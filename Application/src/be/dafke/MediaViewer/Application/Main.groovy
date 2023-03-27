@@ -11,7 +11,7 @@ import java.awt.CardLayout
 
 class Main {
     static JPanel center
-    static StoryPanel storyPanel
+    static StoryOverviewPanel storyPanel
     static CardLayout cardLayoutCenter
     static JFrame frame
 
@@ -19,7 +19,7 @@ class Main {
     static final String STORY_OVERVIEW = 'Stories'
     static final String STORY_DETAIL = 'Story'
 
-    static List<Story> stories = []
+    static ArrayList<Story> stories = []
 
     static void addStory(Story story){
         stories.add(story)
@@ -61,8 +61,8 @@ class Main {
         // ...
     }
 
-    static StoryPanel createStoryPanel(){
-        StoryPanel panel = new StoryPanel()
+    static StoryOverviewPanel createStoryPanel(){
+        StoryOverviewPanel panel = new StoryOverviewPanel()
         panel
     }
 

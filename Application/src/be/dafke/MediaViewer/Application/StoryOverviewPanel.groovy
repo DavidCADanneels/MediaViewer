@@ -17,13 +17,13 @@ import java.awt.event.ActionListener
 
 import static java.util.ResourceBundle.getBundle
 
-class StoryPanel extends JPanel implements ActionListener{
+class StoryOverviewPanel extends JPanel implements ActionListener{
     JTextField nameField, descriptionField
     JButton createButton
-    JTable overviewTable
-    StoryOverviewDataModel dataModel
+    static JTable overviewTable
+    static StoryOverviewDataModel dataModel
 
-    StoryPanel() {
+    StoryOverviewPanel() {
         setLayout(new BorderLayout())
         add createTopPanel(), BorderLayout.NORTH
         add createCenterPanel(), BorderLayout.CENTER

@@ -2,11 +2,11 @@ package be.dafke.MediaViewer.Application
 
 import be.dafke.MediaViewer.ObjectModel.Story
 
-import javax.swing.table.AbstractTableModel
+import javax.swing.table.DefaultTableModel
 
 import static java.util.ResourceBundle.getBundle
 
-class StoryOverviewDataModel extends AbstractTableModel {
+class StoryOverviewDataModel extends DefaultTableModel {
 
     static int NAME_COL = 0
     static int DESC_COL = 1
@@ -55,27 +55,14 @@ class StoryOverviewDataModel extends AbstractTableModel {
                 story.getTitle()
             } else if (columnIndex == DESC_COL) {
                 story.getShortDescription()
-            }
+            } else null
         } else {
-//            System.err.println("Stories is still null")
             null
         }
-        null
     }
 
     @Override
     void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         // no editable fields for now
     }
-
-//    remaining methods in interface TableModel:
-//    @Override
-//    void addTableModelListener(TableModelListener l) {
-//
-//    }
-//
-//    @Override
-//    void removeTableModelListener(TableModelListener l) {
-//
-//    }
 }

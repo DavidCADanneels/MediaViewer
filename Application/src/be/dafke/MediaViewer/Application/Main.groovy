@@ -1,6 +1,7 @@
 package be.dafke.MediaViewer.Application
 
 import be.dafke.MediaViewer.Application.ChapterView.ChapterOverviewPanel
+import be.dafke.MediaViewer.Application.Menu.MediaMenuBar
 import be.dafke.MediaViewer.Application.StoryView.StoryOverviewPanel
 import be.dafke.MediaViewer.ObjectModel.Chapter
 import be.dafke.MediaViewer.ObjectModel.Story
@@ -37,8 +38,8 @@ class Main {
         frame = new JFrame()
 
         // MenuBar:
-        // JMenuBar menuBar = createMenuBar()
-        // frame.setMenuBar(menuBar)
+         JMenuBar menuBar = createMenuBar()
+         frame.setJMenuBar(menuBar)
 
         // Content Panel contains only a 'center' panel -> FullScreen
         // Center Panel in CardLayout to switch between input, display, etc.
@@ -87,7 +88,7 @@ class Main {
 //    }
 
     static JMenuBar createMenuBar(){
-        JMenuBar bar = new JMenuBar()
+        JMenuBar bar = new MediaMenuBar()
         bar
     }
 

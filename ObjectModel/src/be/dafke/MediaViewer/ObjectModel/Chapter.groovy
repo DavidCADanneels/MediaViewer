@@ -1,23 +1,29 @@
 package be.dafke.MediaViewer.ObjectModel
 
 class Chapter{
-    String prefix
-    String description
-    String path
     final Story story
+    final String prefix
+    String description
+    Chapter parentChapter
+//    String path
 //    List<Picture> pictures = []
 //    HashMap<String, Chapter> subChapters = []
 
-    Chapter(Story story, String prefix, String description, String path) {
+    Chapter(Story story, String prefix, String description) {//}, String path) {
         this.story = story
         this.prefix = prefix
         this.description = description
-        this.path = path
+//        this.path = path
     }
 
     Story getStory() {
         return story
     }
+
+    Chapter getParentChapter() {
+        return parentChapter
+    }
+
 //    List<Picture> getPictures() {
 //        return pictures
 //    }

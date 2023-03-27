@@ -1,6 +1,5 @@
 package be.dafke.MediaViewer.Application.Menu
 
-import be.dafke.MediaViewer.Application.MainMenu
 
 import javax.swing.JMenu
 import javax.swing.JMenuBar

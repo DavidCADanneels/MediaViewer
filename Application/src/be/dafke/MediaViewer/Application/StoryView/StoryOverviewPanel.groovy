@@ -1,7 +1,6 @@
 package be.dafke.MediaViewer.Application.StoryView
 
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.Application.StoryView.StoryOverviewDataModel
 import be.dafke.MediaViewer.ObjectModel.Story
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
@@ -21,7 +20,7 @@ import static java.util.ResourceBundle.getBundle
 
 class StoryOverviewPanel extends JPanel implements ActionListener{
     JTextField nameField, descriptionField
-    JButton createButton
+    JButton createButton, openButton
     static JTable overviewTable
     static StoryOverviewDataModel dataModel
 
@@ -29,6 +28,7 @@ class StoryOverviewPanel extends JPanel implements ActionListener{
         setLayout(new BorderLayout())
         add createTopPanel(), BorderLayout.NORTH
         add createCenterPanel(), BorderLayout.CENTER
+        add createBottomPanel(), BorderLayout.SOUTH
     }
 
     JPanel createTopPanel(){
@@ -54,6 +54,17 @@ class StoryOverviewPanel extends JPanel implements ActionListener{
         panel
     }
 
+    JPanel createBottomPanel(){
+        JPanel panel = new JPanel()
+        openButton = new JButton("Open")
+        openButton.addActionListener({ e ->
+            Story story = getSelectedItem()
+            openStory(story)
+        } )
+        panel.add openButton
+        panel
+    }
+
     JScrollPane createCenterPanel(){
         dataModel = new StoryOverviewDataModel()
 //        overviewTable = new StoryTable(dataModel)
@@ -68,19 +79,41 @@ class StoryOverviewPanel extends JPanel implements ActionListener{
 //        dataModel.fireTableDataChanged()
 //    }
 
+    static Story getSelectedItem(){
+        int row = overviewTable.getSelectedRow()
+        if(row == -1){
+            // TODO: disable button of none is selected
+            return null
+        } else {
+            Main.stories.get(row)
+        }
+    }
+
+    static void openStory(story){
+        if(story){
+            Main.switchView(Main.CHAPTERS)
+            Main.chapterPanel.setStory(story)
+        } else {
+            System.err.println("Story is 'null'")
+        }
+    }
+
     @Override
     void actionPerformed(ActionEvent e) {
-        String storyName = nameField.text.trim()
-        String description = descriptionField.text.trim()
-        if(storyName) {
-            Story story = new Story(storyName, description)
-            Main.addStory(story)
-            nameField.text = ''
-            descriptionField.text = ''
+        Object source = e.getSource()
+        if (source == createButton) {
+            String storyName = nameField.text.trim()
+            String description = descriptionField.text.trim()
+            if (storyName) {
+                Story story = new Story(storyName, description)
+                Main.addStory(story)
+                nameField.text = ''
+                descriptionField.text = ''
 
-            XmlMapper xmlMapper = new XmlMapper()
-            String xml = xmlMapper.writeValueAsString(story)
-            System.out.println(xml)
+                XmlMapper xmlMapper = new XmlMapper()
+                String xml = xmlMapper.writeValueAsString(story)
+                System.out.println(xml)
+            }
         }
     }
 }

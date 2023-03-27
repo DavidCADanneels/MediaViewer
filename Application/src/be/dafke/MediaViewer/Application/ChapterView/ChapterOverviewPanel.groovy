@@ -9,12 +9,24 @@ class ChapterOverviewPanel extends JPanel {
     Story mainStory
     Chapter parentChapter
 
-    ChapterOverviewPanel(Story mainStory) {
+    ChapterOverviewPanel() {
+
+    }
+
+    void setMainStory(Story mainStory) {
         this.mainStory = mainStory
     }
 
-    ChapterOverviewPanel(Chapter parentChapter) {
+    void setParentChapter(Chapter parentChapter) {
         this.parentChapter = parentChapter
-        parentChapter.getStory()
+        mainStory = parentChapter.story
     }
+//    ChapterOverviewPanel(Story mainStory) {
+//        this.mainStory = mainStory
+//    }
+//
+//    ChapterOverviewPanel(Chapter parentChapter) {
+//        this.parentChapter = parentChapter
+//        parentChapter.getStory()
+//    }
 }

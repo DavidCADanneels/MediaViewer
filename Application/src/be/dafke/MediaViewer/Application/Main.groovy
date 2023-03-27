@@ -17,12 +17,12 @@ import static java.util.ResourceBundle.getBundle
 class Main {
     static JPanel center
     static StoryOverviewPanel storyPanel
+    static ChapterOverviewPanel chapterPanel
     static CardLayout cardLayoutCenter
     static JFrame frame
 
     static final String STORIES = 'STORIES'
-    static final String STOReeY_OVERVIEW = 'STORY_OVERVIEW'
-    static final String STORY_DETAIL = 'Story'
+    static final String CHAPTERS = 'CHAPTERS'
 
     static ArrayList<Story> stories = []
 
@@ -59,11 +59,12 @@ class Main {
     }
 
     static void createCardPanels(){
-        // 1. New Story
+        // 1. Stories
         storyPanel = createStoryOverviewPanel()
         center.add storyPanel, STORIES
-        // 2. View Stories
-        // ...
+        // 2. Chapters
+        chapterPanel = createChapterOverviewPanel()
+        center.add chapterPanel, CHAPTERS
     }
 
     static StoryOverviewPanel createStoryOverviewPanel(){
@@ -71,13 +72,19 @@ class Main {
         panel
     }
 
-    static ChapterOverviewPanel createChapterOverviewPanel(Story story){
-        ChapterOverviewPanel overviewPanel = new ChapterOverviewPanel(story)
+    static ChapterOverviewPanel createChapterOverviewPanel(){
+        ChapterOverviewPanel panel = new ChapterOverviewPanel()
+        panel
     }
 
-    static ChapterOverviewPanel createChapterOverviewPanel(Chapter chapter){
-        ChapterOverviewPanel overviewPanel = new ChapterOverviewPanel(chapter)
-    }
+//    static ChapterOverviewPanel createChapterOverviewPanel(Story story){
+//        ChapterOverviewPanel overviewPanel = new ChapterOverviewPanel(story)
+//        center.add overviewPanel, CHAPTERS
+//    }
+//
+//    static ChapterOverviewPanel createChapterOverviewPanel(Chapter chapter){
+//        ChapterOverviewPanel overviewPanel = new ChapterOverviewPanel(chapter)
+//    }
 
     static JMenuBar createMenuBar(){
         JMenuBar bar = new JMenuBar()

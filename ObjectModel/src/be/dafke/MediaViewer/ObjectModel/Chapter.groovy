@@ -4,7 +4,7 @@ class Chapter{
     String prefix
     String description
     String path
-    final String story
+    final Story story
 //    List<Picture> pictures = []
 //    HashMap<String, Chapter> subChapters = []
 
@@ -15,7 +15,7 @@ class Chapter{
         this.path = path
     }
 
-    String getStory() {
+    Story getStory() {
         return story
     }
 //    List<Picture> getPictures() {

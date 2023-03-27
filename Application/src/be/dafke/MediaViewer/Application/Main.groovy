@@ -1,5 +1,8 @@
 package be.dafke.MediaViewer.Application
 
+import be.dafke.MediaViewer.Application.ChapterView.ChapterOverviewPanel
+import be.dafke.MediaViewer.Application.StoryView.StoryOverviewPanel
+import be.dafke.MediaViewer.ObjectModel.Chapter
 import be.dafke.MediaViewer.ObjectModel.Story
 
 import javax.swing.JFrame
@@ -9,14 +12,16 @@ import javax.swing.WindowConstants
 import java.awt.BorderLayout
 import java.awt.CardLayout
 
+import static java.util.ResourceBundle.getBundle
+
 class Main {
     static JPanel center
     static StoryOverviewPanel storyPanel
     static CardLayout cardLayoutCenter
     static JFrame frame
 
-    static final String NEW_STORY = 'Create new Story'
-    static final String STORY_OVERVIEW = 'Stories'
+    static final String STORIES = 'STORIES'
+    static final String STOReeY_OVERVIEW = 'STORY_OVERVIEW'
     static final String STORY_DETAIL = 'Story'
 
     static ArrayList<Story> stories = []
@@ -50,20 +55,28 @@ class Main {
         frame.setVisible(true)
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
-        switchView(NEW_STORY)
+        switchView(STORIES)
     }
 
     static void createCardPanels(){
         // 1. New Story
-        storyPanel = createStoryPanel()
-        center.add storyPanel, NEW_STORY
+        storyPanel = createStoryOverviewPanel()
+        center.add storyPanel, STORIES
         // 2. View Stories
         // ...
     }
 
-    static StoryOverviewPanel createStoryPanel(){
+    static StoryOverviewPanel createStoryOverviewPanel(){
         StoryOverviewPanel panel = new StoryOverviewPanel()
         panel
+    }
+
+    static ChapterOverviewPanel createChapterOverviewPanel(Story story){
+        ChapterOverviewPanel overviewPanel = new ChapterOverviewPanel(story)
+    }
+
+    static ChapterOverviewPanel createChapterOverviewPanel(Chapter chapter){
+        ChapterOverviewPanel overviewPanel = new ChapterOverviewPanel(chapter)
     }
 
     static JMenuBar createMenuBar(){
@@ -73,6 +86,7 @@ class Main {
 
     static switchView(String view){
         cardLayoutCenter.show(center, view)
-        frame.title = view
+        String title = getBundle("MediaViewer").getString(view)
+        frame.title = title
     }
 }

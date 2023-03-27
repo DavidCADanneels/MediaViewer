@@ -1,5 +1,6 @@
-package be.dafke.MediaViewer.Application
+package be.dafke.MediaViewer.Application.ChapterView
 
+import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Story
 
 import javax.swing.table.AbstractTableModel

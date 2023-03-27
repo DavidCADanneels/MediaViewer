@@ -1,5 +1,7 @@
-package be.dafke.MediaViewer.Application
+package be.dafke.MediaViewer.Application.StoryView
 
+import be.dafke.MediaViewer.Application.Main
+import be.dafke.MediaViewer.Application.StoryView.StoryOverviewDataModel
 import be.dafke.MediaViewer.ObjectModel.Story
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper

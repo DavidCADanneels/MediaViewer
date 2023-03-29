@@ -14,6 +14,7 @@ import javax.swing.JScrollPane
 import javax.swing.JTable
 import javax.swing.JTextField
 import java.awt.BorderLayout
+import java.awt.Component
 
 import static java.util.ResourceBundle.getBundle
 
@@ -83,7 +84,7 @@ class StoryOverviewPanel extends JPanel {
         saveButton = new JButton(getBundle("MediaViewer").getString("STORY_TO_XML"))
         saveButton.addActionListener { e ->
             Story story = getSelectedItem()
-            saveStory(story)
+            saveStory(story, this)
         }
         panel.add saveButton
 
@@ -124,7 +125,7 @@ class StoryOverviewPanel extends JPanel {
         }
     }
 
-    void saveStory(Story story){
+    static void saveStory(Story story, Component parent){
         XmlMapper xmlMapper = new XmlMapper()
         String xml = xmlMapper.writeValueAsString(story)
 
@@ -134,7 +135,7 @@ class StoryOverviewPanel extends JPanel {
         if(file == null){
             JFileChooser chooser = new JFileChooser()
             chooser.setMultiSelectionEnabled(false)
-            if(chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            if(chooser.showSaveDialog(parent) == JFileChooser.APPROVE_OPTION) {
                 file = chooser.getSelectedFile()
                 if(file != null) {
                     story.setDataFile(file)

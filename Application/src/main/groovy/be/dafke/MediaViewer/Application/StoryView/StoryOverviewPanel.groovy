@@ -3,7 +3,6 @@ package be.dafke.MediaViewer.Application.StoryView
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Chapter
 import be.dafke.MediaViewer.ObjectModel.Story
-
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 
 import javax.swing.BoxLayout
@@ -20,7 +19,7 @@ import static java.util.ResourceBundle.getBundle
 
 class StoryOverviewPanel extends JPanel {
     JTextField nameField, descriptionField
-    JButton createButton, openButton
+    JButton createButton, openButton, saveButton
     static JTable overviewTable
     static StoryOverviewDataModel dataModel
 
@@ -52,10 +51,6 @@ class StoryOverviewPanel extends JPanel {
                 Main.addStory(story)
                 nameField.text = ''
                 descriptionField.text = ''
-
-                XmlMapper xmlMapper = new XmlMapper()
-                String xml = xmlMapper.writeValueAsString(story)
-                System.out.println(xml)
             }
         }
 
@@ -78,12 +73,20 @@ class StoryOverviewPanel extends JPanel {
 
     JPanel createBottomPanel(){
         JPanel panel = new JPanel()
-        openButton = new JButton("Open")
+        openButton = new JButton(getBundle("MediaViewer").getString("SHOW_CHAPTERS_FOR_STORY"))
         openButton.addActionListener { e ->
             Story story = getSelectedItem()
-            openStory(story)
+            showChapters(story)
         }
         panel.add openButton
+
+        saveButton = new JButton(getBundle("MediaViewer").getString("STORY_TO_XML"))
+        saveButton.addActionListener { e ->
+            Story story = getSelectedItem()
+            saveStory(story)
+        }
+        panel.add saveButton
+
         panel
     }
 
@@ -111,7 +114,7 @@ class StoryOverviewPanel extends JPanel {
         }
     }
 
-    static void openStory(Story story){
+    static void showChapters(Story story){
         if(story){
             Main.switchView(Main.CHAPTERS)
 //            Main.chapterPanel.setChapter(story.getRootChapter())
@@ -119,5 +122,11 @@ class StoryOverviewPanel extends JPanel {
         } else {
             System.err.println("Story is 'null'")
         }
+    }
+
+    static void saveStory(Story story){
+        XmlMapper xmlMapper = new XmlMapper()
+        String xml = xmlMapper.writeValueAsString(story)
+        System.out.println(xml)
     }
 }

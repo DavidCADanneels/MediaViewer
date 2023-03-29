@@ -15,12 +15,11 @@ import javax.swing.JTable
 import javax.swing.JTextField
 import java.awt.BorderLayout
 
-
 import static java.util.ResourceBundle.getBundle
 
 class StoryOverviewPanel extends JPanel {
     JTextField nameField, descriptionField
-    JButton createButton, openButton, saveButton
+    JButton createButton, chaptersButton, saveButton
     static JTable overviewTable
     static StoryOverviewDataModel dataModel
 
@@ -74,12 +73,12 @@ class StoryOverviewPanel extends JPanel {
 
     JPanel createBottomPanel(){
         JPanel panel = new JPanel()
-        openButton = new JButton(getBundle("MediaViewer").getString("SHOW_CHAPTERS_FOR_STORY"))
-        openButton.addActionListener { e ->
+        chaptersButton = new JButton(getBundle("MediaViewer").getString("SHOW_CHAPTERS_FOR_STORY"))
+        chaptersButton.addActionListener { e ->
             Story story = getSelectedItem()
             showChapters(story)
         }
-        panel.add openButton
+        panel.add chaptersButton
 
         saveButton = new JButton(getBundle("MediaViewer").getString("STORY_TO_XML"))
         saveButton.addActionListener { e ->

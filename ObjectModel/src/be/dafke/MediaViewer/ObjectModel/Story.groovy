@@ -4,25 +4,31 @@ class Story {
     String title = ""
     String shortDescription = ""
     String introText = ""
-//    ArrayList<Chapter> chapters = []
+//    Chapter rootChapter = null
+//    HashMap<String, Chapter> chapters = [:]
 
-    Story(String name) {
-        this(name, "","")
+    Story() {
+
     }
 
-    Story(String name, String desc) {
-        this(name, desc, "")
-    }
-
-    Story(String title, String shortDescription, String introText) {
-        this.title = title
-        this.shortDescription = shortDescription
-        this.introText = introText
-    }
+//    Story(String title, String shortDescription, String introText) {
+//        this.title = title
+//        this.shortDescription = shortDescription
+//        this.introText = introText
+////        rootChapter = null
+//    }
 
     String getTitle() {
         return title
     }
+
+//    Chapter getRootChapter() {
+//        return rootChapter
+//    }
+//
+//    void setRootChapter(Chapter rootChapter) {
+//        this.rootChapter = rootChapter
+//    }
 
     void setTitle(String title) {
         this.title = title

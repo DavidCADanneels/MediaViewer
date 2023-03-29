@@ -1,6 +1,7 @@
 package be.dafke.MediaViewer.Application.StoryView
 
 import be.dafke.MediaViewer.Application.Main
+import be.dafke.MediaViewer.ObjectModel.Chapter
 import be.dafke.MediaViewer.ObjectModel.Story
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
@@ -89,10 +90,11 @@ class StoryOverviewPanel extends JPanel implements ActionListener{
         }
     }
 
-    static void openStory(story){
+    static void openStory(Story story){
         if(story){
             Main.switchView(Main.CHAPTERS)
-            Main.chapterPanel.setStory(story)
+//            Main.chapterPanel.setChapter(story.getRootChapter())
+//            Main.chapterPanel.setStory(story)
         } else {
             System.err.println("Story is 'null'")
         }
@@ -105,7 +107,16 @@ class StoryOverviewPanel extends JPanel implements ActionListener{
             String storyName = nameField.text.trim()
             String description = descriptionField.text.trim()
             if (storyName) {
-                Story story = new Story(storyName, description)
+//                Story story = new Story(storyName, description, "")
+                Story story = new Story()
+                story.setTitle(storyName)
+                story.setShortDescription(description)
+//                Chapter root = new Chapter(story, story.getTitle(), '00')
+                Chapter root = new Chapter()
+//                root.setStory(story)
+                root.setTitle(storyName)
+                root.setPrefix("00")
+//                story.setRootChapter(root)
                 Main.addStory(story)
                 nameField.text = ''
                 descriptionField.text = ''

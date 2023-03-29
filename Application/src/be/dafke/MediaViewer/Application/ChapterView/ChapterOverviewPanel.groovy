@@ -7,35 +7,22 @@ import be.dafke.MediaViewer.ObjectModel.Story
 import javax.swing.JPanel
 
 class ChapterOverviewPanel extends JPanel {
-    Story story
+//    Story story
     Chapter chapter
 
-    void setStory(Story mainStory) {
-        this.story = mainStory
-        // TODO: use 'setToolTipText()' in graphical part when hoovering over a Point !!!
-//        setToolTipText()
-        setTitle(story)
-    }
-
-    void setTitle(Story story){
-        // TODO: update title (with name of Story)
-        String title = story.getTitle()
-        if(chapter == null){
-            title += '/Root'
-        } else{
-            Chapter iter = chapter
-            while(iter != null) {
-                title = "$chapter.prefix/$title"
-                iter = iter.parentChapter
-            }
-        }
-        Main.frame.title = title
-    }
+//    void setStory(Story mainStory) {
+//        this.story = mainStory
+//        // TODO: use 'setToolTipText()' in graphical part when hoovering over a Point !!!
+////        setToolTipText()
+//        setTitle(story)
+//    }
 
     void setChapter(Chapter chapter) {
         this.chapter = chapter
-        story = chapter.story
+//        story = chapter.story
+        Main.frame.title = chapter.toString()
     }
+
 //    ChapterOverviewPanel(Story mainStory) {
 //        this.mainStory = mainStory
 //    }

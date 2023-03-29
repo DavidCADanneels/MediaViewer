@@ -7,6 +7,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper
 
 import javax.swing.BoxLayout
 import javax.swing.JButton
+import javax.swing.JFileChooser
 import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JScrollPane
@@ -114,7 +115,7 @@ class StoryOverviewPanel extends JPanel {
         }
     }
 
-    static void showChapters(Story story){
+    void showChapters(Story story){
         if(story){
             Main.switchView(Main.CHAPTERS)
 //            Main.chapterPanel.setChapter(story.getRootChapter())
@@ -124,9 +125,34 @@ class StoryOverviewPanel extends JPanel {
         }
     }
 
-    static void saveStory(Story story){
+    void saveStory(Story story){
         XmlMapper xmlMapper = new XmlMapper()
         String xml = xmlMapper.writeValueAsString(story)
+
         System.out.println(xml)
+
+        File file = story.getDataFile()
+        if(file == null){
+            JFileChooser chooser = new JFileChooser()
+            chooser.setMultiSelectionEnabled(false)
+            if(chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                file = chooser.getSelectedFile()
+                if(file != null) {
+                    story.setDataFile(file)
+                }
+            }
+        }
+        if(file != null){
+            try {
+                Writer writer = new FileWriter(file)
+                writer.write xml
+                writer.flush()
+                writer.close()
+            } catch (IOException ex) {
+//                Logger.getLogger(Accounts.class.name).log(Level.SEVERE, null, ex)
+            }
+        }
+
+
     }
 }

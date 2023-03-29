@@ -4,6 +4,7 @@ class Story {
     String title = ""
     String shortDescription = ""
     String introText = ""
+    File dataFile
 //    Chapter rootChapter = null
 //    HashMap<String, Chapter> chapters = [:]
 
@@ -22,6 +23,13 @@ class Story {
         return title
     }
 
+    File getDataFile() {
+        return dataFile
+    }
+
+    void setDataFile(File dataFile) {
+        this.dataFile = dataFile
+    }
 //    Chapter getRootChapter() {
 //        return rootChapter
 //    }

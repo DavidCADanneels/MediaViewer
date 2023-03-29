@@ -4,10 +4,8 @@ import javax.swing.JButton
 import javax.swing.JPanel
 import javax.swing.JScrollPane
 import java.awt.BorderLayout
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
 
-class MediaViewerPanel extends JPanel implements ActionListener {
+class MediaViewerPanel extends JPanel {
     JButton addPicture
     JButton displayPicture
 
@@ -20,18 +18,17 @@ class MediaViewerPanel extends JPanel implements ActionListener {
         JPanel north = new JPanel()
 
         addPicture = new JButton("Add picture ...")
-        addPicture.addActionListener(this)
+        addPicture.addActionListener { e ->
+
+        }
         north.add(addPicture, BorderLayout.NORTH)
 
         displayPicture = new JButton("Show picture ...")
-        displayPicture.addActionListener(this)
+        displayPicture.addActionListener { e ->
+
+        }
         north.add(displayPicture, BorderLayout.NORTH)
 
         add(north, BorderLayout.NORTH)
-    }
-
-    @Override
-    void actionPerformed(ActionEvent e) {
-
     }
 }

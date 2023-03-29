@@ -9,28 +9,19 @@ import java.awt.event.ActionListener
 
 import static java.util.ResourceBundle.getBundle
 
-class MainMenu extends JMenu implements ActionListener {
+class MainMenu extends JMenu  {
     JMenuItem storyView, chapterView
 
     MainMenu() {
         super(getBundle("MediaViewer").getString("MAIN_MENU"))
 
         storyView = new JMenuItem("Stories")
-        storyView.addActionListener this
+        storyView.addActionListener { e -> Main.switchView(Main.STORIES) }
 
         chapterView = new JMenuItem("Chapter")
-        chapterView.addActionListener this
+        chapterView.addActionListener  { e -> Main.switchView(Main.CHAPTERS) }
 
         add storyView
         add chapterView
-    }
-
-    void actionPerformed(ActionEvent e) {
-        Object source = e.getSource()
-        if(source == storyView){
-            Main.switchView(Main.STORIES)
-        } else if(source == chapterView){
-            Main.switchView(Main.CHAPTERS)
-        }
     }
 }

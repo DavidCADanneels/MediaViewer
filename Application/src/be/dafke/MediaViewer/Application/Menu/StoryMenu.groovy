@@ -6,15 +6,15 @@ import javax.swing.JMenuItem
 
 import static java.util.ResourceBundle.getBundle
 
-class StoryMenu extends JMenu { //implements ActionListener {
+class StoryMenu extends JMenu {
     JMenuItem openStory, saveStory
 
     StoryMenu() {
         super(getBundle("MediaViewer").getString('STORIES'))
         openStory = new JMenuItem()
-        openStory.addActionListener({ e -> readFile() } )
+        openStory.addActionListener { e -> readFile() }
         saveStory = new JMenuItem()
-        saveStory.addActionListener({ e -> writeFile() } )
+        saveStory.addActionListener { e -> writeFile() }
     }
 
     void readFile(){

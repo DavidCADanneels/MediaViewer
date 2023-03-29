@@ -14,12 +14,11 @@ import javax.swing.JScrollPane
 import javax.swing.JTable
 import javax.swing.JTextField
 import java.awt.BorderLayout
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
+
 
 import static java.util.ResourceBundle.getBundle
 
-class StoryOverviewPanel extends JPanel implements ActionListener{
+class StoryOverviewPanel extends JPanel {
     JTextField nameField, descriptionField
     JButton createButton, openButton
     static JTable overviewTable
@@ -36,7 +35,29 @@ class StoryOverviewPanel extends JPanel implements ActionListener{
         nameField = new JTextField(20)
         descriptionField = new JTextField(30)
         createButton = new JButton("Create")
-        createButton.addActionListener this
+        createButton.addActionListener { e ->
+            String storyName = nameField.text.trim()
+            String description = descriptionField.text.trim()
+            if (storyName) {
+//                Story story = new Story(storyName, description, "")
+                Story story = new Story()
+                story.setTitle(storyName)
+                story.setShortDescription(description)
+//                Chapter root = new Chapter(story, story.getTitle(), '00')
+                Chapter root = new Chapter()
+//                root.setStory(story)
+                root.setTitle(storyName)
+                root.setPrefix("00")
+//                story.setRootChapter(root)
+                Main.addStory(story)
+                nameField.text = ''
+                descriptionField.text = ''
+
+                XmlMapper xmlMapper = new XmlMapper()
+                String xml = xmlMapper.writeValueAsString(story)
+                System.out.println(xml)
+            }
+        }
 
         JPanel line1 = new JPanel()
         line1.add new JLabel("${getBundle("MediaViewer").getString("NAME")}:")
@@ -58,10 +79,10 @@ class StoryOverviewPanel extends JPanel implements ActionListener{
     JPanel createBottomPanel(){
         JPanel panel = new JPanel()
         openButton = new JButton("Open")
-        openButton.addActionListener({ e ->
+        openButton.addActionListener { e ->
             Story story = getSelectedItem()
             openStory(story)
-        } )
+        }
         panel.add openButton
         panel
     }
@@ -97,34 +118,6 @@ class StoryOverviewPanel extends JPanel implements ActionListener{
 //            Main.chapterPanel.setStory(story)
         } else {
             System.err.println("Story is 'null'")
-        }
-    }
-
-    @Override
-    void actionPerformed(ActionEvent e) {
-        Object source = e.getSource()
-        if (source == createButton) {
-            String storyName = nameField.text.trim()
-            String description = descriptionField.text.trim()
-            if (storyName) {
-//                Story story = new Story(storyName, description, "")
-                Story story = new Story()
-                story.setTitle(storyName)
-                story.setShortDescription(description)
-//                Chapter root = new Chapter(story, story.getTitle(), '00')
-                Chapter root = new Chapter()
-//                root.setStory(story)
-                root.setTitle(storyName)
-                root.setPrefix("00")
-//                story.setRootChapter(root)
-                Main.addStory(story)
-                nameField.text = ''
-                descriptionField.text = ''
-
-                XmlMapper xmlMapper = new XmlMapper()
-                String xml = xmlMapper.writeValueAsString(story)
-                System.out.println(xml)
-            }
         }
     }
 }

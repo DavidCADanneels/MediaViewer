@@ -1,6 +1,7 @@
 package be.dafke.MediaViewer.Application.StoryView
 
 import be.dafke.MediaViewer.Application.Main
+import be.dafke.MediaViewer.Application.NewStoryView.NewStoryPanel
 import be.dafke.MediaViewer.ObjectModel.Chapter
 import be.dafke.MediaViewer.ObjectModel.IoTools
 import be.dafke.MediaViewer.ObjectModel.Story
@@ -13,59 +14,21 @@ import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JScrollPane
 import javax.swing.JTable
-import javax.swing.JTextField
 import java.awt.BorderLayout
 
 import static java.util.ResourceBundle.getBundle
 
 class StoryOverviewPanel extends JPanel {
-    JTextField nameField, descriptionField
-    JButton createButton, chaptersButton, participantsButton
+    JButton chaptersButton, participantsButton
     static JTable overviewTable
     static StoryOverviewDataModel dataModel
 
     StoryOverviewPanel() {
         setLayout(new BorderLayout())
-        add createTopPanel(), BorderLayout.NORTH
+        NewStoryPanel north = new NewStoryPanel()
+        add north, BorderLayout.NORTH
         add createCenterPanel(), BorderLayout.CENTER
         add createBottomPanel(), BorderLayout.SOUTH
-    }
-
-    JPanel createTopPanel(){
-        nameField = new JTextField(20)
-        descriptionField = new JTextField(30)
-        createButton = new JButton("Create")
-        createButton.addActionListener { e ->
-            String storyName = nameField.text.trim()
-            String description = descriptionField.text.trim()
-            if (storyName) {
-                Story story = new Story()
-                story.setTitle(storyName)
-                story.setShortDescription(description)
-                Chapter root = new Chapter()
-                root.setTitle(storyName)
-                root.setPrefix("00")
-                Main.addStory(story)
-                nameField.text = ''
-                descriptionField.text = ''
-            }
-        }
-
-        JPanel line1 = new JPanel()
-        line1.add new JLabel("${getBundle("MediaViewer").getString("NAME")}:")
-        line1.add nameField
-        line1.add createButton
-
-        JPanel line2 = new JPanel()
-        line2.add new JLabel("${getBundle("MediaViewer").getString("DESCR")}:")
-        line2.add descriptionField
-
-        JPanel panel = new JPanel()
-        panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS))
-        panel.add line1
-        panel.add line2
-
-        panel
     }
 
     JPanel createBottomPanel(){

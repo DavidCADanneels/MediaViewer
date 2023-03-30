@@ -4,8 +4,6 @@ import be.dafke.MediaViewer.Application.Main
 
 import javax.swing.JMenu
 import javax.swing.JMenuItem
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
 
 import static java.util.ResourceBundle.getBundle
 

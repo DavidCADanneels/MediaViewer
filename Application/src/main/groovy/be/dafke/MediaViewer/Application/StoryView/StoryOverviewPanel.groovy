@@ -25,8 +25,6 @@ class StoryOverviewPanel extends JPanel {
 
     StoryOverviewPanel() {
         setLayout(new BorderLayout())
-        NewStoryPanel north = new NewStoryPanel()
-        add north, BorderLayout.NORTH
         add createCenterPanel(), BorderLayout.CENTER
         add createBottomPanel(), BorderLayout.SOUTH
     }
@@ -64,10 +62,6 @@ class StoryOverviewPanel extends JPanel {
 
         new JScrollPane(overviewTable)
     }
-
-//    static void refresh(){
-//        dataModel.fireTableDataChanged()
-//    }
 
     Story getSelectedItem(){
         int row = overviewTable.getSelectedRow()

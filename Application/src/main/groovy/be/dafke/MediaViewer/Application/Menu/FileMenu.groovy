@@ -1,10 +1,13 @@
 package be.dafke.MediaViewer.Application.Menu
 
 import be.dafke.MediaViewer.Application.Main
+import be.dafke.MediaViewer.Application.NewStoryView.NewStoryDialog
+import be.dafke.MediaViewer.Application.NewStoryView.NewStoryPanel
 import be.dafke.MediaViewer.ObjectModel.Story
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 
 import javax.swing.*
+import java.awt.Point
 
 import static java.util.ResourceBundle.getBundle
 
@@ -14,7 +17,7 @@ class FileMenu extends JMenu  {
     FileMenu() {
         super(getBundle("MediaViewer").getString("FILE_MENU"))
 
-        loadStory = new JMenuItem(getBundle("MediaViewer").getString("LOAD_STORY_FROM_XML"))
+        loadStory = new JMenuItem(getBundle("MediaViewer").getString("LOAD_STORY_BUTTON"))
         loadStory.addActionListener { e ->
             Story story = loadStory()
             if(story){
@@ -22,9 +25,8 @@ class FileMenu extends JMenu  {
                 Main.setActiveStory(story)
             }
         }
-        add loadStory
 
-        saveStory = new JMenuItem(getBundle("MediaViewer").getString("SAVE_STORY_TO_XML"))
+        saveStory = new JMenuItem(getBundle("MediaViewer").getString("SAVE_STORY_BUTTON"))
         saveStory.addActionListener { e ->
             Story story = Main.activeStory
             if(story!=null) {
@@ -32,13 +34,18 @@ class FileMenu extends JMenu  {
                 saveStory(story)
             }
         }
-        add saveStory
 
-        newStory = new JMenuItem(getBundle("MediaViewer").getString("NEW_STORY"))
+        newStory = new JMenuItem(getBundle("MediaViewer").getString("NEW_STORY_BUTTON"))
         newStory.addActionListener { e ->
             // TODO: open new Frame  with StoryOverviewPanel.topPanel to create new Story
+            Point locationOnScreen = getLocationOnScreen()
+            NewStoryDialog newStoryDialog = new NewStoryDialog()
+            newStoryDialog.setLocation(locationOnScreen)
+            newStoryDialog.visible = true
         }
         add newStory
+        add loadStory
+        add saveStory
     }
 
     void saveStory(Story story){

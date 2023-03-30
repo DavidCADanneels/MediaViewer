@@ -11,13 +11,12 @@ import javax.swing.JPanel
 import javax.swing.JScrollPane
 import javax.swing.JTable
 import java.awt.BorderLayout
-import java.awt.Point
 
 import static java.util.ResourceBundle.getBundle
 
 class ParticipantsOverviewPanel extends JPanel {
     ParticipantsOverviewDataModel dataModel
-    JButton backToStoryOverViewButton, mediaButton, addParticipantButton
+    JButton backToStoryDetailsButton, backToStoryOverViewButton, mediaButton, addParticipantButton
     JTable overviewTable
 
     ParticipantsOverviewPanel() {
@@ -31,7 +30,10 @@ class ParticipantsOverviewPanel extends JPanel {
             Main.switchView(Main.VIEW_STORY_OVERVIEW)
         }
 
-        add backToStoryOverViewButton, BorderLayout.SOUTH
+        backToStoryDetailsButton = new JButton("${getBundle("MediaViewer").getString("BACK_TO_MAIN")}")
+        backToStoryDetailsButton.addActionListener { e ->
+            Main.switchView(Main.VIEW_STORY_DETAILS)
+        }
 
         mediaButton = new JButton(getBundle("MediaViewer").getString("SHOW_MEDIA_FOR_STORY"))
         mediaButton.addActionListener { e ->
@@ -46,9 +48,10 @@ class ParticipantsOverviewPanel extends JPanel {
         })
         
         JPanel south = new JPanel()
-        south.add backToStoryOverViewButton
+//        south.add backToStoryOverViewButton
+        south.add backToStoryDetailsButton
         south.add mediaButton
-        south.add addParticipantButton
+//        south.add addParticipantButton
 
         add south, BorderLayout.SOUTH
     }

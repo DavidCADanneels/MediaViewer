@@ -40,7 +40,7 @@ class FileMenu extends JMenu  {
         newStory.addActionListener { e ->
             showDialog()
         }
-        add newStory
+//        add newStory
         add loadStory
         add saveStory
     }

@@ -16,7 +16,7 @@ import static java.util.ResourceBundle.getBundle
 
 class MediaOverviewPanel extends JPanel {
     MediaOverviewDataModel dataModel
-    JButton backToStoryOverViewButton, participantButton, addMediaButton
+    JButton backToStoryDetailsButton, backToStoryOverViewButton, participantButton, addMediaButton
     static JTable overviewTable
 
     Story story
@@ -32,6 +32,11 @@ class MediaOverviewPanel extends JPanel {
             Main.switchView(Main.VIEW_STORY_OVERVIEW)
         }
 
+        backToStoryDetailsButton = new JButton("${getBundle("MediaViewer").getString("BACK_TO_DETAILS")}")
+        backToStoryDetailsButton.addActionListener { e ->
+            Main.switchView(Main.VIEW_STORY_DETAILS)
+        }
+
         participantButton = new JButton(getBundle("MediaViewer").getString("SHOW_PARTICIPANTS_FOR_STORY"))
         participantButton.addActionListener { e ->
             Main.switchView(Main.VIEW_PARTICIPANTS_FOR_STORY)
@@ -39,23 +44,19 @@ class MediaOverviewPanel extends JPanel {
 
         addMediaButton = new JButton(getBundle("MediaViewer").getString("ADD_MEDIA_BUTTON"))
         addMediaButton.addActionListener { e ->
-            showDialog()
+            Point locationOnScreen = getLocationOnScreen()
+            NewMediaDialog newMediaDialog = new NewMediaDialog()
+            newMediaDialog.setLocation(locationOnScreen)
+            newMediaDialog.visible = true
         }
 
         JPanel south = new JPanel()
-        south.add backToStoryOverViewButton
+//        south.add backToStoryOverViewButton
+        south.add backToStoryDetailsButton
         south.add participantButton
         south.add addMediaButton
 
         add south, BorderLayout.SOUTH
-    }
-
-    void showDialog(){
-        Point locationOnScreen = getLocationOnScreen()
-        NewMediaDialog newMediaDialog = new NewMediaDialog()
-        newMediaDialog.setLocation(locationOnScreen)
-        newMediaDialog.visible = true
-
     }
 
     void setStory(Story story) {

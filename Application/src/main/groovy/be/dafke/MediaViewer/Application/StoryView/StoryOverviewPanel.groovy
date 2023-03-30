@@ -20,7 +20,7 @@ import static java.util.ResourceBundle.getBundle
 
 class StoryOverviewPanel extends JPanel {
     JTextField nameField, descriptionField
-    JButton createButton, chaptersButton, saveButton, loadButton
+    JButton createButton, chaptersButton, saveButton
     static JTable overviewTable
     static StoryOverviewDataModel dataModel
 
@@ -87,17 +87,6 @@ class StoryOverviewPanel extends JPanel {
         }
         panel.add saveButton
 
-        loadButton = new JButton(getBundle("MediaViewer").getString("LOAD_STORY_FROM_XML"))
-        loadButton.addActionListener { e ->
-            Story story = loadStory()
-            if(story){
-                Main.addStory(story)
-                Main.setActiveStory(story)
-                dataModel.fireTableDataChanged()
-            }
-        }
-        panel.add loadButton
-
         panel
     }
 
@@ -162,24 +151,4 @@ class StoryOverviewPanel extends JPanel {
         }
     }
 
-    Story loadStory(){
-        JFileChooser chooser = new JFileChooser()
-        chooser.setMultiSelectionEnabled(false)
-        if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File file = chooser.getSelectedFile()
-            readStory(file)
-        }
-        else null
-    }
-
-    Story readStory(File file){
-        XmlMapper xmlMapper = new XmlMapper()
-        try {
-            def xml
-            xmlMapper.readValue(file, Story.class)
-        } catch (Exception ex) {
-            System.err.println(ex)
-//                Logger.getLogger(Accounts.class.name).log(Level.SEVERE, null, ex)
-        }
-    }
 }

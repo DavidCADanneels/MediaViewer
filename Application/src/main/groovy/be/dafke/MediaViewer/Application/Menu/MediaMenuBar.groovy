@@ -5,10 +5,12 @@ import javax.swing.JMenu
 import javax.swing.JMenuBar
 
 class MediaMenuBar extends JMenuBar {
-    JMenu mainMenu
+    JMenu fileMenu, mainMenu
 
     MediaMenuBar() {
-        mainMenu = new MainMenu()
-        add mainMenu
+//        mainMenu = new MainMenu()
+//        add mainMenu
+        fileMenu = new FileMenu()
+        add fileMenu
     }
 }

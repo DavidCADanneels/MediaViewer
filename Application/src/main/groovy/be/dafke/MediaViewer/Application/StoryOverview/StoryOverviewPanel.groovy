@@ -12,65 +12,15 @@ import java.awt.BorderLayout
 import static java.util.ResourceBundle.getBundle
 
 class StoryOverviewPanel extends JPanel {
-    JButton chaptersButton, participantButton, mediaButton
     static JTable overviewTable
     static StoryOverviewDataModel dataModel
 
     StoryOverviewPanel() {
         setLayout(new BorderLayout())
-        add createCenterPanel(), BorderLayout.CENTER
-        add createBottomPanel(), BorderLayout.SOUTH
-    }
-
-    JPanel createBottomPanel(){
-        JPanel panel = new JPanel()
-        chaptersButton = new JButton(getBundle("MediaViewer").getString("SHOW_CHAPTERS_FOR_STORY"))
-        chaptersButton.addActionListener { e ->
-            Story story = getSelectedItem()
-            if(story) {
-                Main.switchView(Main.VIEW_STORY_DETAILS)
-            } else {
-                System.err.println("Story is 'null'")
-            }
-        }
-
-        participantButton = new JButton(getBundle("MediaViewer").getString("SHOW_PARTICIPANTS_FOR_STORY"))
-        participantButton.addActionListener { e ->
-            Story story = getSelectedItem()
-            if(story) {
-                Main.setActiveStory(story)
-                Main.switchView(Main.VIEW_PARTICIPANTS_FOR_STORY)
-//                Main.participantsOverviewPanel.setStory(story)
-//                Main.participantsOverviewPanel.setParticipants(story.getParticipants())
-            } else {
-                System.err.println("Story is 'null'")
-            }
-        }
-
-        mediaButton = new JButton(getBundle("MediaViewer").getString("SHOW_MEDIA_FOR_STORY"))
-        mediaButton.addActionListener { e ->
-            Story story = getSelectedItem()
-            if(story) {
-                Main.switchView(Main.VIEW_MEDIA_FOR_STORY)
-                Main.mediaOverviewPanel.setStory(story)
-//                Main.mediaOverviewPanel.setMediaList(story.getMedia())
-            } else {
-                System.err.println("Story is 'null'")
-            }
-        }
-
-
-//        panel.add chaptersButton
-        panel.add participantButton
-        panel.add mediaButton
-
-        panel
-    }
-
-    JScrollPane createCenterPanel(){
         dataModel = new StoryOverviewDataModel()
         overviewTable = new JTable(dataModel)
-        new JScrollPane(overviewTable)
+        add new JScrollPane(overviewTable), BorderLayout.CENTER
+        add new StoryButtonsPanel(), BorderLayout.SOUTH
     }
 
     Story getSelectedItem(){
@@ -82,5 +32,4 @@ class StoryOverviewPanel extends JPanel {
             Main.stories.get(row)
         }
     }
-
 }

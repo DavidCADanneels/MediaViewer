@@ -20,14 +20,6 @@ class Story {
         return participants
     }
 
-    void setParticipants(List<Participant> participants) {
-        this.participants = participants
-    }
-
-//    void addParticipant(Participant participant){
-//        participants.add(participant)
-//    }
-
     String getTitle() {
         return title
     }

@@ -40,6 +40,14 @@ class Main {
         storyOverviewPanel.dataModel.fireTableDataChanged()
     }
 
+    static Story getActiveStory() {
+        return activeStory
+    }
+
+    static void setActiveStory(Story activeStory) {
+        this.activeStory = activeStory
+    }
+
     static void main(String[] args) {
         stories = []
         activeStory = null

@@ -20,8 +20,6 @@ class ParticipantsOverviewPanel extends JPanel {
     JButton backToStoryOverViewButton, mediaButton, addParticipantButton
     JTable overviewTable
 
-    Story story
-
     ParticipantsOverviewPanel() {
         setLayout(new BorderLayout())
         dataModel = new ParticipantsOverviewDataModel()
@@ -45,7 +43,6 @@ class ParticipantsOverviewPanel extends JPanel {
             NewParticipantDialog newParticipantDialog = new NewParticipantDialog()
             newParticipantDialog.setLocation(getLocationOnScreen())
             newParticipantDialog.visible = true
-//            showDialog()
         })
         
         JPanel south = new JPanel()
@@ -56,25 +53,14 @@ class ParticipantsOverviewPanel extends JPanel {
         add south, BorderLayout.SOUTH
     }
 
-    void showDialog() {
-        Point locationOnScreen = getLocationOnScreen()
-        NewParticipantDialog newParticipantDialog = new NewParticipantDialog()
-        newParticipantDialog.setLocation(locationOnScreen)
-        newParticipantDialog.visible = true
-    }
 
     ParticipantsOverviewDataModel getDataModel() {
         return dataModel
     }
 
     void setStory(Story story) {
-//        this.story = story
         if(story){
             dataModel.setParticipants(story.getParticipants())
         }
     }
-//
-//    void setParticipants(List<Participant> participants) {
-//        dataModel.setParticipants(participants)
-//    }
 }

@@ -1,7 +1,5 @@
 package be.dafke.MediaViewer.Application.Participants
 
-import be.dafke.MediaViewer.ObjectModel.Media.Story
-
 import javax.swing.*
 
 import static java.util.ResourceBundle.getBundle

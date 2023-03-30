@@ -21,7 +21,8 @@ class FileMenu extends JMenu  {
             Story story = loadStory()
             if(story){
                 Main.addStory(story)
-                Main.setActiveStory(story)
+                Main.activeStory = story
+                Main.switchView(Main.VIEW_STORY_DETAILS)
             }
         }
 

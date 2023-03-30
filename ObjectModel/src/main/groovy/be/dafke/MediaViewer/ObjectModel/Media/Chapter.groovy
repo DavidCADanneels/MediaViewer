@@ -1,4 +1,4 @@
-package be.dafke.MediaViewer.ObjectModel
+package be.dafke.MediaViewer.ObjectModel.Media
 
 class Chapter{
 //    Story story = null

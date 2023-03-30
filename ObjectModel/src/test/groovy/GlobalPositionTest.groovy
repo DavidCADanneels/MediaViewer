@@ -1,4 +1,4 @@
-import be.dafke.MediaViewer.ObjectModel.GlobalPosition
+import be.dafke.MediaViewer.ObjectModel.Interactive.GlobalPosition
 import org.junit.Test
 
 class GlobalPositionTest {

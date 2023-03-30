@@ -3,7 +3,7 @@ package be.dafke.MediaViewer.Application
 import be.dafke.MediaViewer.Application.Menu.MediaMenuBar
 import be.dafke.MediaViewer.Application.StoryOverview.StoryDetailsPanel
 import be.dafke.MediaViewer.Application.StoryOverview.StoryOverviewPanel
-import be.dafke.MediaViewer.ObjectModel.Story
+import be.dafke.MediaViewer.ObjectModel.Media.Story
 
 import javax.swing.JFrame
 import javax.swing.JMenuBar

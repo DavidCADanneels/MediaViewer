@@ -1,4 +1,4 @@
-package be.dafke.MediaViewer.ObjectModel
+package be.dafke.MediaViewer.ObjectModel.Media
 
 class Story {
     String title = ""
@@ -7,6 +7,7 @@ class Story {
     File dataFile
 //    Chapter rootChapter = null
 //    HashMap<String, Chapter> chapters = [:]
+    HashMap<String, Media> media
 
     Story() {
 

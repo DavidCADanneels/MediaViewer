@@ -8,5 +8,6 @@ class StoryDetailsPanel extends JPanel {
     StoryDetailsPanel() {
         setLayout(new BorderLayout())
 
+
     }
 }

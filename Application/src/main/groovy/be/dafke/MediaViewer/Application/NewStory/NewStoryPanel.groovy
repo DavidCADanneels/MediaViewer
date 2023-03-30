@@ -1,8 +1,8 @@
 package be.dafke.MediaViewer.Application.NewStory
 
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.ObjectModel.Chapter
-import be.dafke.MediaViewer.ObjectModel.Story
+import be.dafke.MediaViewer.ObjectModel.Media.Chapter
+import be.dafke.MediaViewer.ObjectModel.Media.Story
 
 import javax.swing.BoxLayout
 import javax.swing.JButton

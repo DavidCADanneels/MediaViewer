@@ -1,5 +1,6 @@
 package be.dafke.MediaViewer.ObjectModel
 
+import be.dafke.MediaViewer.ObjectModel.Media.Story
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 
 class IoTools {

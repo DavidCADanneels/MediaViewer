@@ -1,4 +1,4 @@
-package be.dafke.MediaViewer.ObjectModel
+package be.dafke.MediaViewer.ObjectModel.Interactive
 
 import java.awt.geom.Point2D
 

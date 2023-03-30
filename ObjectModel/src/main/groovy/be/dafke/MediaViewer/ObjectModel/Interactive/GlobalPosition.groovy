@@ -1,12 +1,8 @@
-package be.dafke.MediaViewer.ObjectModel
+package be.dafke.MediaViewer.ObjectModel.Interactive
 
-import com.grum.geocalc.Coordinate
+
 import com.grum.geocalc.DegreeCoordinate
 import com.grum.geocalc.EarthCalc
-
-import java.awt.Point
-import java.awt.geom.Point2D
-import org.geotools.referencing.GeodeticCalculator
 
 class GlobalPosition {
     double latitude, longitude

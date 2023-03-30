@@ -1,4 +1,7 @@
-package be.dafke.MediaViewer.ObjectModel
+package be.dafke.MediaViewer.ObjectModel.Interactive
+
+import be.dafke.MediaViewer.ObjectModel.Media.Picture
+import be.dafke.MediaViewer.ObjectModel.Media.Size2D
 
 class Map {
     final Picture image

@@ -54,7 +54,7 @@ class MediaOverviewPanel extends JPanel {
         Point locationOnScreen = getLocationOnScreen()
         NewMediaDialog newMediaDialog = new NewMediaDialog()
         newMediaDialog.setLocation(locationOnScreen)
-        newMediaDialog.setVisible(true)
+        newMediaDialog.visible = true
 
     }
 

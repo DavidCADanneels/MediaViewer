@@ -16,9 +16,17 @@ class Story {
         participants = []
     }
 
-    void addParticipant(Participant participant){
-        participants.add(participant)
+    List<Participant> getParticipants() {
+        return participants
     }
+
+    void setParticipants(List<Participant> participants) {
+        this.participants = participants
+    }
+
+//    void addParticipant(Participant participant){
+//        participants.add(participant)
+//    }
 
     String getTitle() {
         return title

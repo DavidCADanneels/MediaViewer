@@ -48,7 +48,7 @@ class FileMenu extends JMenu  {
         Point locationOnScreen = getLocationOnScreen()
         NewStoryDialog newStoryDialog = new NewStoryDialog()
         newStoryDialog.setLocation(locationOnScreen)
-        newStoryDialog.setVisible(true)
+        newStoryDialog.visible = true
     }
 
     void saveStory(Story story){

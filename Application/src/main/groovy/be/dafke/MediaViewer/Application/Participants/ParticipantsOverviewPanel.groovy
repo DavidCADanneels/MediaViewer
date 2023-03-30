@@ -18,7 +18,7 @@ import static java.util.ResourceBundle.getBundle
 class ParticipantsOverviewPanel extends JPanel {
     ParticipantsOverviewDataModel dataModel
     JButton backToStoryOverViewButton, mediaButton, addParticipantButton
-    static JTable overviewTable
+    JTable overviewTable
 
     Story story
 
@@ -41,9 +41,12 @@ class ParticipantsOverviewPanel extends JPanel {
         }
 
         addParticipantButton = new JButton(getBundle("MediaViewer").getString("ADD_PARTICIPANTS_BUTTON"))
-        addParticipantButton.addActionListener { e ->
-            showDialog()
-        }
+        addParticipantButton.addActionListener({ e ->
+            NewParticipantDialog newParticipantDialog = new NewParticipantDialog()
+            newParticipantDialog.setLocation(getLocationOnScreen())
+            newParticipantDialog.visible = true
+//            showDialog()
+        })
         
         JPanel south = new JPanel()
         south.add backToStoryOverViewButton
@@ -53,16 +56,11 @@ class ParticipantsOverviewPanel extends JPanel {
         add south, BorderLayout.SOUTH
     }
 
-    void showDialog(){
-        Story story = Main.getActiveStory()
-        if(story) {
-            Point locationOnScreen = getLocationOnScreen()
-            NewParticipantDialog newParticipantDialog = new NewParticipantDialog(story)
-            newParticipantDialog.setLocation(locationOnScreen)
-            newParticipantDialog.setVisible(true)
-        } else {
-            System.err.println("Story is 'null'")
-        }
+    void showDialog() {
+        Point locationOnScreen = getLocationOnScreen()
+        NewParticipantDialog newParticipantDialog = new NewParticipantDialog()
+        newParticipantDialog.setLocation(locationOnScreen)
+        newParticipantDialog.visible = true
     }
 
     ParticipantsOverviewDataModel getDataModel() {

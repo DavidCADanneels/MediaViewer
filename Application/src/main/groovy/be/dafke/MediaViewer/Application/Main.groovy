@@ -32,7 +32,7 @@ class Main {
     static final String VIEW_MEDIA_FOR_STORY = 'MEDIA'
     static final String VIEW_PARTICIPANTS_FOR_STORY = 'PARTICIPANTS'
 
-    static ArrayList<Story> stories = []
+    static ArrayList<Story> stories
     static Story activeStory
 
     static void addStory(Story story){
@@ -41,7 +41,8 @@ class Main {
     }
 
     static void main(String[] args) {
-
+        stories = []
+        activeStory = null
 
         frame = new JFrame()
 
@@ -61,7 +62,7 @@ class Main {
         createCardPanels()
 
         frame.pack()
-        frame.setVisible(true)
+        frame.visible = true
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
         switchView(VIEW_STORY_OVERVIEW)

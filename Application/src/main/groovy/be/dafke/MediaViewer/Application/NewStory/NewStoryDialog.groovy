@@ -1,4 +1,4 @@
-package be.dafke.MediaViewer.Application.NewStoryView
+package be.dafke.MediaViewer.Application.NewStory
 
 import javax.swing.JDialog
 

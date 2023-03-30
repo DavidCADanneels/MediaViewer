@@ -1,8 +1,7 @@
 package be.dafke.MediaViewer.Application.Menu
 
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.Application.NewStoryView.NewStoryDialog
-import be.dafke.MediaViewer.Application.NewStoryView.NewStoryPanel
+import be.dafke.MediaViewer.Application.NewStory.NewStoryDialog
 import be.dafke.MediaViewer.ObjectModel.Story
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 

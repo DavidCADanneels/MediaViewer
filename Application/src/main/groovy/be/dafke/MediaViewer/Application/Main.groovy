@@ -1,9 +1,8 @@
 package be.dafke.MediaViewer.Application
 
-import be.dafke.MediaViewer.Application.ChapterView.ChapterOverviewPanel
 import be.dafke.MediaViewer.Application.Menu.MediaMenuBar
-import be.dafke.MediaViewer.Application.StoryView.StoryOverviewPanel
-import be.dafke.MediaViewer.ObjectModel.Chapter
+import be.dafke.MediaViewer.Application.StoryOverview.StoryDetailsPanel
+import be.dafke.MediaViewer.Application.StoryOverview.StoryOverviewPanel
 import be.dafke.MediaViewer.ObjectModel.Story
 
 import javax.swing.JFrame
@@ -17,20 +16,20 @@ import static java.util.ResourceBundle.getBundle
 
 class Main {
     static JPanel center
-    static StoryOverviewPanel storyPanel
-    static ChapterOverviewPanel chapterPanel
+    static StoryOverviewPanel storyOverviewPanel
+    static StoryDetailsPanel storyDetailsPanel
     static CardLayout cardLayoutCenter
     static JFrame frame
 
-    static final String STORIES = 'STORIES'
-    static final String CHAPTERS = 'CHAPTERS'
+    static final String STORY_OVERVIEW = 'STORY_OVERVIEW_TITLE'
+    static final String STORY_DETAILS = 'STORY_DETAILS_TITLE'
 
     static ArrayList<Story> stories = []
     static Story activeStory
 
     static void addStory(Story story){
         stories.add(story)
-        storyPanel.dataModel.fireTableDataChanged()
+        storyOverviewPanel.dataModel.fireTableDataChanged()
     }
 
     static void main(String[] args) {
@@ -57,36 +56,17 @@ class Main {
         frame.setVisible(true)
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
-        switchView(STORIES)
+        switchView(STORY_OVERVIEW)
     }
 
     static void createCardPanels(){
-        // 1. Stories
-        storyPanel = createStoryOverviewPanel()
-        center.add storyPanel, STORIES
-        // 2. Chapters
-        chapterPanel = createChapterOverviewPanel()
-        center.add chapterPanel, CHAPTERS
+        // 1. Story Overview
+        storyOverviewPanel = new StoryOverviewPanel()
+        center.add storyOverviewPanel, STORY_OVERVIEW
+        // 2. Story Details
+        storyDetailsPanel = new StoryDetailsPanel()
+        center.add storyDetailsPanel, STORY_DETAILS
     }
-
-    static StoryOverviewPanel createStoryOverviewPanel(){
-        StoryOverviewPanel panel = new StoryOverviewPanel()
-        panel
-    }
-
-    static ChapterOverviewPanel createChapterOverviewPanel(){
-        ChapterOverviewPanel panel = new ChapterOverviewPanel()
-        panel
-    }
-
-//    static ChapterOverviewPanel createChapterOverviewPanel(Story story){
-//        ChapterOverviewPanel overviewPanel = new ChapterOverviewPanel(story)
-//        center.add overviewPanel, CHAPTERS
-//    }
-//
-//    static ChapterOverviewPanel createChapterOverviewPanel(Chapter chapter){
-//        ChapterOverviewPanel overviewPanel = new ChapterOverviewPanel(chapter)
-//    }
 
     static JMenuBar createMenuBar(){
         JMenuBar bar = new MediaMenuBar()

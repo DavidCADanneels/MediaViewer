@@ -1,13 +1,13 @@
-package be.dafke.MediaViewer.Application.ChapterView
+package be.dafke.MediaViewer.Application.StoryOverview
 
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Story
 
-import javax.swing.table.AbstractTableModel
+import javax.swing.table.DefaultTableModel
 
 import static java.util.ResourceBundle.getBundle
 
-class ChapterOverviewDataModel extends AbstractTableModel {
+class StoryOverviewDataModel extends DefaultTableModel {
 
     static int NAME_COL = 0
     static int DESC_COL = 1
@@ -16,7 +16,7 @@ class ChapterOverviewDataModel extends AbstractTableModel {
     HashMap<Integer,String> columnNames = [:]
     HashMap<Integer,Class> columnClasses = [:]
 
-    ChapterOverviewDataModel() {
+    StoryOverviewDataModel() {
         columnClasses.put(NAME_COL, String.class)
         columnClasses.put(DESC_COL, String.class)
         columnNames.put(NAME_COL, getBundle("MediaViewer").getString("NAME"))
@@ -56,27 +56,14 @@ class ChapterOverviewDataModel extends AbstractTableModel {
                 story.getTitle()
             } else if (columnIndex == DESC_COL) {
                 story.getShortDescription()
-            }
+            } else null
         } else {
-//            System.err.println("Stories is still null")
             null
         }
-        null
     }
 
     @Override
     void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         // no editable fields for now
     }
-
-//    remaining methods in interface TableModel:
-//    @Override
-//    void addTableModelListener(TableModelListener l) {
-//
-//    }
-//
-//    @Override
-//    void removeTableModelListener(TableModelListener l) {
-//
-//    }
 }

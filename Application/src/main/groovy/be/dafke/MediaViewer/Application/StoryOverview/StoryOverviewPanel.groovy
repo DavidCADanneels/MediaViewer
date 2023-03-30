@@ -20,7 +20,7 @@ class StoryOverviewPanel extends JPanel {
         dataModel = new StoryOverviewDataModel()
         overviewTable = new JTable(dataModel)
         add new JScrollPane(overviewTable), BorderLayout.CENTER
-        add new StoryButtonsPanel(), BorderLayout.SOUTH
+//        add new StoryButtonsPanel(), BorderLayout.SOUTH
     }
 
     Story getSelectedItem(){

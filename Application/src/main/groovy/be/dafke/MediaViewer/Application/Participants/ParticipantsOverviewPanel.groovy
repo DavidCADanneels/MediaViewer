@@ -53,14 +53,7 @@ class ParticipantsOverviewPanel extends JPanel {
         add south, BorderLayout.SOUTH
     }
 
-
-    ParticipantsOverviewDataModel getDataModel() {
-        return dataModel
-    }
-
-    void setStory(Story story) {
-        if(story){
-            dataModel.setParticipants(story.getParticipants())
-        }
-    }
+//    ParticipantsOverviewDataModel getDataModel() {
+//        return dataModel
+//    }
 }

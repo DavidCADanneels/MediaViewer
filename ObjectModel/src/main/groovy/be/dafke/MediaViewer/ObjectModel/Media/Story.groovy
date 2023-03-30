@@ -3,9 +3,9 @@ package be.dafke.MediaViewer.ObjectModel.Media
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
 
 class Story {
-    String title = ""
-    String shortDescription = ""
-    String introText = ""
+    String title
+    String shortDescription
+    String introText
     File dataFile
 //    HashMap<String, Chapter> chapters = [:]
     List<Media> media
@@ -16,20 +16,8 @@ class Story {
         participants = []
     }
 
-    List<Participant> getParticipants() {
-        return participants
-    }
-
     String getTitle() {
         return title
-    }
-
-    File getDataFile() {
-        return dataFile
-    }
-
-    void setDataFile(File dataFile) {
-        this.dataFile = dataFile
     }
 
     void setTitle(String title) {
@@ -50,5 +38,29 @@ class Story {
 
     void setIntroText(String introText) {
         this.introText = introText
+    }
+
+    File getDataFile() {
+        return dataFile
+    }
+
+    void setDataFile(File dataFile) {
+        this.dataFile = dataFile
+    }
+
+    List<Media> getMedia() {
+        return media
+    }
+
+    void setMedia(List<Media> media) {
+        this.media = media
+    }
+
+    List<Participant> getParticipants() {
+        return participants
+    }
+
+    void setParticipants(List<Participant> participants) {
+        this.participants = participants
     }
 }

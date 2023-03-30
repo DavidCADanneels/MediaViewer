@@ -28,7 +28,7 @@ class StoryButtonsPanel extends JPanel {
         participantButton.addActionListener { e ->
             Story story = Main.activeStory
             if(story) {
-                Main.participantsOverviewPanel.setStory(story)
+                Main.participantsOverviewPanel.dataModel.fireTableDataChanged()
                 Main.switchView(Main.VIEW_PARTICIPANTS_FOR_STORY)
             } else {
                 System.err.println("Story is 'null'")

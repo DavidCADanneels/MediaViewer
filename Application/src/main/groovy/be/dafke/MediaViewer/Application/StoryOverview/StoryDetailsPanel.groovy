@@ -1,5 +1,8 @@
 package be.dafke.MediaViewer.Application.StoryOverview
 
+import be.dafke.MediaViewer.Application.Main
+import be.dafke.MediaViewer.ObjectModel.Media.Story
+
 import javax.swing.JButton
 import javax.swing.JLabel
 import javax.swing.JPanel
@@ -12,8 +15,8 @@ import static java.util.ResourceBundle.getBundle
 
 class StoryDetailsPanel extends JPanel {
     JTextField nameField, descrField
-    JButton saveChanges
     JTextArea longText
+    JButton saveChanges
 
     StoryDetailsPanel() {
         setLayout(new BorderLayout())
@@ -36,14 +39,24 @@ class StoryDetailsPanel extends JPanel {
         JPanel center = new JPanel()
         center.add scrollPane
 
-
-
         add north, BorderLayout.NORTH
         add center, BorderLayout.CENTER
-//        add longText, BorderLayout.CENTER
+        add new StoryButtonsPanel(), BorderLayout.SOUTH
+    }
+
+    void setStory() {
+        Story story = Main.activeStory
+        if(story) {
+            nameField.setText(story.getTitle())
+            descrField.setText(story.getShortDescription())
+            longText.setText(story.getIntroText())
+        }
     }
 
     void save(){
-
+        Story story = Main.activeStory
+        story.title = nameField.text.trim()
+        story.shortDescription = descrField.text.trim()
+        story.introText = longText.text.trim()
     }
 }

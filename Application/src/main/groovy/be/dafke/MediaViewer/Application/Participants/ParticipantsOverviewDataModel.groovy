@@ -16,19 +16,11 @@ class ParticipantsOverviewDataModel extends DefaultTableModel {
     HashMap<Integer,String> columnNames = [:]
     HashMap<Integer,Class> columnClasses = [:]
 
-    List<Participant> participants
-
     ParticipantsOverviewDataModel() {
-        participants = []
         columnClasses.put(FIRST_NAME_COL, String.class)
         columnClasses.put(LAST_NAME_COL, String.class)
         columnNames.put(FIRST_NAME_COL, getBundle("MediaViewer").getString("FIRST_NAME"))
         columnNames.put(LAST_NAME_COL, getBundle("MediaViewer").getString("LAST_NAME"))
-    }
-
-    void setParticipants(List<Participant> participants) {
-        this.participants = participants
-        fireTableDataChanged()
     }
 
     List<Participant> getParticipants(){
@@ -83,6 +75,7 @@ class ParticipantsOverviewDataModel extends DefaultTableModel {
 
     @Override
     void setValueAt(Object value, int rowIndex, int columnIndex) {
+        List<Participant> participants = getParticipants()
         Participant participant = participants.get(rowIndex)
         if(participant != null) {
             if (columnIndex == FIRST_NAME_COL) {

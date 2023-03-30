@@ -46,8 +46,7 @@ class AddParticipantPanel extends JPanel {
             if (story!=null && story.getParticipants()!=null) {
                 List<Participant> participants = story.getParticipants()
                 participants.add(participant)
-                ParticipantsOverviewDataModel dataModel = Main.participantsOverviewPanel.getDataModel()
-                dataModel.fireTableDataChanged()
+                Main.participantsOverviewPanel.dataModel.fireTableDataChanged()
                 firstNameField.text = ''
                 lastNameField.text = ''
             }

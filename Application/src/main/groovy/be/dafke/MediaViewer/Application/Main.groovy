@@ -94,6 +94,10 @@ class Main {
         center.add participantsOverviewPanel, VIEW_PARTICIPANTS_FOR_STORY
     }
 
+    static void setStory(Story story){
+        storyDetailsPanel.setSt
+    }
+
     static JMenuBar createMenuBar(){
         JMenuBar bar = new MediaMenuBar()
         bar

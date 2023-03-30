@@ -1,24 +1,20 @@
 package be.dafke.MediaViewer.ObjectModel.Media
 
+import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
+
 class Story {
     String title = ""
     String shortDescription = ""
     String introText = ""
     File dataFile
-//    Chapter rootChapter = null
 //    HashMap<String, Chapter> chapters = [:]
-    HashMap<String, Media> media
+    List<Media> media
+    List<Participant> participants
 
     Story() {
-
+        media = []
+        participants = []
     }
-
-//    Story(String title, String shortDescription, String introText) {
-//        this.title = title
-//        this.shortDescription = shortDescription
-//        this.introText = introText
-////        rootChapter = null
-//    }
 
     String getTitle() {
         return title
@@ -31,13 +27,6 @@ class Story {
     void setDataFile(File dataFile) {
         this.dataFile = dataFile
     }
-//    Chapter getRootChapter() {
-//        return rootChapter
-//    }
-//
-//    void setRootChapter(Chapter rootChapter) {
-//        this.rootChapter = rootChapter
-//    }
 
     void setTitle(String title) {
         this.title = title

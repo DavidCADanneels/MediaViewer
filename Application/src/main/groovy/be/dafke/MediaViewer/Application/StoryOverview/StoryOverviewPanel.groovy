@@ -12,7 +12,7 @@ import java.awt.BorderLayout
 import static java.util.ResourceBundle.getBundle
 
 class StoryOverviewPanel extends JPanel {
-    JButton detailsButton
+    JButton chaptersButton, participantButton, mediaButton
     static JTable overviewTable
     static StoryOverviewDataModel dataModel
 
@@ -24,16 +24,43 @@ class StoryOverviewPanel extends JPanel {
 
     JPanel createBottomPanel(){
         JPanel panel = new JPanel()
-        detailsButton = new JButton(getBundle("MediaViewer").getString("SHOW_CHAPTERS_FOR_STORY"))
-        detailsButton.addActionListener { e ->
+        chaptersButton = new JButton(getBundle("MediaViewer").getString("SHOW_CHAPTERS_FOR_STORY"))
+        chaptersButton.addActionListener { e ->
             Story story = getSelectedItem()
             if(story) {
-                Main.switchView(Main.STORY_DETAILS)
+                Main.switchView(Main.VIEW_STORY_DETAILS)
             } else {
                 System.err.println("Story is 'null'")
             }
         }
-        panel.add detailsButton
+
+        participantButton = new JButton(getBundle("MediaViewer").getString("SHOW_PARTICPANTS_FOR_STORY"))
+        participantButton.addActionListener { e ->
+            Story story = getSelectedItem()
+            if(story) {
+                Main.switchView(Main.VIEW_PARTICIPANTS_FOR_STORY)
+                Main.participantsOverviewPanel.setParticipants(story.getParticipants())
+            } else {
+                System.err.println("Story is 'null'")
+            }
+        }
+
+        mediaButton = new JButton(getBundle("MediaViewer").getString("SHOW_MEDIA_FOR_STORY"))
+        mediaButton.addActionListener { e ->
+            Story story = getSelectedItem()
+            if(story) {
+                Main.switchView(Main.VIEW_MEDIA_FOR_STORY)
+                Main.mediaOverviewPanel.setMediaList(story.getMedia())
+            } else {
+                System.err.println("Story is 'null'")
+            }
+        }
+
+
+//        panel.add chaptersButton
+        panel.add participantButton
+        panel.add mediaButton
+
         panel
     }
 

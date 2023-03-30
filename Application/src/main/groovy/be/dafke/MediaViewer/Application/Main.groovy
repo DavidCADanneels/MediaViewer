@@ -1,6 +1,8 @@
 package be.dafke.MediaViewer.Application
 
+import be.dafke.MediaViewer.Application.Media.MediaOverviewPanel
 import be.dafke.MediaViewer.Application.Menu.MediaMenuBar
+import be.dafke.MediaViewer.Application.Participants.ParticipantsOverviewPanel
 import be.dafke.MediaViewer.Application.StoryOverview.StoryDetailsPanel
 import be.dafke.MediaViewer.Application.StoryOverview.StoryOverviewPanel
 import be.dafke.MediaViewer.ObjectModel.Media.Story
@@ -18,11 +20,16 @@ class Main {
     static JPanel center
     static StoryOverviewPanel storyOverviewPanel
     static StoryDetailsPanel storyDetailsPanel
+    static MediaOverviewPanel mediaOverviewPanel
+    static ParticipantsOverviewPanel participantsOverviewPanel
     static CardLayout cardLayoutCenter
     static JFrame frame
 
-    static final String STORY_OVERVIEW = 'STORY_OVERVIEW_TITLE'
-    static final String STORY_DETAILS = 'STORY_DETAILS_TITLE'
+    static final String VIEW_STORY_OVERVIEW = 'STORY_OVERVIEW_TITLE'
+    static final String VIEW_STORY_DETAILS = 'STORY_DETAILS_TITLE'
+    static final String VIEW_CHAPTERS_FOR_STORY = 'CHAPTERS'
+    static final String VIEW_MEDIA_FOR_STORY = 'MEDIA'
+    static final String VIEW_PARTICIPANTS_FOR_STORY = 'PARTICIPANTS'
 
     static ArrayList<Story> stories = []
     static Story activeStory
@@ -56,16 +63,25 @@ class Main {
         frame.setVisible(true)
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
-        switchView(STORY_OVERVIEW)
+        switchView(VIEW_STORY_OVERVIEW)
     }
 
     static void createCardPanels(){
         // 1. Story Overview
         storyOverviewPanel = new StoryOverviewPanel()
-        center.add storyOverviewPanel, STORY_OVERVIEW
+        center.add storyOverviewPanel, VIEW_STORY_OVERVIEW
         // 2. Story Details
         storyDetailsPanel = new StoryDetailsPanel()
-        center.add storyDetailsPanel, STORY_DETAILS
+        center.add storyDetailsPanel, VIEW_STORY_DETAILS
+
+//        def chapterPanel = null
+//        center.add chapterPanel, CHAPTERS_FOR_STORY
+
+        mediaOverviewPanel = new MediaOverviewPanel()
+        center.add mediaOverviewPanel, VIEW_MEDIA_FOR_STORY
+
+        participantsOverviewPanel = new ParticipantsOverviewPanel()
+        center.add participantsOverviewPanel, VIEW_PARTICIPANTS_FOR_STORY
     }
 
     static JMenuBar createMenuBar(){
@@ -77,5 +93,6 @@ class Main {
         cardLayoutCenter.show(center, view)
         String title = getBundle("MediaViewer").getString(view)
         frame.title = title
+//        frame.revalidate()
     }
 }

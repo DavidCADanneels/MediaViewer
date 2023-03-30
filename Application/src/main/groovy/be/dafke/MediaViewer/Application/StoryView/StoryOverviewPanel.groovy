@@ -2,6 +2,7 @@ package be.dafke.MediaViewer.Application.StoryView
 
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Chapter
+import be.dafke.MediaViewer.ObjectModel.IoTools
 import be.dafke.MediaViewer.ObjectModel.Story
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 
@@ -14,13 +15,12 @@ import javax.swing.JScrollPane
 import javax.swing.JTable
 import javax.swing.JTextField
 import java.awt.BorderLayout
-import java.awt.Component
 
 import static java.util.ResourceBundle.getBundle
 
 class StoryOverviewPanel extends JPanel {
     JTextField nameField, descriptionField
-    JButton createButton, chaptersButton, saveButton
+    JButton createButton, chaptersButton, saveButton, loadButton
     static JTable overviewTable
     static StoryOverviewDataModel dataModel
 
@@ -39,16 +39,12 @@ class StoryOverviewPanel extends JPanel {
             String storyName = nameField.text.trim()
             String description = descriptionField.text.trim()
             if (storyName) {
-//                Story story = new Story(storyName, description, "")
                 Story story = new Story()
                 story.setTitle(storyName)
                 story.setShortDescription(description)
-//                Chapter root = new Chapter(story, story.getTitle(), '00')
                 Chapter root = new Chapter()
-//                root.setStory(story)
                 root.setTitle(storyName)
                 root.setPrefix("00")
-//                story.setRootChapter(root)
                 Main.addStory(story)
                 nameField.text = ''
                 descriptionField.text = ''
@@ -81,12 +77,26 @@ class StoryOverviewPanel extends JPanel {
         }
         panel.add chaptersButton
 
-        saveButton = new JButton(getBundle("MediaViewer").getString("STORY_TO_XML"))
+        saveButton = new JButton(getBundle("MediaViewer").getString("SAVE_STORY_TO_XML"))
         saveButton.addActionListener { e ->
             Story story = getSelectedItem()
-            saveStory(story, this)
+            if(story!=null) {
+                // TODO: disable button if nothing is selected
+                saveStory(story)
+            }
         }
         panel.add saveButton
+
+        loadButton = new JButton(getBundle("MediaViewer").getString("LOAD_STORY_FROM_XML"))
+        loadButton.addActionListener { e ->
+            Story story = loadStory()
+            if(story){
+                Main.addStory(story)
+                Main.setActiveStory(story)
+                dataModel.fireTableDataChanged()
+            }
+        }
+        panel.add loadButton
 
         panel
     }
@@ -105,7 +115,7 @@ class StoryOverviewPanel extends JPanel {
 //        dataModel.fireTableDataChanged()
 //    }
 
-    static Story getSelectedItem(){
+    Story getSelectedItem(){
         int row = overviewTable.getSelectedRow()
         if(row == -1){
             // TODO: disable button of none is selected
@@ -125,17 +135,12 @@ class StoryOverviewPanel extends JPanel {
         }
     }
 
-    static void saveStory(Story story, Component parent){
-        XmlMapper xmlMapper = new XmlMapper()
-        String xml = xmlMapper.writeValueAsString(story)
-
-        System.out.println(xml)
-
+    void saveStory(Story story){
         File file = story.getDataFile()
         if(file == null){
             JFileChooser chooser = new JFileChooser()
             chooser.setMultiSelectionEnabled(false)
-            if(chooser.showSaveDialog(parent) == JFileChooser.APPROVE_OPTION) {
+            if(chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
                 file = chooser.getSelectedFile()
                 if(file != null) {
                     story.setDataFile(file)
@@ -143,16 +148,38 @@ class StoryOverviewPanel extends JPanel {
             }
         }
         if(file != null){
+            XmlMapper xmlMapper = new XmlMapper()
+            String xml = xmlMapper.writeValueAsString(story)
             try {
                 Writer writer = new FileWriter(file)
                 writer.write xml
                 writer.flush()
                 writer.close()
             } catch (IOException ex) {
+                System.err.println(ex)
 //                Logger.getLogger(Accounts.class.name).log(Level.SEVERE, null, ex)
             }
         }
+    }
 
+    Story loadStory(){
+        JFileChooser chooser = new JFileChooser()
+        chooser.setMultiSelectionEnabled(false)
+        if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile()
+            readStory(file)
+        }
+        else null
+    }
 
+    Story readStory(File file){
+        XmlMapper xmlMapper = new XmlMapper()
+        try {
+            def xml
+            xmlMapper.readValue(file, Story.class)
+        } catch (Exception ex) {
+            System.err.println(ex)
+//                Logger.getLogger(Accounts.class.name).log(Level.SEVERE, null, ex)
+        }
     }
 }

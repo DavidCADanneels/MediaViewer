@@ -1,6 +1,5 @@
 package be.dafke.MediaViewer.Application.Menu
 
-import javax.swing.JFileChooser
 import javax.swing.JMenu
 import javax.swing.JMenuItem
 
@@ -27,6 +26,7 @@ class StoryMenu extends JMenu {
 //    }
 //
 //    void writeFile(){
+//
 //        StoryOverviewPanel.saveStory()
 //    }
 

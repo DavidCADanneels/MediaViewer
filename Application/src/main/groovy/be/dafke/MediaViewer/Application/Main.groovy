@@ -26,6 +26,7 @@ class Main {
     static final String CHAPTERS = 'CHAPTERS'
 
     static ArrayList<Story> stories = []
+    static Story activeStory
 
     static void addStory(Story story){
         stories.add(story)

@@ -34,7 +34,7 @@ class StoryOverviewPanel extends JPanel {
             }
         }
 
-        participantButton = new JButton(getBundle("MediaViewer").getString("SHOW_PARTICPANTS_FOR_STORY"))
+        participantButton = new JButton(getBundle("MediaViewer").getString("SHOW_PARTICIPANTS_FOR_STORY"))
         participantButton.addActionListener { e ->
             Story story = getSelectedItem()
             if(story) {

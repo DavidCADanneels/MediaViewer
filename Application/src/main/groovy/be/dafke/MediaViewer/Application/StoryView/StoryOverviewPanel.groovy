@@ -20,7 +20,7 @@ import static java.util.ResourceBundle.getBundle
 
 class StoryOverviewPanel extends JPanel {
     JTextField nameField, descriptionField
-    JButton createButton, chaptersButton, saveButton
+    JButton createButton, chaptersButton, participantsButton
     static JTable overviewTable
     static StoryOverviewDataModel dataModel
 
@@ -73,20 +73,22 @@ class StoryOverviewPanel extends JPanel {
         chaptersButton = new JButton(getBundle("MediaViewer").getString("SHOW_CHAPTERS_FOR_STORY"))
         chaptersButton.addActionListener { e ->
             Story story = getSelectedItem()
-            showChapters(story)
+            if(story) {
+                // TODO: disable button if nothing is selected
+                showChapters(story)
+            }
         }
         panel.add chaptersButton
 
-        saveButton = new JButton(getBundle("MediaViewer").getString("SAVE_STORY_TO_XML"))
-        saveButton.addActionListener { e ->
+        participantsButton = new JButton(getBundle("MediaViewer").getString("SHOW_PARTICPANTS_FOR_STORY"))
+        participantsButton.addActionListener { e ->
             Story story = getSelectedItem()
-            if(story!=null) {
+            if(story) {
                 // TODO: disable button if nothing is selected
-                saveStory(story)
+                showParticipants(story)
             }
         }
-        panel.add saveButton
-
+        panel.add participantsButton
         panel
     }
 
@@ -124,31 +126,7 @@ class StoryOverviewPanel extends JPanel {
         }
     }
 
-    void saveStory(Story story){
-        File file = story.getDataFile()
-        if(file == null){
-            JFileChooser chooser = new JFileChooser()
-            chooser.setMultiSelectionEnabled(false)
-            if(chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                file = chooser.getSelectedFile()
-                if(file != null) {
-                    story.setDataFile(file)
-                }
-            }
-        }
-        if(file != null){
-            XmlMapper xmlMapper = new XmlMapper()
-            String xml = xmlMapper.writeValueAsString(story)
-            try {
-                Writer writer = new FileWriter(file)
-                writer.write xml
-                writer.flush()
-                writer.close()
-            } catch (IOException ex) {
-                System.err.println(ex)
-//                Logger.getLogger(Accounts.class.name).log(Level.SEVERE, null, ex)
-            }
-        }
-    }
+    void showParticipants(Story story){
 
+    }
 }

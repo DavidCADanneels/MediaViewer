@@ -13,7 +13,7 @@ import static java.util.ResourceBundle.getBundle
 
 class MediaOverviewPanel extends JPanel {
     MediaOverviewDataModel dataModel
-    JButton backToStoryOverViewButton, participantButton
+    JButton backToStoryOverViewButton, participantButton, addMediaButton
     static JTable overviewTable
 
     MediaOverviewPanel() {
@@ -27,18 +27,26 @@ class MediaOverviewPanel extends JPanel {
             Main.switchView(Main.VIEW_STORY_OVERVIEW)
         }
 
-        add backToStoryOverViewButton, BorderLayout.SOUTH
-
         participantButton = new JButton(getBundle("MediaViewer").getString("SHOW_PARTICIPANTS_FOR_STORY"))
         participantButton.addActionListener { e ->
             Main.switchView(Main.VIEW_PARTICIPANTS_FOR_STORY)
         }
 
+        addMediaButton = new JButton(getBundle("MediaViewer").getString("ADD_MEDIA_TO_STORY"))
+        addMediaButton.addActionListener { e ->
+            addMedia()
+        }
+
         JPanel south = new JPanel()
         south.add backToStoryOverViewButton
         south.add participantButton
+        south.add addMediaButton
 
         add south, BorderLayout.SOUTH
+    }
+
+    void addMedia(){
+
     }
 
     void setMediaList(List<Media> mediaList) {

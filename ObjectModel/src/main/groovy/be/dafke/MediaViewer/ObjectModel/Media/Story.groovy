@@ -16,6 +16,10 @@ class Story {
         participants = []
     }
 
+    void addParticipant(Participant participant){
+        participants.add(participant)
+    }
+
     String getTitle() {
         return title
     }

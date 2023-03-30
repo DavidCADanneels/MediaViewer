@@ -1,5 +1,6 @@
 package be.dafke.MediaViewer.Application.Participants
 
+import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
 import be.dafke.MediaViewer.ObjectModel.Media.Story
 
@@ -30,8 +31,16 @@ class ParticipantsOverviewDataModel extends DefaultTableModel {
         fireTableDataChanged()
     }
 
+    List<Participant> getParticipants(){
+        Story story = Main.activeStory
+        if(story){
+            story.getParticipants()
+        } else null
+    }
+
     @Override
     int getRowCount() {
+        List<Participant> participants = getParticipants()
         participants?.size()?:0
     }
 
@@ -57,16 +66,19 @@ class ParticipantsOverviewDataModel extends DefaultTableModel {
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-        Participant participant = participants.get(rowIndex)
-        if(participant != null) {
-            if (columnIndex == FIRST_NAME_COL) {
-                participant.getFirstName()
-            } else if (columnIndex == LAST_NAME_COL) {
-                participant.getLastName()
-            } else null
-        } else {
-            null
-        }
+        List<Participant> participants = getParticipants()
+        if(participants) {
+            Participant participant = participants.get(rowIndex)
+            if (participant != null) {
+                if (columnIndex == FIRST_NAME_COL) {
+                    participant.getFirstName()
+                } else if (columnIndex == LAST_NAME_COL) {
+                    participant.getLastName()
+                } else null
+            } else {
+                null
+            }
+        } else null
     }
 
     @Override

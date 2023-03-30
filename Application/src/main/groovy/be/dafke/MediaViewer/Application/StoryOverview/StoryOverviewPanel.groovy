@@ -38,8 +38,10 @@ class StoryOverviewPanel extends JPanel {
         participantButton.addActionListener { e ->
             Story story = getSelectedItem()
             if(story) {
+                Main.setActiveStory(story)
                 Main.switchView(Main.VIEW_PARTICIPANTS_FOR_STORY)
-                Main.participantsOverviewPanel.setParticipants(story.getParticipants())
+//                Main.participantsOverviewPanel.setStory(story)
+//                Main.participantsOverviewPanel.setParticipants(story.getParticipants())
             } else {
                 System.err.println("Story is 'null'")
             }
@@ -50,7 +52,8 @@ class StoryOverviewPanel extends JPanel {
             Story story = getSelectedItem()
             if(story) {
                 Main.switchView(Main.VIEW_MEDIA_FOR_STORY)
-                Main.mediaOverviewPanel.setMediaList(story.getMedia())
+                Main.mediaOverviewPanel.setStory(story)
+//                Main.mediaOverviewPanel.setMediaList(story.getMedia())
             } else {
                 System.err.println("Story is 'null'")
             }

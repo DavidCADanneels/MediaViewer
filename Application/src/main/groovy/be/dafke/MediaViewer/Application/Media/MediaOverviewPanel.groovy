@@ -1,13 +1,16 @@
 package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.Application.Main
+import be.dafke.MediaViewer.Application.NewStory.NewStoryDialog
 import be.dafke.MediaViewer.ObjectModel.Media.Media
+import be.dafke.MediaViewer.ObjectModel.Media.Story
 
 import javax.swing.JButton
 import javax.swing.JPanel
 import javax.swing.JScrollPane
 import javax.swing.JTable
 import java.awt.BorderLayout
+import java.awt.Point
 
 import static java.util.ResourceBundle.getBundle
 
@@ -15,6 +18,8 @@ class MediaOverviewPanel extends JPanel {
     MediaOverviewDataModel dataModel
     JButton backToStoryOverViewButton, participantButton, addMediaButton
     static JTable overviewTable
+
+    Story story
 
     MediaOverviewPanel() {
         setLayout(new BorderLayout())
@@ -32,9 +37,9 @@ class MediaOverviewPanel extends JPanel {
             Main.switchView(Main.VIEW_PARTICIPANTS_FOR_STORY)
         }
 
-        addMediaButton = new JButton(getBundle("MediaViewer").getString("ADD_MEDIA_TO_STORY"))
+        addMediaButton = new JButton(getBundle("MediaViewer").getString("ADD_MEDIA_BUTTON"))
         addMediaButton.addActionListener { e ->
-            addMedia()
+            showDialog()
         }
 
         JPanel south = new JPanel()
@@ -45,11 +50,22 @@ class MediaOverviewPanel extends JPanel {
         add south, BorderLayout.SOUTH
     }
 
-    void addMedia(){
+    void showDialog(){
+        Point locationOnScreen = getLocationOnScreen()
+        NewMediaDialog newMediaDialog = new NewMediaDialog()
+        newMediaDialog.setLocation(locationOnScreen)
+        newMediaDialog.setVisible(true)
 
     }
 
-    void setMediaList(List<Media> mediaList) {
-        dataModel.setMediaList(mediaList)
+    void setStory(Story story) {
+        this.story = story
+        if(story){
+            dataModel.setMediaList(story.getMedia())
+        }
     }
+
+//    void setMediaList(List<Media> mediaList) {
+//        dataModel.setMediaList(mediaList)
+//    }
 }

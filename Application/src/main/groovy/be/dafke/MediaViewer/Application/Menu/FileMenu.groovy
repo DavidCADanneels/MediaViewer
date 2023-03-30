@@ -36,15 +36,19 @@ class FileMenu extends JMenu  {
 
         newStory = new JMenuItem(getBundle("MediaViewer").getString("NEW_STORY_BUTTON"))
         newStory.addActionListener { e ->
-            // TODO: open new Frame  with StoryOverviewPanel.topPanel to create new Story
-            Point locationOnScreen = getLocationOnScreen()
-            NewStoryDialog newStoryDialog = new NewStoryDialog()
-            newStoryDialog.setLocation(locationOnScreen)
-            newStoryDialog.visible = true
+            showDialog()
         }
         add newStory
         add loadStory
         add saveStory
+    }
+
+    void showDialog(){
+        // TODO: open new Frame  with StoryOverviewPanel.topPanel to create new Story
+        Point locationOnScreen = getLocationOnScreen()
+        NewStoryDialog newStoryDialog = new NewStoryDialog()
+        newStoryDialog.setLocation(locationOnScreen)
+        newStoryDialog.setVisible(true)
     }
 
     void saveStory(Story story){

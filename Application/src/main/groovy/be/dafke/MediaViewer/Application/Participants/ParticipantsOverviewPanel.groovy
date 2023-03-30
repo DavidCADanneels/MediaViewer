@@ -1,13 +1,17 @@
 package be.dafke.MediaViewer.Application.Participants
 
 import be.dafke.MediaViewer.Application.Main
+import be.dafke.MediaViewer.Application.Media.NewMediaDialog
+import be.dafke.MediaViewer.Application.NewStory.NewStoryDialog
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
+import be.dafke.MediaViewer.ObjectModel.Media.Story
 
 import javax.swing.JButton
 import javax.swing.JPanel
 import javax.swing.JScrollPane
 import javax.swing.JTable
 import java.awt.BorderLayout
+import java.awt.Point
 
 import static java.util.ResourceBundle.getBundle
 
@@ -15,6 +19,8 @@ class ParticipantsOverviewPanel extends JPanel {
     ParticipantsOverviewDataModel dataModel
     JButton backToStoryOverViewButton, mediaButton, addParticipantButton
     static JTable overviewTable
+
+    Story story
 
     ParticipantsOverviewPanel() {
         setLayout(new BorderLayout())
@@ -29,16 +35,14 @@ class ParticipantsOverviewPanel extends JPanel {
 
         add backToStoryOverViewButton, BorderLayout.SOUTH
 
-
-
         mediaButton = new JButton(getBundle("MediaViewer").getString("SHOW_MEDIA_FOR_STORY"))
         mediaButton.addActionListener { e ->
             Main.switchView(Main.VIEW_MEDIA_FOR_STORY)
         }
 
-        addParticipantButton = new JButton(getBundle("MediaViewer").getString("ADD_PARTICIPANTS_TO_STORY"))
+        addParticipantButton = new JButton(getBundle("MediaViewer").getString("ADD_PARTICIPANTS_BUTTON"))
         addParticipantButton.addActionListener { e ->
-            addParticipant()
+            showDialog()
         }
         
         JPanel south = new JPanel()
@@ -49,11 +53,30 @@ class ParticipantsOverviewPanel extends JPanel {
         add south, BorderLayout.SOUTH
     }
 
-    void addParticipant(){
-
+    void showDialog(){
+        Story story = Main.getActiveStory()
+        if(story) {
+            Point locationOnScreen = getLocationOnScreen()
+            NewParticipantDialog newParticipantDialog = new NewParticipantDialog(story)
+            newParticipantDialog.setLocation(locationOnScreen)
+            newParticipantDialog.setVisible(true)
+        } else {
+            System.err.println("Story is 'null'")
+        }
     }
 
-    void setParticipants(List<Participant> participants) {
-        dataModel.setParticipants(participants)
+    ParticipantsOverviewDataModel getDataModel() {
+        return dataModel
     }
+
+    void setStory(Story story) {
+//        this.story = story
+        if(story){
+            dataModel.setParticipants(story.getParticipants())
+        }
+    }
+//
+//    void setParticipants(List<Participant> participants) {
+//        dataModel.setParticipants(participants)
+//    }
 }

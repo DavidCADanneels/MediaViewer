@@ -5,6 +5,7 @@ import be.dafke.MediaViewer.Application.Menu.MediaMenuBar
 import be.dafke.MediaViewer.Application.Participants.ParticipantsOverviewPanel
 import be.dafke.MediaViewer.Application.StoryOverview.StoryDetailsPanel
 import be.dafke.MediaViewer.Application.StoryOverview.StoryOverviewPanel
+import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
 import be.dafke.MediaViewer.ObjectModel.Media.Story
 
 import javax.swing.JFrame

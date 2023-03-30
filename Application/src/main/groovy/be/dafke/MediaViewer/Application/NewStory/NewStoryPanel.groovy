@@ -21,8 +21,8 @@ class NewStoryPanel extends JPanel {
         descriptionField = new JTextField(30)
         createButton = new JButton("Create")
         createButton.addActionListener { e ->
-            String storyName = nameField.text.trim()
-            String description = descriptionField.text.trim()
+            String storyName = nameField.getText().trim()
+            String description = descriptionField.getText().trim()
             if (storyName) {
                 Story story = new Story()
                 story.setTitle(storyName)

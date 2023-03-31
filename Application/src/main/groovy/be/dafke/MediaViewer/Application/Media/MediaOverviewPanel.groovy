@@ -1,16 +1,29 @@
 package be.dafke.MediaViewer.Application.Media
 
+import be.dafke.MediaViewer.Application.IoTools
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.Application.NewStory.NewStoryDialog
+import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
 import be.dafke.MediaViewer.ObjectModel.Media.Media
+import be.dafke.MediaViewer.ObjectModel.Media.Picture
+import be.dafke.MediaViewer.ObjectModel.Media.Size2D
 import be.dafke.MediaViewer.ObjectModel.Media.Story
+import com.sun.imageio.plugins.jpeg.JPEGImageReader
+
+import javax.imageio.*;
+import javax.imageio.stream.*;
+import javax.imageio.metadata.*;
 
 import javax.swing.JButton
+import javax.swing.JFileChooser
 import javax.swing.JPanel
 import javax.swing.JScrollPane
 import javax.swing.JTable
 import java.awt.BorderLayout
 import java.awt.Point
+import java.nio.file.Files
+import java.nio.file.attribute.BasicFileAttributes
+import java.nio.file.attribute.FileTime
 
 import static java.util.ResourceBundle.getBundle
 
@@ -44,10 +57,25 @@ class MediaOverviewPanel extends JPanel {
 
         addMediaButton = new JButton(getBundle("MediaViewer").getString("ADD_MEDIA_BUTTON"))
         addMediaButton.addActionListener { e ->
-            Point locationOnScreen = getLocationOnScreen()
-            NewMediaDialog newMediaDialog = new NewMediaDialog()
-            newMediaDialog.setLocation(locationOnScreen)
-            newMediaDialog.visible = true
+            JFileChooser chooser = new JFileChooser()
+            chooser.setMultiSelectionEnabled(true)
+            if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File[] files = chooser.getSelectedFiles()
+                files.each { File file ->
+                    String name = file.name - '.jpg'
+                    System.out.println("name: ${name}")
+                    System.out.println("file: ${file.getName()}")
+
+                    Media media = parseMedia(file)
+                    story.getMedia().add(media)
+                    // TODO: show popup to set owner
+                }
+                Main.mediaOverviewPanel.dataModel.fireTableDataChanged()
+            }
+//            Point locationOnScreen = getLocationOnScreen()
+//            NewMediaDialog newMediaDialog = new NewMediaDialog()
+//            newMediaDialog.setLocation(locationOnScreen)
+//            newMediaDialog.visible = true
         }
 
         JPanel south = new JPanel()
@@ -58,6 +86,27 @@ class MediaOverviewPanel extends JPanel {
 
         add south, BorderLayout.SOUTH
     }
+
+    Media parseMedia(File file){
+
+//        BasicFileAttributes attr = Files.readAttributes(file, BasicFileAttributes.class)
+
+        File dataStorage = file
+        Participant author = null
+//        FileTime creationTime = attr.creationTime()
+//        attr.lastModifiedTime()
+//        attr.lastAccessTime()
+
+        if(file.name.toLowerCase().endsWith('.jpg')){
+//            JPEGImageReader jpegImageReader = new JPEGImageReader()
+
+            Size2D size2D = IoTools.readAndDisplayMetadata(file)
+            return new Picture(dataStorage,author, null,size2D)
+        } else {
+            null
+        }
+    }
+
 
     void setStory(Story story) {
         this.story = story

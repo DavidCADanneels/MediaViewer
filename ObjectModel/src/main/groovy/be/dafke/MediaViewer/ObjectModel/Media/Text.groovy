@@ -2,6 +2,8 @@ package be.dafke.MediaViewer.ObjectModel.Media
 
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
 
+import java.nio.file.attribute.FileTime
+
 class Text extends Media {
     int length
 
@@ -12,7 +14,7 @@ class Text extends Media {
      * @param creationTime
      * @param length number of characters
      */
-    Text(File dataStorage, Participant author, Date creationTime, int length) {
+    Text(File dataStorage, Participant author, FileTime creationTime, int length) {
         super(dataStorage, author, creationTime)
         this.length = length
     }

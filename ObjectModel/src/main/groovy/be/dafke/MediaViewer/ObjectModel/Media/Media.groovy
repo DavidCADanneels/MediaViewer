@@ -2,13 +2,15 @@ package be.dafke.MediaViewer.ObjectModel.Media
 
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
 
+import java.nio.file.attribute.FileTime
+
 abstract class Media {
     File dataStorage
     Participant author
-    Date creationTime
+    FileTime creationTime
 //    String index
 
-    Media(File dataStorage, Participant author, Date creationTime) {
+    Media(File dataStorage, Participant author, FileTime creationTime) {
         this.dataStorage = dataStorage
         this.author = author
         this.creationTime = creationTime
@@ -30,11 +32,11 @@ abstract class Media {
         this.author = author
     }
 
-    Date getCreationTime() {
+    FileTime getCreationTime() {
         return creationTime
     }
 
-    void setCreationTime(Date creationTime) {
+    void setCreationTime(FileTime creationTime) {
         this.creationTime = creationTime
     }
 }

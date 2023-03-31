@@ -7,6 +7,7 @@ class Story {
     String shortDescription
     String introText
 //    HashMap<String, Chapter> chapters = [:]
+    // TODO: use HashMap iso List (is this really needed?)
     List<Media> media
     List<Participant> participants
 

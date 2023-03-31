@@ -18,9 +18,17 @@ class FileMenu extends JMenu  {
 
         loadStory = new JMenuItem(getBundle("MediaViewer").getString("LOAD_STORY_BUTTON"))
         loadStory.addActionListener { e ->
-            Story story = loadStory()
+            Story story = null
+            File file = null
+
+            JFileChooser chooser = new JFileChooser()
+            chooser.setMultiSelectionEnabled(false)
+            if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                file = chooser.getSelectedFile()
+                story = IoTools.readStory(file)
+            }
             if(story){
-                Main.addStory(story)
+                Main.addStory(story, file)
                 Main.activeStory = story
                 Main.storyDetailsPanel.setStory()
                 Main.switchView(Main.VIEW_STORY_DETAILS)
@@ -54,29 +62,20 @@ class FileMenu extends JMenu  {
     }
 
     void saveStory(Story story){
-        File file = story.getDataFile()
+        String title = story.getTitle()
+        File file = Main.storyLocations.get(title)
         if(file == null){
             JFileChooser chooser = new JFileChooser()
             chooser.setMultiSelectionEnabled(false)
             if(chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
                 file = chooser.getSelectedFile()
                 if(file != null) {
-                    story.setDataFile(file)
+                    Main.storyLocations.put(title,file)
                 }
             }
         }
         if(file != null){
             IoTools.writeObject(story, file)
         }
-    }
-
-    Story loadStory(){
-        JFileChooser chooser = new JFileChooser()
-        chooser.setMultiSelectionEnabled(false)
-        if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File file = chooser.getSelectedFile()
-            IoTools.readStory(file)
-        }
-        else null
     }
 }

@@ -23,13 +23,13 @@ class StoryOverviewPanel extends JPanel {
 //        add new StoryButtonsPanel(), BorderLayout.SOUTH
     }
 
-    Story getSelectedItem(){
-        int row = overviewTable.getSelectedRow()
-        if(row == -1){
-            // TODO: disable button of none is selected
-            return null
-        } else {
-            Main.stories.get(row)
-        }
-    }
+//    Story getSelectedItem(){
+//        int row = overviewTable.getSelectedRow()
+//        if(row == -1){
+//            // TODO: disable button of none is selected
+//            return null
+//        } else {
+//            Main.stories.get(row)
+//        }
+//    }
 }

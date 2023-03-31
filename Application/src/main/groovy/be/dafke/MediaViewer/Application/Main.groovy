@@ -32,11 +32,14 @@ class Main {
     static final String VIEW_MEDIA_FOR_STORY = 'MEDIA'
     static final String VIEW_PARTICIPANTS_FOR_STORY = 'PARTICIPANTS'
 
-    static ArrayList<Story> stories
+    static HashMap<String, Story> stories
+    static HashMap<String, File> storyLocations
     static Story activeStory
 
-    static void addStory(Story story){
-        stories.add(story)
+    static void addStory(Story story, File dataFile){
+        String title = story.getTitle()
+        stories.put(title, story)
+        storyLocations.put(title, dataFile)
         storyOverviewPanel.dataModel.fireTableDataChanged()
     }
 
@@ -49,7 +52,8 @@ class Main {
     }
 
     static void main(String[] args) {
-        stories = []
+        stories = [:]
+        storyLocations = [:]
         activeStory = null
 
         frame = new JFrame()

@@ -50,7 +50,7 @@ class StoryOverviewDataModel extends DefaultTableModel {
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-        Story story = Main.stories.get(rowIndex)
+        Story story = Main.stories.values().get(rowIndex)
         if(story != null) {
             if (columnIndex == NAME_COL) {
                 story.getTitle()

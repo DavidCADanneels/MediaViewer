@@ -6,7 +6,6 @@ class Story {
     String title
     String shortDescription
     String introText
-    File dataFile
 //    HashMap<String, Chapter> chapters = [:]
     List<Media> media
     List<Participant> participants
@@ -38,14 +37,6 @@ class Story {
 
     void setIntroText(String introText) {
         this.introText = introText
-    }
-
-    File getDataFile() {
-        return dataFile
-    }
-
-    void setDataFile(File dataFile) {
-        this.dataFile = dataFile
     }
 
     List<Media> getMedia() {

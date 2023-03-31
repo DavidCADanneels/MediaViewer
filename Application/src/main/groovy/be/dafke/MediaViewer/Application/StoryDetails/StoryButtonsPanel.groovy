@@ -1,11 +1,10 @@
-package be.dafke.MediaViewer.Application.StoryOverview
+package be.dafke.MediaViewer.Application.StoryDetails
 
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Media.Story
 
 import javax.swing.JButton
 import javax.swing.JPanel
-import javax.swing.JTable
 
 import static java.util.ResourceBundle.getBundle
 

@@ -1,4 +1,4 @@
-package be.dafke.MediaViewer.Application.Participants
+package be.dafke.MediaViewer.Application.NewParticipant
 
 import javax.swing.*
 

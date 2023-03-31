@@ -1,4 +1,4 @@
-package be.dafke.MediaViewer.Application.Participants
+package be.dafke.MediaViewer.Application.ParticipantsOverview
 
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant

@@ -1,10 +1,7 @@
-package be.dafke.MediaViewer.Application.Participants
+package be.dafke.MediaViewer.Application.ParticipantsOverview
 
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.Application.Media.NewMediaDialog
-import be.dafke.MediaViewer.Application.NewStory.NewStoryDialog
-import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
-import be.dafke.MediaViewer.ObjectModel.Media.Story
+import be.dafke.MediaViewer.Application.NewParticipant.NewParticipantDialog
 
 import javax.swing.JButton
 import javax.swing.JPanel

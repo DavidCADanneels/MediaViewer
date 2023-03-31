@@ -4,6 +4,7 @@ import be.dafke.MediaViewer.Application.IoTools
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.Application.NewStory.NewStoryDialog
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
+import be.dafke.MediaViewer.ObjectModel.Media.Catalog
 import be.dafke.MediaViewer.ObjectModel.Media.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Media.Size2D
@@ -53,36 +54,44 @@ class MediaOverviewPanel extends JPanel {
         addMediaButton.addActionListener { e ->
             JFileChooser chooser = new JFileChooser()
             chooser.setMultiSelectionEnabled(true)
-            if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            Story story = Main.getActiveStory()
+            if(story != null && chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 File[] files = chooser.getSelectedFiles()
                 files.each { File file ->
                     // TODO: use 'name' to store Catalog
 
                     // TODO: use 'extension' to store in Media object
 //                    System.out.println("name: ${name}")
-//                    System.out.println("file: ${file.getName()}")
+                    System.out.println("file: ${file.getName()}")
 
                     if(file.name.toLowerCase().endsWith('.jpg')) {
+                        System.out.println("ends with jpg")
                         Picture picture = new Picture()
                         String fileName = file.name - '.jpg'
                         picture.setFileName(fileName)
                         picture.setExtension('jpg')
                         picture.setSubFolderName('jpg')
-                        Size2D size2D = IoTools.readAndDisplayMetadata(file)
-                        picture.setSize(size2D)
-
-                        Story story = Main.getActiveStory()
-                        if(story){
-                            List<String> mediaList = story.getMediaList()
-                            if(mediaList){
+//                        Size2D size2D = IoTools.readAndDisplayMetadata(file)
+//                        picture.setSize(size2D)
+//                        Main.activeStory.mediaList.add(fileName)
+                        List<String> mediaList = story.getMediaList()
+                        System.out.println("fetch List")
+                        if(mediaList != null){
+                            System.out.println("not null")
+                            HashMap<String, File> sourceFiles = Catalog.getSourceFiles()
+                            HashMap<String, Media> mediaFiles = Catalog.getMediaFiles()
+                            if(sourceFiles) {
+                                sourceFiles.put(fileName, file)
+                            }
+                            if(mediaFiles) {
+                                mediaFiles.put(fileName, picture)
+                            }
+                            if(mediaList) {
                                 mediaList.add(fileName)
                             }
-
-
-//                            Main.getCatalog().sourceFiles.put(fileName, file)
-//                            Main.catalog.mediaFiles.put(fileName, picture)
-
+                            System.out.println("ADD")
                         }
+
 //
                         // TODO: show popup to set owner
                     }

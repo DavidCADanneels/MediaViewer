@@ -2,6 +2,7 @@ package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
+import be.dafke.MediaViewer.ObjectModel.Media.Catalog
 import be.dafke.MediaViewer.ObjectModel.Media.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Story
 
@@ -75,19 +76,26 @@ class MediaOverviewDataModel extends DefaultTableModel {
     Object getValueAt(int rowIndex, int columnIndex) {
         List<String> mediaList = getMediaList()
         String fileName = mediaList.get(rowIndex)
-        HashMap<String,Media> mediaFiles = Main.catalog.mediaFiles
-        if(mediaFiles) {
-            Media media = mediaFiles.get(fileName)
-            if (media != null) {
-                if (columnIndex == FILE_NAME_COL) {
-                    fileName
-                } else if (columnIndex == FULL_PATH_COL) {
-                    null
-                } else if (columnIndex == AUTHOR_COL) {
-                    media.getAuthor()
-                } else if (columnIndex == CREATION_DATE_COL) {
-                    null
+
+        if(columnIndex == FULL_PATH_COL) {
+            HashMap<String, File> sourceFiles = Catalog.getSourceFiles()
+            if (sourceFiles) {
+                File file = sourceFiles.get(fileName)
+                file.absolutePath
+            }
+        } else {
+            HashMap<String,Media> mediaFiles = Catalog.getMediaFiles()
+            if(mediaFiles) {
+                Media media = mediaFiles.get(fileName)
+                if (media != null) {
+                    if (columnIndex == FILE_NAME_COL) {
+                        fileName
+                    } else if (columnIndex == AUTHOR_COL) {
+                        media.getAuthor()
+                    } else if (columnIndex == CREATION_DATE_COL) {
+                        null
 //                media.getCreationTime()
+                    }
                 }
             }
         }

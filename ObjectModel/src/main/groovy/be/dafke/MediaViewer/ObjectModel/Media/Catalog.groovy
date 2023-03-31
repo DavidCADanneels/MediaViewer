@@ -1,19 +1,16 @@
 package be.dafke.MediaViewer.ObjectModel.Media
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
-
-//@JacksonXmlRootElement(localName = "catalog")
-//@JsonSerialize(using = CatalogSerializer.class)
 class Catalog {
 
-    HashMap<String,Media> mediaFiles
-    HashMap<String,File> sourceFiles
+    static HashMap<String,Media> mediaFiles
+    static HashMap<String,File> sourceFiles
 
     Catalog() {
+        mediaFiles = new HashMap<String,Media>()
+        sourceFiles = new HashMap<String,File>()
     }
 
-    HashMap<String, Media> getMediaFiles() {
+    static HashMap<String, Media> getMediaFiles() {
         return mediaFiles
     }
 
@@ -21,7 +18,7 @@ class Catalog {
         this.mediaFiles = mediaFiles
     }
 
-    HashMap<String, File> getSourceFiles() {
+    static HashMap<String, File> getSourceFiles() {
         return sourceFiles
     }
 

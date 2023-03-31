@@ -37,7 +37,6 @@ class Main {
     // TODO: NOTE: "CassablancaVibes\/.metadata\/story.xml" == "${index=name} + '.metadata' + 'story.xml
     static HashMap<String, String> storyPaths
     static HashMap<String, File> storyLocations
-    static Catalog catalog
     static Story activeStory
 
     static void addStory(String rootPath, Story story, File dataFile){

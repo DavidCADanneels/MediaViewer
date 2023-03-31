@@ -18,20 +18,34 @@ class FileMenu extends JMenu  {
 
         loadStory = new JMenuItem(getBundle("MediaViewer").getString("LOAD_STORY_BUTTON"))
         loadStory.addActionListener { e ->
-            Story story = null
-            File file = null
-
             JFileChooser chooser = new JFileChooser()
             chooser.setMultiSelectionEnabled(false)
             if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-                file = chooser.getSelectedFile()
-                story = IoTools.readStory(file)
-            }
-            if(story){
-                Main.addStory(story, file)
-                Main.activeStory = story
-                Main.storyDetailsPanel.setStory()
-                Main.switchView(Main.VIEW_STORY_DETAILS)
+                File file = chooser.getSelectedFile()
+                Story story = IoTools.readStory(file)
+
+                if (story) {
+                    String fullPath = file.getAbsolutePath()
+                    System.out.println("fullPath:${fullPath}")
+
+                    if (fullPath.contains('.metadata')) {
+                        String[] parts = fullPath.split('.metadata')
+
+                        String prefix = parts[0]
+                        prefix = prefix.substring(0, prefix.length() - 1)
+
+//                        String remainingPart = parts[1]
+//                        remainingPart = remainingPart.substring(1, remainingPart.length())
+
+//                        story.setRootPath(prefix) // do not store this (in xml metadata), this is platform-specific
+
+                        Main.addStory(prefix, story, file)
+//                        Main.addStory(story, file)
+                        Main.activeStory = story
+                        Main.storyDetailsPanel.setStory()
+                        Main.switchView(Main.VIEW_STORY_DETAILS)
+                    }
+                }
             }
         }
 

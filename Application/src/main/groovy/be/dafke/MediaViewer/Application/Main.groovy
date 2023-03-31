@@ -32,11 +32,15 @@ class Main {
     static final String VIEW_PARTICIPANTS_FOR_STORY = 'PARTICIPANTS'
 
     static HashMap<String, Story> stories
+    // TODO: replace 'storyLocations' by 'storyPaths' + 'Story.fileName()' (e.g. "CassablancaVibes\/.metadata\/story.xml")
+    // TODO: NOTE: "CassablancaVibes\/.metadata\/story.xml" == "${index=name} + '.metadata' + 'story.xml
+    static HashMap<String, String> storyPaths
     static HashMap<String, File> storyLocations
     static Story activeStory
 
-    static void addStory(Story story, File dataFile){
+    static void addStory(String rootPath, Story story, File dataFile){
         String title = story.getTitle()
+        storyPaths.put(title, rootPath)
         stories.put(title, story)
         storyLocations.put(title, dataFile)
         storyOverviewPanel.dataModel.fireTableDataChanged()
@@ -52,6 +56,7 @@ class Main {
 
     static void main(String[] args) {
         stories = [:]
+        storyPaths = [:]
         storyLocations = [:]
         activeStory = null
 

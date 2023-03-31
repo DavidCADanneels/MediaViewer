@@ -1,8 +1,10 @@
 package be.dafke.MediaViewer.Application.StoryOverview
 
+import be.dafke.MediaViewer.Application.IoTools
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Media.Story
 
+import javax.swing.BoxLayout
 import javax.swing.JButton
 import javax.swing.JLabel
 import javax.swing.JPanel
@@ -22,17 +24,24 @@ class StoryDetailsPanel extends JPanel {
         setLayout(new BorderLayout())
 
         nameField = new JTextField(20)
-        descrField = new JTextField(60)
+        descrField = new JTextField(30)
         nameField.editable = false
         saveChanges = new JButton(getBundle("MediaViewer").getString("SAVE_STORY_BUTTON"))
         saveChanges.addActionListener({ e -> save()})
 
+        JPanel line1 = new JPanel()
+        line1.add new JLabel("${getBundle("MediaViewer").getString("NAME")}:")
+        line1.add nameField
+        line1.add saveChanges
+
+        JPanel line2 = new JPanel()
+        line2.add new JLabel("${getBundle("MediaViewer").getString("DESCR")}:")
+        line2.add descrField
+
         JPanel north = new JPanel()
-        north.add new JLabel("${getBundle("MediaViewer").getString("NAME")}:")
-        north.add nameField
-        north.add new JLabel("${getBundle("MediaViewer").getString("DESCR")}:")
-        north.add descrField
-        north.add saveChanges
+        north.setLayout(new BoxLayout(north,BoxLayout.Y_AXIS))
+        north.add line1
+        north.add line2
 
         longText = new JTextArea(20, 50)
         JScrollPane scrollPane = new JScrollPane(longText)
@@ -55,8 +64,12 @@ class StoryDetailsPanel extends JPanel {
 
     void save(){
         Story story = Main.activeStory
-        story.title = nameField.text.trim()
-        story.shortDescription = descrField.text.trim()
-        story.introText = longText.text.trim()
+        String title = nameField.getText().trim()
+        String descr = descrField.text.trim()
+        String intro = longText.text.trim()
+        story.setTitle(title)
+        story.setShortDescription(descr)
+        story.setIntroText(intro)
+        IoTools.writeObject(story, story.dataFile)
     }
 }

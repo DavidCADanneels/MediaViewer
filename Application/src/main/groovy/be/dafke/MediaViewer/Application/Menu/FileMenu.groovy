@@ -1,9 +1,9 @@
 package be.dafke.MediaViewer.Application.Menu
 
+import be.dafke.MediaViewer.Application.IoTools
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.Application.NewStory.NewStoryDialog
 import be.dafke.MediaViewer.ObjectModel.Media.Story
-import com.fasterxml.jackson.dataformat.xml.XmlMapper
 
 import javax.swing.*
 import java.awt.Point
@@ -66,17 +66,7 @@ class FileMenu extends JMenu  {
             }
         }
         if(file != null){
-            XmlMapper xmlMapper = new XmlMapper()
-            String xml = xmlMapper.writeValueAsString(story)
-            try {
-                Writer writer = new FileWriter(file)
-                writer.write xml
-                writer.flush()
-                writer.close()
-            } catch (IOException ex) {
-                System.err.println(ex)
-//                Logger.getLogger(Accounts.class.name).log(Level.SEVERE, null, ex)
-            }
+            IoTools.writeObject(story, file)
         }
     }
 
@@ -85,19 +75,8 @@ class FileMenu extends JMenu  {
         chooser.setMultiSelectionEnabled(false)
         if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile()
-            readStory(file)
+            IoTools.readStory(file)
         }
         else null
-    }
-
-    Story readStory(File file){
-        XmlMapper xmlMapper = new XmlMapper()
-        try {
-            def xml
-            xmlMapper.readValue(file, Story.class)
-        } catch (Exception ex) {
-            System.err.println(ex)
-//                Logger.getLogger(Accounts.class.name).log(Level.SEVERE, null, ex)
-        }
     }
 }

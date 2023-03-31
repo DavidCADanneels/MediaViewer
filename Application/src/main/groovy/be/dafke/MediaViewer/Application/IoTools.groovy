@@ -1,12 +1,12 @@
-package be.dafke.MediaViewer.ObjectModel
+package be.dafke.MediaViewer.Application
 
 import be.dafke.MediaViewer.ObjectModel.Media.Story
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 
 class IoTools {
-    static void saveStory(Story story, File file){
+    static void writeObject(Object object, File file){
         XmlMapper xmlMapper = new XmlMapper()
-        String xml = xmlMapper.writeValueAsString(story)
+        String xml = xmlMapper.writeValueAsString(object)
         try {
             Writer writer = new FileWriter(file)
             writer.write xml

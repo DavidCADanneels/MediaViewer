@@ -70,6 +70,9 @@ class StoryDetailsPanel extends JPanel {
         story.setTitle(title)
         story.setShortDescription(descr)
         story.setIntroText(intro)
-        IoTools.writeObject(story, story.dataFile)
+        File file = story.getDataFile()
+        if(file != null) {
+            IoTools.writeObject(story, file)
+        }
     }
 }

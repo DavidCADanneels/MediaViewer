@@ -32,14 +32,22 @@ class MediaOverviewDataModel extends DefaultTableModel {
         columnNames.put(FULL_PATH_COL, getBundle("MediaViewer").getString("FULL_PATH"))
     }
 
-    void setStory(Story story) {
-        this.story = story
-        fireTableDataChanged()
+//    void setStory(Story story) {
+//        this.story = story
+//        fireTableDataChanged()
+//    }
+
+    List<String> getMediaList(){
+        Story story = Main.activeStory
+        if(story){
+            story.getMediaList()
+        } else null
     }
 
     @Override
     int getRowCount() {
-        story?.mediaMap?.size()?:0
+        List<String> mediaList = getMediaList()
+        mediaList?.size()?:0
     }
 
     @Override
@@ -65,18 +73,16 @@ class MediaOverviewDataModel extends DefaultTableModel {
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-        HashMap<String, Media> mediaMap = story?.mediaMap
-        if(mediaMap) {
-            Media media = mediaMap.get(rowIndex)
+        List<String> mediaList = getMediaList()
+        String fileName = mediaList.get(rowIndex)
+        HashMap<String,Media> mediaFiles = Main.catalog.mediaFiles
+        if(mediaFiles) {
+            Media media = mediaFiles.get(fileName)
             if (media != null) {
-                String fileName = media.getFileName()
                 if (columnIndex == FILE_NAME_COL) {
                     fileName
                 } else if (columnIndex == FULL_PATH_COL) {
-                    String pathPrefix = Main.storyPaths.get(fileName)
-//                    media.getDataStorage()
-                    // TODO: append 'pathPrefix' with 'fileName' (+ infix?)
-                    pathPrefix
+                    null
                 } else if (columnIndex == AUTHOR_COL) {
                     media.getAuthor()
                 } else if (columnIndex == CREATION_DATE_COL) {

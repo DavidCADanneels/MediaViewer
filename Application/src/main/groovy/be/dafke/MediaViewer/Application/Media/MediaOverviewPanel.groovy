@@ -20,10 +20,6 @@ import javax.swing.JPanel
 import javax.swing.JScrollPane
 import javax.swing.JTable
 import java.awt.BorderLayout
-import java.awt.Point
-import java.nio.file.Files
-import java.nio.file.attribute.BasicFileAttributes
-import java.nio.file.attribute.FileTime
 
 import static java.util.ResourceBundle.getBundle
 
@@ -31,8 +27,6 @@ class MediaOverviewPanel extends JPanel {
     MediaOverviewDataModel dataModel
     JButton backToStoryDetailsButton, backToStoryOverViewButton, participantButton, addMediaButton
     static JTable overviewTable
-
-    Story story
 
     MediaOverviewPanel() {
         setLayout(new BorderLayout())
@@ -62,19 +56,36 @@ class MediaOverviewPanel extends JPanel {
             if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 File[] files = chooser.getSelectedFiles()
                 files.each { File file ->
-                    String name = file.name - '.jpg'
+                    // TODO: use 'name' to store Catalog
+
+                    // TODO: use 'extension' to store in Media object
 //                    System.out.println("name: ${name}")
 //                    System.out.println("file: ${file.getName()}")
 
-                    Media media = parseMedia(file)
-                    HashMap<String, Media> map = story.getMediaMap()
+                    if(file.name.toLowerCase().endsWith('.jpg')) {
+                        Picture picture = new Picture()
+                        String fileName = file.name - '.jpg'
+                        picture.setFileName(fileName)
+                        picture.setExtension('jpg')
+                        picture.setSubFolderName('jpg')
+                        Size2D size2D = IoTools.readAndDisplayMetadata(file)
+                        picture.setSize(size2D)
 
-                    if(map.containsKey(name)){
-                        System.err.println("mediaList already contains ${name}")
-                    } else {
-                        map.put(name, media)
+                        Story story = Main.getActiveStory()
+                        if(story){
+                            List<String> mediaList = story.getMediaList()
+                            if(mediaList){
+                                mediaList.add(fileName)
+                            }
+
+
+//                            Main.getCatalog().sourceFiles.put(fileName, file)
+//                            Main.catalog.mediaFiles.put(fileName, picture)
+
+                        }
+//
+                        // TODO: show popup to set owner
                     }
-                    // TODO: show popup to set owner
                 }
                 Main.mediaOverviewPanel.dataModel.fireTableDataChanged()
             }
@@ -92,34 +103,4 @@ class MediaOverviewPanel extends JPanel {
 
         add south, BorderLayout.SOUTH
     }
-
-    Media parseMedia(File file){
-
-//        BasicFileAttributes attr = Files.readAttributes(file, BasicFileAttributes.class)
-//        FileTime creationTime = attr.creationTime()
-//        attr.lastModifiedTime()
-//        attr.lastAccessTime()
-
-        if(file.name.toLowerCase().endsWith('.jpg')){
-            Picture picture = new Picture()
-//            JPEGImageReader jpegImageReader = new JPEGImageReader()
-            Size2D size2D = IoTools.readAndDisplayMetadata(file)
-            picture.setSize(size2D)
-            return picture
-        } else {
-            null
-        }
-    }
-
-
-    void setStory(Story newStory) {
-        this.story = newStory
-        if(story){
-            dataModel.setStory(story)
-        }
-    }
-
-//    void setMediaList(List<Media> mediaList) {
-//        dataModel.setMediaList(mediaList)
-//    }
 }

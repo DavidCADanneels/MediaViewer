@@ -3,12 +3,40 @@ package be.dafke.MediaViewer.ObjectModel.Media
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
 
 abstract class Media {
-    File dataStorage
+    String subFolderName
     String fileName
+    String extension
     Participant author
 
     Media() {
+    }
 
+    String getAbsolutePath(File projectRoot){
+        File file = getFile(projectRoot)
+        if(file){
+            return file.name
+        } else null
+    }
+
+    String getFile(File projectRoot){
+        String fullFileName = fileName
+        if(extension != null){
+            fullFileName = "${fullFileName}.${extension}"
+        }
+
+        File folder = projectRoot
+        if(subFolderName != null){
+            folder = new File(projectRoot, subFolderName)
+        }
+        new File(folder, fullFileName)
+    }
+
+    String getSubFolderName() {
+        return subFolderName
+    }
+
+    void setSubFolderName(String subFolderName) {
+        this.subFolderName = subFolderName
     }
 
     String getFileName() {
@@ -17,10 +45,6 @@ abstract class Media {
 
     void setFileName(String fileName) {
         this.fileName = fileName
-    }
-
-    File getDataStorage() {
-        return dataStorage
     }
 
     Participant getAuthor() {

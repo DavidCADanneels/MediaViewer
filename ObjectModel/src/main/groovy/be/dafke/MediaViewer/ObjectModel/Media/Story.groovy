@@ -1,9 +1,6 @@
 package be.dafke.MediaViewer.ObjectModel.Media
 
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
 
 class Story {
@@ -11,24 +8,29 @@ class Story {
     String shortDescription
     String introText
 //    HashMap<String, Chapter> chapters = [:]
-    // TODO: use HashMap iso List (is this really needed?)
-//    @JacksonXmlRootElement(localName = "headers")
-//    @JsonSerialize(using = ApplicationJsonSerializer)
-//    @JacksonXmlProperty
-    HashMap<String, Media> mediaMap
+    List<String> mediaList
     List<Participant> participants
+    File projectFolder
 
     Story() {
-        mediaMap = [:]
+        mediaList = []
         participants = []
     }
 
-    HashMap<String, Media> getMediaMap() {
-        return mediaMap
+    File getProjectFolder() {
+        return projectFolder
     }
 
-    void setMediaMap(HashMap<String, Media> mediaMap) {
-        this.mediaMap = mediaMap
+    void setProjectFolder(File projectFolder) {
+        this.projectFolder = projectFolder
+    }
+
+    List<String> getMediaList() {
+        return mediaList
+    }
+
+    void setMediaList(List<String> mediaList) {
+        this.mediaList = mediaList
     }
 
     String getTitle() {

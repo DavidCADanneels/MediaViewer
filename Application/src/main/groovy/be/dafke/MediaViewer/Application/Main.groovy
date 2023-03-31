@@ -5,6 +5,7 @@ import be.dafke.MediaViewer.Application.Menu.MediaMenuBar
 import be.dafke.MediaViewer.Application.ParticipantsOverview.ParticipantsOverviewPanel
 import be.dafke.MediaViewer.Application.StoryDetails.StoryDetailsPanel
 import be.dafke.MediaViewer.Application.StoryOverview.StoryOverviewPanel
+import be.dafke.MediaViewer.ObjectModel.Media.Catalog
 import be.dafke.MediaViewer.ObjectModel.Media.Story
 
 import javax.swing.JFrame
@@ -36,6 +37,7 @@ class Main {
     // TODO: NOTE: "CassablancaVibes\/.metadata\/story.xml" == "${index=name} + '.metadata' + 'story.xml
     static HashMap<String, String> storyPaths
     static HashMap<String, File> storyLocations
+    static Catalog catalog
     static Story activeStory
 
     static void addStory(String rootPath, Story story, File dataFile){

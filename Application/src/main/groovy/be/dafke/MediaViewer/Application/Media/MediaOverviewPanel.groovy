@@ -63,11 +63,17 @@ class MediaOverviewPanel extends JPanel {
                 File[] files = chooser.getSelectedFiles()
                 files.each { File file ->
                     String name = file.name - '.jpg'
-                    System.out.println("name: ${name}")
-                    System.out.println("file: ${file.getName()}")
+//                    System.out.println("name: ${name}")
+//                    System.out.println("file: ${file.getName()}")
 
                     Media media = parseMedia(file)
-                    story.getMedia().add(media)
+                    HashMap<String, Media> map = story.getMediaMap()
+
+                    if(map.containsKey(name)){
+                        System.err.println("mediaList already contains ${name}")
+                    } else {
+                        map.put(name, media)
+                    }
                     // TODO: show popup to set owner
                 }
                 Main.mediaOverviewPanel.dataModel.fireTableDataChanged()
@@ -90,28 +96,26 @@ class MediaOverviewPanel extends JPanel {
     Media parseMedia(File file){
 
 //        BasicFileAttributes attr = Files.readAttributes(file, BasicFileAttributes.class)
-
-        File dataStorage = file
-        Participant author = null
 //        FileTime creationTime = attr.creationTime()
 //        attr.lastModifiedTime()
 //        attr.lastAccessTime()
 
         if(file.name.toLowerCase().endsWith('.jpg')){
+            Picture picture = new Picture()
 //            JPEGImageReader jpegImageReader = new JPEGImageReader()
-
             Size2D size2D = IoTools.readAndDisplayMetadata(file)
-            return new Picture(dataStorage,author, null,size2D)
+            picture.setSize(size2D)
+            return picture
         } else {
             null
         }
     }
 
 
-    void setStory(Story story) {
-        this.story = story
+    void setStory(Story newStory) {
+        this.story = newStory
         if(story){
-            dataModel.setMediaList(story.getMedia())
+            dataModel.setStory(story)
         }
     }
 

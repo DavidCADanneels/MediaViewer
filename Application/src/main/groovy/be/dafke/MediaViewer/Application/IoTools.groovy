@@ -3,8 +3,8 @@ package be.dafke.MediaViewer.Application
 import be.dafke.MediaViewer.ObjectModel.Media.Size2D
 import be.dafke.MediaViewer.ObjectModel.Media.Story
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
+import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator
 import com.sun.imageio.plugins.jpeg.JPEGImageReader
-import org.w3c.dom.NamedNodeMap
 
 import javax.imageio.ImageIO
 import javax.imageio.ImageReader
@@ -14,7 +14,8 @@ import javax.imageio.stream.ImageInputStream
 class IoTools {
     static void writeObject(Object object, File file){
         XmlMapper xmlMapper = new XmlMapper()
-        String xml = xmlMapper.writeValueAsString(object)
+        xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true)
+        String xml = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object)
         try {
             Writer writer = new FileWriter(file)
             writer.write xml

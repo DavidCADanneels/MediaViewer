@@ -51,58 +51,7 @@ class MediaOverviewPanel extends JPanel {
         }
 
         addMediaButton = new JButton(getBundle("MediaViewer").getString("ADD_MEDIA_BUTTON"))
-        addMediaButton.addActionListener { e ->
-            JFileChooser chooser = new JFileChooser()
-            chooser.setMultiSelectionEnabled(true)
-            Story story = Main.getActiveStory()
-            if(story != null && chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-                File[] files = chooser.getSelectedFiles()
-                files.each { File file ->
-                    // TODO: use 'name' to store Catalog
-
-                    // TODO: use 'extension' to store in Media object
-//                    System.out.println("name: ${name}")
-                    System.out.println("file: ${file.getName()}")
-
-                    if(file.name.toLowerCase().endsWith('.jpg')) {
-                        System.out.println("ends with jpg")
-                        Picture picture = new Picture()
-                        String fileName = file.name - '.jpg'
-                        picture.setFileName(fileName)
-                        picture.setExtension('jpg')
-                        picture.setSubFolderName('jpg')
-//                        Size2D size2D = IoTools.readAndDisplayMetadata(file)
-//                        picture.setSize(size2D)
-//                        Main.activeStory.mediaList.add(fileName)
-                        List<String> mediaList = story.getMediaList()
-                        System.out.println("fetch List")
-                        if(mediaList != null){
-                            System.out.println("not null")
-                            HashMap<String, File> sourceFiles = Catalog.getSourceFiles()
-                            HashMap<String, Media> mediaFiles = Catalog.getMediaFiles()
-                            if(sourceFiles) {
-                                sourceFiles.put(fileName, file)
-                            }
-                            if(mediaFiles) {
-                                mediaFiles.put(fileName, picture)
-                            }
-                            if(mediaList) {
-                                mediaList.add(fileName)
-                            }
-                            System.out.println("ADD")
-                        }
-
-//
-                        // TODO: show popup to set owner
-                    }
-                }
-                Main.mediaOverviewPanel.dataModel.fireTableDataChanged()
-            }
-//            Point locationOnScreen = getLocationOnScreen()
-//            NewMediaDialog newMediaDialog = new NewMediaDialog()
-//            newMediaDialog.setLocation(locationOnScreen)
-//            newMediaDialog.visible = true
-        }
+        addMediaButton.addActionListener { e -> loadData() }
 
         JPanel south = new JPanel()
 //        south.add backToStoryOverViewButton
@@ -111,5 +60,49 @@ class MediaOverviewPanel extends JPanel {
         south.add addMediaButton
 
         add south, BorderLayout.SOUTH
+    }
+
+    void loadData(){
+        Story story = Main.activeStory
+        List<String> mediaList = story.getMediaList()
+
+        JFileChooser chooser = new JFileChooser()
+        chooser.setMultiSelectionEnabled(true)
+        if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File[] files = chooser.getSelectedFiles()
+            files.each { File file ->
+                // TODO: use 'name' to store Catalog
+
+                // TODO: use 'extension' to store in Media object
+//                    System.out.println("name: ${name}")
+                System.out.println("file: ${file.getName()}")
+
+                if(file.name.toLowerCase().endsWith('.jpg')) {
+                    System.out.println("ends with jpg")
+                    Picture picture = new Picture()
+                    String fileName = file.name - '.jpg'
+                    picture.setFileName(fileName)
+                    picture.setExtension('jpg')
+                    picture.setSubFolderName('jpg')
+//                        Size2D size2D = IoTools.readAndDisplayMetadata(file)
+//                        picture.setSize(size2D)
+//                        Main.activeStory.mediaList.add(fileName)
+
+//                        Catalog.sourceFiles.put(fileName, file)
+//                        Catalog.mediaFiles.put(fileName, picture)
+//                    Main.activeStory.mediaList.add(fileName)
+                    mediaList.add(fileName)
+                    System.out.println("ADD")
+//
+                    // TODO: show popup to set owner
+                }
+            }
+            Main.mediaOverviewPanel.dataModel.fireTableDataChanged()
+        }
+//            Point locationOnScreen = getLocationOnScreen()
+//            NewMediaDialog newMediaDialog = new NewMediaDialog()
+//            newMediaDialog.setLocation(locationOnScreen)
+//            newMediaDialog.visible = true
+
     }
 }

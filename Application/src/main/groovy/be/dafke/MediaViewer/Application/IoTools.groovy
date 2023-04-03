@@ -1,6 +1,6 @@
 package be.dafke.MediaViewer.Application
 
-import be.dafke.MediaViewer.ObjectModel.Media.Size2D
+import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator
@@ -37,7 +37,7 @@ class IoTools {
         }
     }
 
-    static Size2D readAndDisplayMetadata(File file) {
+    static Picture readAndDisplayMetadata(File file, Picture picture) {
         try {
             ImageInputStream iis = ImageIO.createImageInputStream(file);
             Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
@@ -54,12 +54,13 @@ class IoTools {
                     int index = 0
                     int width = jpegImageReader.getWidth(index)
                     int height = jpegImageReader.getHeight(index)
-                    Size2D size2D = new Size2D(width, height)
+                    picture.setWidth(width)
+                    picture.setHeigth(height)
 
 //                    IIOMetadata metadata = reader.getImageMetadata(0)
 //                    String[] names = metadata.getMetadataFormatNames()
 
-                    return size2D
+                    return picture
                 } else {
                     return null
                 }

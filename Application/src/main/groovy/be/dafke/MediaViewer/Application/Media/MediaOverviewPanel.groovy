@@ -4,7 +4,6 @@ import be.dafke.MediaViewer.Application.IoTools
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Media.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
-import be.dafke.MediaViewer.ObjectModel.Media.Size2D
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.JButton
@@ -82,8 +81,8 @@ class MediaOverviewPanel extends JPanel {
                     picture.setFileName(fileName)
                     picture.setExtension('jpg')
                     picture.setSubFolderName('jpg')
-                    Size2D size2D = IoTools.readAndDisplayMetadata(file)
-                    picture.setSize(size2D)
+                    // TODO: no need to reassign picture to picture ?
+                    picture = IoTools.readAndDisplayMetadata(file, picture)
 
                     mediaList.add(picture)
 

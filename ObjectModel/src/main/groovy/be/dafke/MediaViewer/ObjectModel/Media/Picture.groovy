@@ -1,17 +1,25 @@
 package be.dafke.MediaViewer.ObjectModel.Media
 
 class Picture extends Media {
-    Size2D size
+    int width, heigth
 
     Picture() {
 
     }
 
-    Size2D getSize() {
-        return size
+    int getWidth() {
+        return width
     }
 
-    void setSize(Size2D size) {
-        this.size = size
+    void setWidth(int width) {
+        this.width = width
+    }
+
+    int getHeigth() {
+        return heigth
+    }
+
+    void setHeigth(int heigth) {
+        this.heigth = heigth
     }
 }

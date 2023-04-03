@@ -2,7 +2,6 @@ package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
-import be.dafke.MediaViewer.ObjectModel.Media.Size2D
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.table.DefaultTableModel
@@ -30,7 +29,7 @@ class MediaOverviewDataModel extends DefaultTableModel {
         columnClasses.put(FOLDER_NAME_COL, String.class)
         columnClasses.put(EXTENSION_COL, String.class)
         columnClasses.put(FILE_NAME_COL, String.class)
-        columnClasses.put(SIZE_COL, Size2D.class)
+        columnClasses.put(SIZE_COL, String.class)
 //        columnClasses.put(AUTHOR_COL, Participant.class)
 //        columnClasses.put(CREATION_DATE_COL, Date.class)
 //        columnClasses.put(FULL_PATH_COL, File.class)
@@ -99,7 +98,7 @@ class MediaOverviewDataModel extends DefaultTableModel {
                 } else if (columnIndex == FILE_NAME_COL) {
                     return "${picture.getFileName()}.${picture.getExtension()}"
                 } else if (columnIndex == SIZE_COL) {
-                    return picture.getSize()
+                    return "${picture.getWidth()} x ${picture.getHeigth()}"
                 } else {
                     null
                 }

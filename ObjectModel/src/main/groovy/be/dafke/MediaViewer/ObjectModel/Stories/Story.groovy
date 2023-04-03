@@ -9,14 +9,13 @@ class Story {
     String title
     String shortDescription
     String introText
-//    HashMap<String, Chapter> chapters = [:]
-//    List<Media> mediaList
-    List<Picture> pictures
+//    List<Chapter> chapters
     List<Participant> participants
+    List<Picture> pictures
     File projectFolder
 
     Story() {
-//        mediaList = []
+//        chapters = []
         pictures = []
         participants = []
     }
@@ -28,14 +27,6 @@ class Story {
     void setProjectFolder(File projectFolder) {
         this.projectFolder = projectFolder
     }
-
-//    List<Media> getMediaList() {
-//        return mediaList
-//    }
-
-//    void setMediaList(List<Media> mediaList) {
-//        this.mediaList = mediaList
-//    }
 
     List<Picture> getPictures() {
         return pictures

@@ -53,8 +53,7 @@ class StoryDetailsPanel extends JPanel {
         add new StoryButtonsPanel(), BorderLayout.SOUTH
     }
 
-    void setStory() {
-        Story story = Main.activeStory
+    void setStory(Story story) {
         if(story) {
             nameField.setText(story.getTitle())
             descrField.setText(story.getShortDescription())

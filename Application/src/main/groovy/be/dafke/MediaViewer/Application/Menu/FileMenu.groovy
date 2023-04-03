@@ -25,26 +25,9 @@ class FileMenu extends JMenu  {
                 Story story = IoTools.readStory(file)
 
                 if (story) {
-                    String fullPath = file.getAbsolutePath()
-                    System.out.println("fullPath:${fullPath}")
-
-                    if (fullPath.contains('.metadata')) {
-                        String[] parts = fullPath.split('.metadata')
-
-                        String prefix = parts[0]
-                        prefix = prefix.substring(0, prefix.length() - 1)
-
-//                        String remainingPart = parts[1]
-//                        remainingPart = remainingPart.substring(1, remainingPart.length())
-
-//                        story.setRootPath(prefix) // do not store this (in xml metadata), this is platform-specific
-
-                        Main.addStory(prefix, story, file)
-//                        Main.addStory(story, file)
-                        Main.activeStory = story
-                        Main.storyDetailsPanel.setStory()
-                        Main.switchView(Main.VIEW_STORY_DETAILS)
-                    }
+                    Main.addStory(story, file)
+                    Main.activeStory = story
+                    Main.switchView(Main.VIEW_STORY_DETAILS)
                 }
             }
         }
@@ -92,22 +75,4 @@ class FileMenu extends JMenu  {
             IoTools.writeObject(story, file)
         }
     }
-
-//    void saveCatalog(){
-//        HashMap<String, File> sourceFiles = Main.getSourceFiles()
-//        File file = Main.getCatalogFile()
-//        if(file == null){
-//            JFileChooser chooser = new JFileChooser()
-//            chooser.setMultiSelectionEnabled(false)
-//            if(chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-//                file = chooser.getSelectedFile()
-//                if(file != null) {
-//                    Main.setCatalogFile(file)
-//                }
-//            }
-//        }
-//        if(file != null){
-//            IoTools.writeObject(sourceFiles, file)
-//        }
-//    }
 }

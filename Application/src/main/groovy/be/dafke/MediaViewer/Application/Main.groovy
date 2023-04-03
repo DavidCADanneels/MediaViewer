@@ -35,30 +35,7 @@ class Main {
     static HashMap<Story, File> storyMap
     static Story activeStory
 
-    static HashMap<String, Media> mediaFiles
-    static HashMap<String,File> sourceFiles
-
-    static HashMap<String, Media> getMediaFiles() {
-//        return catalog.getMediaFiles()
-        return mediaFiles
-    }
-
-    static void setMediaFiles(HashMap<String, Media> mediaFiles) {
-//        catalog.setMediaFiles(mediaFiles)
-        Main.mediaFiles = mediaFiles
-    }
-
-    static HashMap<String, File> getSourceFiles() {
-//        return catalog.getSourceFiles()
-        return sourceFiles
-    }
-
-    static void setSourceFiles(HashMap<String, File> sourceFiles) {
-//        catalog.setSourceFiles(sourceFiles)
-        Main.sourceFiles = sourceFiles
-    }
-
-    static void addStory(String rootPath, Story story, File dataFile){
+    static void addStory(Story story, File dataFile){
         storyMap.put(story,dataFile)
         storyOverviewPanel.dataModel.fireTableDataChanged()
     }
@@ -69,12 +46,11 @@ class Main {
 
     static void setActiveStory(Story activeStory) {
         this.activeStory = activeStory
+        storyDetailsPanel.setStory(activeStory)
     }
 
     static void main(String[] args) {
         storyMap = [:]
-        sourceFiles = [:]
-        mediaFiles = [:]
         activeStory = null
 
         frame = new JFrame()

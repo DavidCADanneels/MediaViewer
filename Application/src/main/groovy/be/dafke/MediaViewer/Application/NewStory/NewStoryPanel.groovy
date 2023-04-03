@@ -27,10 +27,10 @@ class NewStoryPanel extends JPanel {
                 Story story = new Story()
                 story.setTitle(storyName)
                 story.setShortDescription(description)
-                Chapter root = new Chapter()
-                root.setTitle(storyName)
-                root.setPrefix("00")
-                Main.addStory(null, story, null)
+//                Chapter root = new Chapter()
+//                root.setTitle(storyName)
+//                root.setPrefix("00")
+                Main.addStory(story, null)
                 nameField.text = ''
                 descriptionField.text = ''
             }

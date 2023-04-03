@@ -41,13 +41,11 @@ class MediaOverviewPanel extends JPanel {
             Main.switchView(Main.VIEW_PARTICIPANTS_FOR_STORY)
         }
 
-        addMediaButton = new JButton(getBundle("MediaViewer").getString("ADD_PICTURES_BUTTON"))
-// TODO: use 'ADD_MEDIA_BUTTON' on button and open NewMediaDialog where MediaType can be set (?) + Author can be added
-//        addMediaButton = new JButton(getBundle("MediaViewer").getString("ADD_MEDIA_BUTTON"))
+        addMediaButton = new JButton(getBundle("MediaViewer").getString("ADD_MEDIA_BUTTON"))
         addMediaButton.addActionListener { e -> loadData() }
 
         JPanel south = new JPanel()
-//        south.add backToStoryOverViewButton
+        south.add backToStoryOverViewButton
         south.add backToStoryDetailsButton
         south.add participantButton
         south.add addMediaButton
@@ -57,7 +55,6 @@ class MediaOverviewPanel extends JPanel {
 
     void loadData(){
         Story story = Main.activeStory
-        List<Picture> mediaList = story.getPictures()
 
         File storyFile = Main.storyMap.get(story)
         File metaDataFolder = storyFile.getParentFile()
@@ -84,7 +81,8 @@ class MediaOverviewPanel extends JPanel {
                     // TODO: no need to reassign picture to picture ?
                     picture = IoTools.readAndDisplayMetadata(file, picture)
 
-                    mediaList.add(picture)
+                    List<Picture> pictures = story.getPictures()
+                    pictures.add(picture)
 
                     // TODO: show popup to set owner
                 }

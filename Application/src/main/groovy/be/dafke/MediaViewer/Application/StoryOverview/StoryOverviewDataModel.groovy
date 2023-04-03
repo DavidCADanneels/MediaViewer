@@ -11,7 +11,8 @@ class StoryOverviewDataModel extends DefaultTableModel {
 
     static int NAME_COL = 0
     static int DESC_COL = 1
-    static int NR_OF_COL = 2
+    static int FILE_COL = 2
+    static int NR_OF_COL = 3
 
     HashMap<Integer,String> columnNames = [:]
     HashMap<Integer,Class> columnClasses = [:]
@@ -19,8 +20,10 @@ class StoryOverviewDataModel extends DefaultTableModel {
     StoryOverviewDataModel() {
         columnClasses.put(NAME_COL, String.class)
         columnClasses.put(DESC_COL, String.class)
+        columnClasses.put(FILE_COL, File.class)
         columnNames.put(NAME_COL, getBundle("MediaViewer").getString("NAME"))
         columnNames.put(DESC_COL, getBundle("MediaViewer").getString("DESCR"))
+        columnNames.put(FILE_COL, getBundle("MediaViewer").getString("FILE"))
     }
 
     @Override
@@ -50,16 +53,19 @@ class StoryOverviewDataModel extends DefaultTableModel {
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-        Story story = Main.storyMap.keySet().getAt(rowIndex)
-        if(story != null) {
-            if (columnIndex == NAME_COL) {
-                story.getTitle()
-            } else if (columnIndex == DESC_COL) {
-                story.getShortDescription()
-            } else null
+        if (columnIndex == FILE_COL){
+            return Main.storyMap.values().getAt(rowIndex)
         } else {
-            null
+            Story story = Main.storyMap.keySet().getAt(rowIndex)
+            if (story != null) {
+                if (columnIndex == NAME_COL) {
+                    return story.getTitle()
+                } else if (columnIndex == DESC_COL) {
+                    return story.getShortDescription()
+                }
+            }
         }
+        return null
     }
 
     @Override

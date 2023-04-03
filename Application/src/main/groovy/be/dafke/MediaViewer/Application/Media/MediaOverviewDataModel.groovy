@@ -1,7 +1,8 @@
 package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.ObjectModel.Media.Media
+import be.dafke.MediaViewer.ObjectModel.Media.Picture
+import be.dafke.MediaViewer.ObjectModel.Media.Size2D
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.table.DefaultTableModel
@@ -9,13 +10,15 @@ import javax.swing.table.DefaultTableModel
 import static java.util.ResourceBundle.getBundle
 
 class MediaOverviewDataModel extends DefaultTableModel {
-    static int FILE_NAME_COL = 0
+    static int ID_COL = 0
     static int FOLDER_NAME_COL = 1
     static int EXTENSION_COL = 2
+    static int FILE_NAME_COL = 3
+    static int SIZE_COL = 4
 //    static int AUTHOR_COL = 1
 //    static int FULL_PATH_COL = 2
 //    static int CREATION_DATE_COL = 2
-    static int NR_OF_COL = 3
+    static int NR_OF_COL = 5
 
     HashMap<Integer,String> columnNames = [:]
     HashMap<Integer,Class> columnClasses = [:]
@@ -23,16 +26,20 @@ class MediaOverviewDataModel extends DefaultTableModel {
 //    Story story
 
     MediaOverviewDataModel() {
-        columnClasses.put(FILE_NAME_COL, String.class)
+        columnClasses.put(ID_COL, String.class)
         columnClasses.put(FOLDER_NAME_COL, String.class)
         columnClasses.put(EXTENSION_COL, String.class)
+        columnClasses.put(FILE_NAME_COL, String.class)
+        columnClasses.put(SIZE_COL, Size2D.class)
 //        columnClasses.put(AUTHOR_COL, Participant.class)
 //        columnClasses.put(CREATION_DATE_COL, Date.class)
 //        columnClasses.put(FULL_PATH_COL, File.class)
 
-        columnNames.put(FILE_NAME_COL, getBundle("MediaViewer").getString("FILE_NAME"))
+        columnNames.put(ID_COL, getBundle("MediaViewer").getString("ID"))
         columnNames.put(FOLDER_NAME_COL, getBundle("MediaViewer").getString("FOLDER_NAME"))
         columnNames.put(EXTENSION_COL, getBundle("MediaViewer").getString("EXTENSION"))
+        columnNames.put(FILE_NAME_COL, getBundle("MediaViewer").getString("FILE_NAME"))
+        columnNames.put(SIZE_COL, getBundle("MediaViewer").getString("IMAGE_SIZE"))
 //        columnNames.put(AUTHOR_COL, getBundle("MediaViewer").getString("AUTHOR"))
 //        columnNames.put(CREATION_DATE_COL, getBundle("MediaViewer").getString("CREATION_DATE"))
 //        columnNames.put(FULL_PATH_COL, getBundle("MediaViewer").getString("FULL_PATH"))
@@ -43,16 +50,16 @@ class MediaOverviewDataModel extends DefaultTableModel {
 //        fireTableDataChanged()
 //    }
 
-    List<Media> getMediaList(){
+    List<Picture> getMediaList(){
         Story story = Main.activeStory
         if(story){
-            story.getMediaList()
+            story.getPictures()
         } else null
     }
 
     @Override
     int getRowCount() {
-        List<Media> mediaList = getMediaList()
+        List<Picture> mediaList = getMediaList()
         mediaList?.size()?:0
     }
 
@@ -79,12 +86,20 @@ class MediaOverviewDataModel extends DefaultTableModel {
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-        List<Media> mediaList = getMediaList()
+        List<Picture> mediaList = getMediaList()
         if(mediaList!=null) {
-            Media media = mediaList.get(rowIndex)
-            if(media) {
-                if (columnIndex == FILE_NAME_COL) {
-                    return media.getFileName()
+            Picture picture = mediaList.get(rowIndex)
+            if(picture) {
+                if (columnIndex == ID_COL) {
+                    return picture.getFileName()
+                } else if (columnIndex == FOLDER_NAME_COL) {
+                    return picture.getSubFolderName()
+                } else if (columnIndex == EXTENSION_COL) {
+                    return picture.getExtension()
+                } else if (columnIndex == FILE_NAME_COL) {
+                    return "${picture.getFileName()}.${picture.getExtension()}"
+                } else if (columnIndex == SIZE_COL) {
+                    return picture.getSize()
                 } else {
                     null
                 }

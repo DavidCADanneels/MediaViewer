@@ -7,4 +7,10 @@ class Size2D {
         this.width = width
         this.height = height
     }
+
+    @Override
+    String toString() {
+        return 'test'
+//        return "${width} x ${height}"
+    }
 }

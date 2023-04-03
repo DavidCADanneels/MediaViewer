@@ -2,18 +2,10 @@ package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.Application.IoTools
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.Application.NewStory.NewStoryDialog
-import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
-import be.dafke.MediaViewer.ObjectModel.Media.Catalog
 import be.dafke.MediaViewer.ObjectModel.Media.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Media.Size2D
-import be.dafke.MediaViewer.ObjectModel.Media.Story
-import com.sun.imageio.plugins.jpeg.JPEGImageReader
-
-import javax.imageio.*;
-import javax.imageio.stream.*;
-import javax.imageio.metadata.*;
+import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.JButton
 import javax.swing.JFileChooser
@@ -64,12 +56,13 @@ class MediaOverviewPanel extends JPanel {
 
     void loadData(){
         Story story = Main.activeStory
-        List<String> mediaList = story.getMediaList()
-//        Catalog catalog = Catalog.getInstance()
-        HashMap<String,File> sourceFiles = Main.getSourceFiles()
-        HashMap<String,Media> mediaFiles = Main.getMediaFiles()
+        List<Media> mediaList = story.getMediaList()
 
-        JFileChooser chooser = new JFileChooser()
+        File storyFile = Main.storyMap.get(story)
+        File metaDataFolder = storyFile.getParentFile()
+        File startFolder = metaDataFolder.getParentFile()
+
+        JFileChooser chooser = new JFileChooser(startFolder)
         chooser.setMultiSelectionEnabled(true)
         if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File[] files = chooser.getSelectedFiles()
@@ -91,11 +84,11 @@ class MediaOverviewPanel extends JPanel {
                     picture.setSize(size2D)
 
 //                    catalog.addFile(fileName, picture, file)
-                    sourceFiles.put(fileName, file)
-                    mediaFiles.put(fileName, picture)
+//                    sourceFiles.put(fileName, file)
+//                    mediaFiles.put(fileName, picture)
 
-                    mediaList.add(fileName)
-                    System.out.println("ADD")
+                    mediaList.add(picture)
+//                    mediaMap.put(picture, file)
 //
                     // TODO: show popup to set owner
                 }

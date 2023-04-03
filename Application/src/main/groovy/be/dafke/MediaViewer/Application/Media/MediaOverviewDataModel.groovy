@@ -1,10 +1,8 @@
 package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
-import be.dafke.MediaViewer.ObjectModel.Media.Catalog
 import be.dafke.MediaViewer.ObjectModel.Media.Media
-import be.dafke.MediaViewer.ObjectModel.Media.Story
+import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.table.DefaultTableModel
 
@@ -12,22 +10,29 @@ import static java.util.ResourceBundle.getBundle
 
 class MediaOverviewDataModel extends DefaultTableModel {
     static int FILE_NAME_COL = 0
-    static int AUTHOR_COL = 1
-    static int FULL_PATH_COL = 2
-    static int CREATION_DATE_COL = 2
-    static int NR_OF_COL = 1
+    static int FOLDER_NAME_COL = 1
+    static int EXTENSION_COL = 2
+//    static int AUTHOR_COL = 1
+//    static int FULL_PATH_COL = 2
+//    static int CREATION_DATE_COL = 2
+    static int NR_OF_COL = 3
 
     HashMap<Integer,String> columnNames = [:]
     HashMap<Integer,Class> columnClasses = [:]
 
-    Story story
+//    Story story
 
     MediaOverviewDataModel() {
         columnClasses.put(FILE_NAME_COL, String.class)
+        columnClasses.put(FOLDER_NAME_COL, String.class)
+        columnClasses.put(EXTENSION_COL, String.class)
 //        columnClasses.put(AUTHOR_COL, Participant.class)
 //        columnClasses.put(CREATION_DATE_COL, Date.class)
 //        columnClasses.put(FULL_PATH_COL, File.class)
+
         columnNames.put(FILE_NAME_COL, getBundle("MediaViewer").getString("FILE_NAME"))
+        columnNames.put(FOLDER_NAME_COL, getBundle("MediaViewer").getString("FOLDER_NAME"))
+        columnNames.put(EXTENSION_COL, getBundle("MediaViewer").getString("EXTENSION"))
 //        columnNames.put(AUTHOR_COL, getBundle("MediaViewer").getString("AUTHOR"))
 //        columnNames.put(CREATION_DATE_COL, getBundle("MediaViewer").getString("CREATION_DATE"))
 //        columnNames.put(FULL_PATH_COL, getBundle("MediaViewer").getString("FULL_PATH"))
@@ -38,7 +43,7 @@ class MediaOverviewDataModel extends DefaultTableModel {
 //        fireTableDataChanged()
 //    }
 
-    List<String> getMediaList(){
+    List<Media> getMediaList(){
         Story story = Main.activeStory
         if(story){
             story.getMediaList()
@@ -47,7 +52,7 @@ class MediaOverviewDataModel extends DefaultTableModel {
 
     @Override
     int getRowCount() {
-        List<String> mediaList = getMediaList()
+        List<Media> mediaList = getMediaList()
         mediaList?.size()?:0
     }
 
@@ -74,39 +79,21 @@ class MediaOverviewDataModel extends DefaultTableModel {
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-        List<String> mediaList = getMediaList()
-        String filename = mediaList.get(rowIndex)
-        return filename
+        List<Media> mediaList = getMediaList()
+        if(mediaList!=null) {
+            Media media = mediaList.get(rowIndex)
+            if(media) {
+                if (columnIndex == FILE_NAME_COL) {
+                    return media.getFileName()
+                } else {
+                    null
+                }
+                null
+            }
+            null
+        }
+        null
     }
-//    @Override
-//    Object getValueAt(int rowIndex, int columnIndex) {
-//        List<String> mediaList = getMediaList()
-//        String fileName = mediaList.get(rowIndex)
-//
-//        if(columnIndex == FULL_PATH_COL) {
-//            HashMap<String, File> sourceFiles = Catalog.getSourceFiles()
-//            if (sourceFiles) {
-//                File file = sourceFiles.get(fileName)
-//                file.absolutePath
-//            }
-//        } else {
-//            HashMap<String,Media> mediaFiles = Catalog.getMediaFiles()
-//            if(mediaFiles) {
-//                Media media = mediaFiles.get(fileName)
-//                if (media != null) {
-//                    if (columnIndex == FILE_NAME_COL) {
-//                        fileName
-//                    } else if (columnIndex == AUTHOR_COL) {
-//                        media.getAuthor()
-//                    } else if (columnIndex == CREATION_DATE_COL) {
-//                        null
-////                media.getCreationTime()
-//                    }
-//                }
-//            }
-//        }
-//        null
-//    }
 
     @Override
     void setValueAt(Object value, int rowIndex, int columnIndex) {

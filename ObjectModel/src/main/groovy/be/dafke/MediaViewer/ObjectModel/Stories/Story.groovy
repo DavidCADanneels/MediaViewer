@@ -1,6 +1,7 @@
-package be.dafke.MediaViewer.ObjectModel.Media
+package be.dafke.MediaViewer.ObjectModel.Stories
 
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
+import be.dafke.MediaViewer.ObjectModel.Media.Media
 
 
 class Story {
@@ -8,7 +9,7 @@ class Story {
     String shortDescription
     String introText
 //    HashMap<String, Chapter> chapters = [:]
-    List<String> mediaList
+    List<Media> mediaList
     List<Participant> participants
     File projectFolder
 
@@ -25,11 +26,11 @@ class Story {
         this.projectFolder = projectFolder
     }
 
-    List<String> getMediaList() {
+    List<Media> getMediaList() {
         return mediaList
     }
 
-    void setMediaList(List<String> mediaList) {
+    void setMediaList(List<Media> mediaList) {
         this.mediaList = mediaList
     }
 

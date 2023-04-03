@@ -5,9 +5,8 @@ import be.dafke.MediaViewer.Application.Menu.MediaMenuBar
 import be.dafke.MediaViewer.Application.ParticipantsOverview.ParticipantsOverviewPanel
 import be.dafke.MediaViewer.Application.StoryDetails.StoryDetailsPanel
 import be.dafke.MediaViewer.Application.StoryOverview.StoryOverviewPanel
-import be.dafke.MediaViewer.ObjectModel.Media.Catalog
 import be.dafke.MediaViewer.ObjectModel.Media.Media
-import be.dafke.MediaViewer.ObjectModel.Media.Story
+import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.JFrame
 import javax.swing.JMenuBar
@@ -33,46 +32,36 @@ class Main {
     static final String VIEW_MEDIA_FOR_STORY = 'MEDIA'
     static final String VIEW_PARTICIPANTS_FOR_STORY = 'PARTICIPANTS'
 
-    static HashMap<String, Story> stories
-    // TODO: replace 'storyLocations' by 'storyPaths' + 'Story.fileName()' (e.g. "CassablancaVibes\/.metadata\/story.xml")
-    // TODO: NOTE: "CassablancaVibes\/.metadata\/story.xml" == "${index=name} + '.metadata' + 'story.xml
-    static HashMap<String, String> storyPaths
-    static HashMap<String, File> storyLocations
+    static HashMap<Story, File> storyMap
     static Story activeStory
+
     static HashMap<String, Media> mediaFiles
     static HashMap<String,File> sourceFiles
-//    static Catalog catalog
+
     static HashMap<String, Media> getMediaFiles() {
+//        return catalog.getMediaFiles()
         return mediaFiles
     }
 
     static void setMediaFiles(HashMap<String, Media> mediaFiles) {
+//        catalog.setMediaFiles(mediaFiles)
         Main.mediaFiles = mediaFiles
     }
 
     static HashMap<String, File> getSourceFiles() {
+//        return catalog.getSourceFiles()
         return sourceFiles
     }
 
     static void setSourceFiles(HashMap<String, File> sourceFiles) {
+//        catalog.setSourceFiles(sourceFiles)
         Main.sourceFiles = sourceFiles
     }
 
     static void addStory(String rootPath, Story story, File dataFile){
-        String title = story.getTitle()
-        storyPaths.put(title, rootPath)
-        stories.put(title, story)
-        storyLocations.put(title, dataFile)
+        storyMap.put(story,dataFile)
         storyOverviewPanel.dataModel.fireTableDataChanged()
     }
-
-//    static Catalog getCatalog() {
-//        return catalog
-//    }
-
-//    static void setCatalog(Catalog catalog) {
-//        Main.catalog = catalog
-//    }
 
     static Story getActiveStory() {
         return activeStory
@@ -83,13 +72,10 @@ class Main {
     }
 
     static void main(String[] args) {
-        stories = [:]
-        storyPaths = [:]
+        storyMap = [:]
         sourceFiles = [:]
         mediaFiles = [:]
-        storyLocations = [:]
         activeStory = null
-//        catalog = Catalog.getInstance()
 
         frame = new JFrame()
 

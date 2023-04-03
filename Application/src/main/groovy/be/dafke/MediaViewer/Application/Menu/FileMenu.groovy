@@ -3,7 +3,7 @@ package be.dafke.MediaViewer.Application.Menu
 import be.dafke.MediaViewer.Application.IoTools
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.Application.NewStory.NewStoryDialog
-import be.dafke.MediaViewer.ObjectModel.Media.Story
+import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.*
 import java.awt.Point
@@ -55,6 +55,7 @@ class FileMenu extends JMenu  {
             if(story!=null) {
                 // TODO: disable button if no activeStory
                 saveStory(story)
+//                saveCatalog()
             }
         }
 
@@ -76,15 +77,14 @@ class FileMenu extends JMenu  {
     }
 
     void saveStory(Story story){
-        String title = story.getTitle()
-        File file = Main.storyLocations.get(title)
+        File file = Main.storyMap.get(story)
         if(file == null){
             JFileChooser chooser = new JFileChooser()
             chooser.setMultiSelectionEnabled(false)
             if(chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
                 file = chooser.getSelectedFile()
                 if(file != null) {
-                    Main.storyLocations.put(title,file)
+                    Main.storyMap.put(story,file)
                 }
             }
         }
@@ -92,4 +92,22 @@ class FileMenu extends JMenu  {
             IoTools.writeObject(story, file)
         }
     }
+
+//    void saveCatalog(){
+//        HashMap<String, File> sourceFiles = Main.getSourceFiles()
+//        File file = Main.getCatalogFile()
+//        if(file == null){
+//            JFileChooser chooser = new JFileChooser()
+//            chooser.setMultiSelectionEnabled(false)
+//            if(chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+//                file = chooser.getSelectedFile()
+//                if(file != null) {
+//                    Main.setCatalogFile(file)
+//                }
+//            }
+//        }
+//        if(file != null){
+//            IoTools.writeObject(sourceFiles, file)
+//        }
+//    }
 }

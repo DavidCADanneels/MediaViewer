@@ -1,7 +1,7 @@
 package be.dafke.MediaViewer.Application.StoryOverview
 
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.ObjectModel.Media.Story
+import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.table.DefaultTableModel
 
@@ -25,7 +25,7 @@ class StoryOverviewDataModel extends DefaultTableModel {
 
     @Override
     int getRowCount() {
-        Main.stories.size()
+        Main.storyMap.size()
     }
 
     @Override
@@ -50,7 +50,7 @@ class StoryOverviewDataModel extends DefaultTableModel {
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-        Story story = Main.stories.values().get(rowIndex)
+        Story story = Main.storyMap.keySet().getAt(rowIndex)
         if(story != null) {
             if (columnIndex == NAME_COL) {
                 story.getTitle()

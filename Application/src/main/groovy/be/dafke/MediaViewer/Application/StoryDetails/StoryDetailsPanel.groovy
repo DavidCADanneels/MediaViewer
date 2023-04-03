@@ -2,7 +2,7 @@ package be.dafke.MediaViewer.Application.StoryDetails
 
 import be.dafke.MediaViewer.Application.IoTools
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.ObjectModel.Media.Story
+import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.BoxLayout
 import javax.swing.JButton
@@ -70,7 +70,7 @@ class StoryDetailsPanel extends JPanel {
         story.setTitle(title)
         story.setShortDescription(descr)
         story.setIntroText(intro)
-        File file = Main.storyLocations.get(title)
+        File file = Main.storyMap.get(story)
         if(file != null) {
             IoTools.writeObject(story, file)
         }

@@ -1,14 +1,13 @@
 package be.dafke.MediaViewer.Application
 
 import be.dafke.MediaViewer.ObjectModel.Media.Size2D
-import be.dafke.MediaViewer.ObjectModel.Media.Story
+import be.dafke.MediaViewer.ObjectModel.Stories.Story
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator
 import com.sun.imageio.plugins.jpeg.JPEGImageReader
 
 import javax.imageio.ImageIO
 import javax.imageio.ImageReader
-import javax.imageio.metadata.IIOMetadata
 import javax.imageio.stream.ImageInputStream
 
 class IoTools {

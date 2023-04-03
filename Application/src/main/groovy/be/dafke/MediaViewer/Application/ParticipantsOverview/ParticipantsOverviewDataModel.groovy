@@ -2,7 +2,7 @@ package be.dafke.MediaViewer.Application.ParticipantsOverview
 
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
-import be.dafke.MediaViewer.ObjectModel.Media.Story
+import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.table.DefaultTableModel
 

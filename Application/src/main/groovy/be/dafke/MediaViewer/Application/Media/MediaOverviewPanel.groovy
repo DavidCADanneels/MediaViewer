@@ -65,6 +65,9 @@ class MediaOverviewPanel extends JPanel {
     void loadData(){
         Story story = Main.activeStory
         List<String> mediaList = story.getMediaList()
+//        Catalog catalog = Catalog.getInstance()
+        HashMap<String,File> sourceFiles = Main.getSourceFiles()
+        HashMap<String,Media> mediaFiles = Main.getMediaFiles()
 
         JFileChooser chooser = new JFileChooser()
         chooser.setMultiSelectionEnabled(true)
@@ -84,13 +87,13 @@ class MediaOverviewPanel extends JPanel {
                     picture.setFileName(fileName)
                     picture.setExtension('jpg')
                     picture.setSubFolderName('jpg')
-//                        Size2D size2D = IoTools.readAndDisplayMetadata(file)
-//                        picture.setSize(size2D)
-//                        Main.activeStory.mediaList.add(fileName)
+                    Size2D size2D = IoTools.readAndDisplayMetadata(file)
+                    picture.setSize(size2D)
 
-//                        Catalog.sourceFiles.put(fileName, file)
-//                        Catalog.mediaFiles.put(fileName, picture)
-//                    Main.activeStory.mediaList.add(fileName)
+//                    catalog.addFile(fileName, picture, file)
+                    sourceFiles.put(fileName, file)
+                    mediaFiles.put(fileName, picture)
+
                     mediaList.add(fileName)
                     System.out.println("ADD")
 //

@@ -6,6 +6,7 @@ import be.dafke.MediaViewer.Application.ParticipantsOverview.ParticipantsOvervie
 import be.dafke.MediaViewer.Application.StoryDetails.StoryDetailsPanel
 import be.dafke.MediaViewer.Application.StoryOverview.StoryOverviewPanel
 import be.dafke.MediaViewer.ObjectModel.Media.Catalog
+import be.dafke.MediaViewer.ObjectModel.Media.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Story
 
 import javax.swing.JFrame
@@ -38,6 +39,24 @@ class Main {
     static HashMap<String, String> storyPaths
     static HashMap<String, File> storyLocations
     static Story activeStory
+    static HashMap<String, Media> mediaFiles
+    static HashMap<String,File> sourceFiles
+//    static Catalog catalog
+    static HashMap<String, Media> getMediaFiles() {
+        return mediaFiles
+    }
+
+    static void setMediaFiles(HashMap<String, Media> mediaFiles) {
+        Main.mediaFiles = mediaFiles
+    }
+
+    static HashMap<String, File> getSourceFiles() {
+        return sourceFiles
+    }
+
+    static void setSourceFiles(HashMap<String, File> sourceFiles) {
+        Main.sourceFiles = sourceFiles
+    }
 
     static void addStory(String rootPath, Story story, File dataFile){
         String title = story.getTitle()
@@ -46,6 +65,14 @@ class Main {
         storyLocations.put(title, dataFile)
         storyOverviewPanel.dataModel.fireTableDataChanged()
     }
+
+//    static Catalog getCatalog() {
+//        return catalog
+//    }
+
+//    static void setCatalog(Catalog catalog) {
+//        Main.catalog = catalog
+//    }
 
     static Story getActiveStory() {
         return activeStory
@@ -58,8 +85,11 @@ class Main {
     static void main(String[] args) {
         stories = [:]
         storyPaths = [:]
+        sourceFiles = [:]
+        mediaFiles = [:]
         storyLocations = [:]
         activeStory = null
+//        catalog = Catalog.getInstance()
 
         frame = new JFrame()
 

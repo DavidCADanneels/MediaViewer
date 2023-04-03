@@ -18,6 +18,8 @@ class StoryOverviewPanel extends JPanel {
 //        add new StoryButtonsPanel(), BorderLayout.SOUTH
     }
 
+    // TODO: add listener on Table entry and open STORY_DETAILS of Selection
+
 //    Story getSelectedItem(){
 //        int row = overviewTable.getSelectedRow()
 //        if(row == -1){

@@ -65,14 +65,7 @@ class MediaOverviewPanel extends JPanel {
         if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File[] files = chooser.getSelectedFiles()
             files.each { File file ->
-                // TODO: use 'name' to store Catalog
-
-                // TODO: use 'extension' to store in Media object
-//                    System.out.println("name: ${name}")
-                System.out.println("file: ${file.getName()}")
-
                 if(file.name.toLowerCase().endsWith('.jpg')) {
-                    System.out.println("ends with jpg")
                     Picture picture = new Picture()
                     String fileName = file.name - '.jpg'
                     picture.setFileName(fileName)
@@ -89,6 +82,7 @@ class MediaOverviewPanel extends JPanel {
             }
             Main.mediaOverviewPanel.dataModel.fireTableDataChanged()
         }
+        // TODO: add support to read Movies, Text, etc. (not only pictures)
 //            Point locationOnScreen = getLocationOnScreen()
 //            NewMediaDialog newMediaDialog = new NewMediaDialog()
 //            newMediaDialog.setLocation(locationOnScreen)

@@ -49,6 +49,12 @@ class Main {
         storyDetailsPanel.setStory(activeStory)
     }
 
+    static File getSubFolder(Story story){
+        File storyFile = Main.storyMap.get(story)
+        File metaDataFolder = storyFile.getParentFile()
+        metaDataFolder.getParentFile()
+    }
+
     static void main(String[] args) {
         storyMap = [:]
         activeStory = null

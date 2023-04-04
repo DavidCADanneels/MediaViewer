@@ -2,10 +2,10 @@ package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.Application.IoTools
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.ObjectModel.Media.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
+import javax.swing.DefaultListSelectionModel
 import javax.swing.JButton
 import javax.swing.JFileChooser
 import javax.swing.JPanel
@@ -20,11 +20,34 @@ class MediaOverviewPanel extends JPanel {
     JButton backToStoryDetailsButton, backToStoryOverViewButton, participantButton, addMediaButton
     static JTable overviewTable
 
+    ImagePanel imagePanel
+
     MediaOverviewPanel() {
         setLayout(new BorderLayout())
         dataModel = new MediaOverviewDataModel()
         overviewTable = new JTable(dataModel)
-        add new JScrollPane(overviewTable), BorderLayout.CENTER
+        add new JScrollPane(overviewTable), BorderLayout.NORTH
+
+        DefaultListSelectionModel selection = new DefaultListSelectionModel()
+        selection.addListSelectionListener({ e ->
+            if (!e.getValueIsAdjusting()) {
+                List<Picture> list = dataModel.getMediaList()
+                int index = overviewTable.getSelectedRow()
+                if(index != -1){
+                    Picture picture = list.get(index)
+                    imagePanel.setPicture(picture)
+                }
+            }
+        })
+        overviewTable.setSelectionModel(selection)
+
+        imagePanel = new ImagePanel()
+
+//        JPanel center = new JPanel()
+//        center.add pictureViewer
+
+        add imagePanel, BorderLayout.CENTER
+//        add center, BorderLayout.CENTER
 
         backToStoryOverViewButton = new JButton("${getBundle("MediaViewer").getString("BACK_TO_MAIN")}")
         backToStoryOverViewButton.addActionListener { e ->
@@ -56,9 +79,10 @@ class MediaOverviewPanel extends JPanel {
     void loadData(){
         Story story = Main.activeStory
 
-        File storyFile = Main.storyMap.get(story)
-        File metaDataFolder = storyFile.getParentFile()
-        File startFolder = metaDataFolder.getParentFile()
+//        File storyFile = Main.storyMap.get(story)
+//        File metaDataFolder = storyFile.getParentFile()
+//        File startFolder = metaDataFolder.getParentFile()
+        File startFolder = Main.getSubFolder(story)
 
         JFileChooser chooser = new JFileChooser(startFolder)
         chooser.setMultiSelectionEnabled(true)

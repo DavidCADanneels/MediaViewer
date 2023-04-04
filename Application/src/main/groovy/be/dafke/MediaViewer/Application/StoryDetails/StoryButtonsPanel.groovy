@@ -9,7 +9,7 @@ import javax.swing.JPanel
 import static java.util.ResourceBundle.getBundle
 
 class StoryButtonsPanel extends JPanel {
-    JButton chaptersButton, participantButton, mediaButton
+    JButton chaptersButton, participantButton, mediaButton, backToStoryOverViewButton
 
     StoryButtonsPanel() {
 //        chaptersButton = new JButton(getBundle("MediaViewer").getString("SHOW_CHAPTERS_FOR_STORY"))
@@ -47,7 +47,12 @@ class StoryButtonsPanel extends JPanel {
             }
         }
 
+        backToStoryOverViewButton = new JButton("${getBundle("MediaViewer").getString("BACK_TO_MAIN")}")
+        backToStoryOverViewButton.addActionListener { e ->
+            Main.switchView(Main.VIEW_STORY_OVERVIEW)
+        }
 
+        add backToStoryOverViewButton
 //        add chaptersButton
         add participantButton
         add mediaButton

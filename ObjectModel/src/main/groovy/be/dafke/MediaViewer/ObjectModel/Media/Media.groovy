@@ -1,12 +1,14 @@
 package be.dafke.MediaViewer.ObjectModel.Media
 
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
+//import com.fasterxml.jackson.dataformat.xml.XmlMapper
 
 abstract class Media {
     String subFolderName
     String fileName
     String extension
-    Participant author
+    // TODO: add Custom @XmlMapper output for 'author' field: use Participant.getId()
+//    Participant author
 
     Media() {
     }
@@ -47,11 +49,11 @@ abstract class Media {
         this.fileName = fileName
     }
 
-    Participant getAuthor() {
-        return author
-    }
-
-    void setAuthor(Participant author) {
-        this.author = author
-    }
+//    Participant getAuthor() {
+//        return author
+//    }
+//
+//    void setAuthor(Participant author) {
+//        this.author = author
+//    }
 }

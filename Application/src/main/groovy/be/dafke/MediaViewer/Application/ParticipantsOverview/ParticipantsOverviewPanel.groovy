@@ -45,7 +45,7 @@ class ParticipantsOverviewPanel extends JPanel {
         })
         
         JPanel south = new JPanel()
-//        south.add backToStoryOverViewButton
+        south.add backToStoryOverViewButton
         south.add backToStoryDetailsButton
         south.add mediaButton
 //        south.add addParticipantButton

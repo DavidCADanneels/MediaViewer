@@ -6,6 +6,10 @@ class Participant {
     Participant() {
     }
 
+//    String getId(){
+//        return "${firstName} ${lastName}"
+//    }
+
     String getFirstName() {
         return firstName
     }

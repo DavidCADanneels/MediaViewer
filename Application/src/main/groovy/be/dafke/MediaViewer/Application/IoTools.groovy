@@ -78,6 +78,7 @@ class IoTools {
                         System.out.println """\
 File ${path.toString()} created on ${creationDate.getDate()}/${creationDate.getMonth() + 1}/${creationDate.getYear() + 1900} \
 at ${creationDate.getHours()}:${creationDate.getMinutes()}:${creationDate.getSeconds()}"""
+                        picture.setCreationDate creationDate
                     }
                     return picture
                 } else {

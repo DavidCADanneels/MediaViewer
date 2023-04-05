@@ -2,6 +2,7 @@ package be.dafke.MediaViewer.ObjectModel.Media
 
 class Picture extends Media {
     int width, heigth
+    Date creationDate
 
     Picture() {
 
@@ -21,5 +22,13 @@ class Picture extends Media {
 
     void setHeigth(int heigth) {
         this.heigth = heigth
+    }
+
+    Date getCreationDate() {
+        return creationDate
+    }
+
+    void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate
     }
 }

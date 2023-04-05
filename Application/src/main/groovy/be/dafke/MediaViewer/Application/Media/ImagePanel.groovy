@@ -5,7 +5,10 @@ import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.ImageIcon
+import javax.swing.JCheckBox
 import javax.swing.JLabel
+import javax.swing.JScrollPane
+import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.Graphics
 import java.awt.Image
@@ -21,10 +24,37 @@ class ImagePanel extends JPanel{
     ImageIcon imageIcon
     Picture picture
     File imageFile
+    JCheckBox checkBox
+    JScrollPane scrollPane
 
     ImagePanel() {
+        setLayout new BorderLayout()
         label = new JLabel()
-        add label
+        add label, BorderLayout.CENTER
+        add createOptionPanel(), BorderLayout.EAST
+    }
+
+    JPanel createOptionPanel(){
+        JPanel panel = new JPanel()
+        checkBox = new JCheckBox("Full size pictures")
+        checkBox.setSelected(false)
+        checkBox.addActionListener { e -> checkBoxAction() }
+        panel.add checkBox
+        panel
+    }
+
+    void checkBoxAction(){
+        fullSize = checkBox.isSelected()
+        if(fullSize){
+            remove(label)
+            scrollPane = new JScrollPane(label)
+            add scrollPane, BorderLayout.CENTER
+        } else {
+            remove(scrollPane)
+            add label, BorderLayout.CENTER
+        }
+        revalidate()
+        repaint()
     }
 
     void setPicture(Picture picture){

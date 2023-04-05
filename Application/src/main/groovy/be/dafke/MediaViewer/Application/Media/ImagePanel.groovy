@@ -28,7 +28,7 @@ class ImagePanel extends JPanel{
     File imageFile
     JCheckBox checkBox
     JScrollPane scrollPane
-    JTextField sizeField
+    ImageDetailPanel imageDetailPanel
 
     ImagePanel() {
         setLayout new BorderLayout()
@@ -45,16 +45,12 @@ class ImagePanel extends JPanel{
         checkBox.setSelected(false)
         checkBox.addActionListener { e -> checkBoxAction() }
 
-        sizeField = new JTextField(20)
-        sizeField.setEnabled false
-        JPanel line1 = new JPanel()
-        line1.add new JLabel("Size:")
-        line1.add sizeField
+        imageDetailPanel = new ImageDetailPanel()
 
         JPanel panel = new JPanel()
         panel.setLayout new BoxLayout(panel, BoxLayout.Y_AXIS)
         panel.add checkBox
-        panel.add line1
+        panel.add imageDetailPanel
         panel
     }
 
@@ -76,7 +72,7 @@ class ImagePanel extends JPanel{
         this.picture = picture
         try {
             if(picture) {
-                sizeField.setText "${picture.getWidth()} x ${picture.getHeigth()}"
+                imageDetailPanel.setPicture(picture)
                 Story story = Main.activeStory
                 File startFolder = Main.getSubFolder(story)
                 String subFolderName = picture.getSubFolderName()
@@ -88,8 +84,6 @@ class ImagePanel extends JPanel{
 //            System.out.println("file: ${imageFile.getAbsolutePath()}")
 
                 bufferedImage = ImageIO.read(imageFile)
-            } else {
-                sizeField.setText ''
             }
         } catch (IOException ex) {
             // handle exception...

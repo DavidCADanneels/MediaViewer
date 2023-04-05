@@ -44,11 +44,12 @@ class MediaOverviewPanel extends JPanel {
         overviewTable.setSelectionModel(selection)
 
         imagePanel = new ImagePanel()
-        JScrollPane imageScroll = new JScrollPane(imagePanel)
+//        JScrollPane imageScroll = new JScrollPane(imagePanel)
+//        splitPane.add imageScroll, JSplitPane.BOTTOM
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT)
         splitPane.add overviewScrol, JSplitPane.TOP
-        splitPane.add imageScroll, JSplitPane.BOTTOM
+        splitPane.add imagePanel, JSplitPane.BOTTOM
         add splitPane, BorderLayout.CENTER
 
         backToStoryOverViewButton = new JButton("${getBundle("MediaViewer").getString("BACK_TO_MAIN")}")

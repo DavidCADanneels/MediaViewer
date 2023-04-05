@@ -10,6 +10,7 @@ import javax.swing.JButton
 import javax.swing.JFileChooser
 import javax.swing.JPanel
 import javax.swing.JScrollPane
+import javax.swing.JSplitPane
 import javax.swing.JTable
 import java.awt.BorderLayout
 
@@ -26,7 +27,7 @@ class MediaOverviewPanel extends JPanel {
         setLayout(new BorderLayout())
         dataModel = new MediaOverviewDataModel()
         overviewTable = new JTable(dataModel)
-        add new JScrollPane(overviewTable), BorderLayout.NORTH
+        JScrollPane overviewScrol =  new JScrollPane(overviewTable)
 
         DefaultListSelectionModel selection = new DefaultListSelectionModel()
         selection.addListSelectionListener({ e ->
@@ -36,18 +37,19 @@ class MediaOverviewPanel extends JPanel {
                 if(index != -1){
                     Picture picture = list.get(index)
                     imagePanel.setPicture(picture)
+                    // TODO: (add option to) show selected image in new ImageFrame
                 }
             }
         })
         overviewTable.setSelectionModel(selection)
 
         imagePanel = new ImagePanel()
+        JScrollPane imageScroll = new JScrollPane(imagePanel)
 
-//        JPanel center = new JPanel()
-//        center.add pictureViewer
-
-        add imagePanel, BorderLayout.CENTER
-//        add center, BorderLayout.CENTER
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT)
+        splitPane.add overviewScrol, JSplitPane.TOP
+        splitPane.add imageScroll, JSplitPane.BOTTOM
+        add splitPane, BorderLayout.CENTER
 
         backToStoryOverViewButton = new JButton("${getBundle("MediaViewer").getString("BACK_TO_MAIN")}")
         backToStoryOverViewButton.addActionListener { e ->

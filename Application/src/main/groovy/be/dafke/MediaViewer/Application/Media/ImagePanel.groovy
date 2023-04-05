@@ -4,16 +4,19 @@ import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
-import java.awt.Graphics
+import javax.swing.ImageIcon
+import javax.swing.JLabel
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import javax.swing.JPanel
 
 class ImagePanel extends JPanel{
 
-    private BufferedImage image
+    JLabel label
 
     ImagePanel() {
+        label = new JLabel()
+        add label
     }
 
     void setPicture(Picture picture){
@@ -28,19 +31,12 @@ class ImagePanel extends JPanel{
             File fileToLoad = new File(startFolder, fileName)
             System.out.println("file: ${fileToLoad.getAbsolutePath()}")
 
-            image = ImageIO.read(fileToLoad)
-//            BufferedImage myPicture = ImageIO.read(new File("path-to-file"));
-//            JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-//            add(picLabel);
+            BufferedImage image = ImageIO.read(fileToLoad)
+            ImageIcon imageIcon = new ImageIcon(image)
+            label.setBounds(0,0,picture.getWidth(),picture.getHeigth())
+            label.setIcon(imageIcon)
         } catch (IOException ex) {
             // handle exception...
         }
     }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g)
-        g.drawImage(image, 0, 0, this) // see javadoc for more info on the parameters            
-    }
-
 }

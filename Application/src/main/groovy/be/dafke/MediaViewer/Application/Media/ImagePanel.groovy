@@ -7,6 +7,7 @@ import be.dafke.MediaViewer.ObjectModel.Stories.Story
 import javax.swing.ImageIcon
 import javax.swing.JLabel
 import java.awt.Dimension
+import java.awt.Graphics
 import java.awt.Image
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
@@ -16,6 +17,10 @@ class ImagePanel extends JPanel{
 
     JLabel label
     boolean fullSize = false
+    BufferedImage bufferedImage
+    ImageIcon imageIcon
+    Picture picture
+    File imageFile
 
     ImagePanel() {
         label = new JLabel()
@@ -23,6 +28,7 @@ class ImagePanel extends JPanel{
     }
 
     void setPicture(Picture picture){
+        this.picture = picture
         try {
             Story story = Main.activeStory
             File startFolder = Main.getSubFolder(story)
@@ -31,33 +37,21 @@ class ImagePanel extends JPanel{
                 startFolder = new File(startFolder, subFolderName)
             }
             String fileName = "${picture.getFileName()}.${picture.getExtension()}"
-            File fileToLoad = new File(startFolder, fileName)
-            System.out.println("file: ${fileToLoad.getAbsolutePath()}")
+            imageFile = new File(startFolder, fileName)
+//            System.out.println("file: ${imageFile.getAbsolutePath()}")
 
-
-            BufferedImage bufferedImage = ImageIO.read(fileToLoad)
-
-            ImageIcon imageIcon
-            if(fullSize){
-                imageIcon = new ImageIcon(bufferedImage)
-            } else {
-                Dimension available = getSize()
-                Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeigth())
-                Dimension newDimension = rescale(oldDimension, available)
-                int availableWidth = available.getWidth()
-                int availableHeight = available.getHeight()
-                System.out.println("Available: ${availableWidth} x ${availableHeight}")
-
-                Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(),newDimension.getHeight().intValue(),Image.SCALE_SMOOTH)
-                imageIcon = new ImageIcon(image)
-            }
-            label.setIcon(imageIcon)
+            bufferedImage = ImageIO.read(imageFile)
         } catch (IOException ex) {
             // handle exception...
+        } finally {
+            repaint()
         }
     }
 
     Dimension rescale(Dimension pictureSize, Dimension available){
+//        int availableWidth = available.getWidth()
+//        int availableHeight = available.getHeight()
+//        System.out.println("Available: ${availableWidth} x ${availableHeight}")
         Double oldWidth = pictureSize.getWidth()
         Double oldHeigth = pictureSize.getHeight()
         Double scaleWidth = oldWidth / available.getWidth()
@@ -66,5 +60,23 @@ class ImagePanel extends JPanel{
         Double newWidth = oldWidth / scale
         Double newHeigth = oldHeigth / scale
         return new Dimension(newWidth.intValue(),newHeigth.intValue())
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g)
+        if (picture) {
+            if (fullSize) {
+                imageIcon = new ImageIcon(bufferedImage)
+            } else {
+                Dimension available = getSize()
+                Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeigth())
+                Dimension newDimension = rescale(oldDimension, available)
+
+                Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
+                imageIcon = new ImageIcon(image)
+            }
+            label.setIcon(imageIcon)
+        }
     }
 }

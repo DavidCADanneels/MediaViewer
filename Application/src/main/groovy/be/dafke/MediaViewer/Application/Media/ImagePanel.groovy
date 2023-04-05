@@ -4,10 +4,12 @@ import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
+import javax.swing.BoxLayout
 import javax.swing.ImageIcon
 import javax.swing.JCheckBox
 import javax.swing.JLabel
 import javax.swing.JScrollPane
+import javax.swing.JTextField
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.Graphics
@@ -26,20 +28,33 @@ class ImagePanel extends JPanel{
     File imageFile
     JCheckBox checkBox
     JScrollPane scrollPane
+    JTextField sizeField
 
     ImagePanel() {
         setLayout new BorderLayout()
         label = new JLabel()
         add label, BorderLayout.CENTER
-        add createOptionPanel(), BorderLayout.EAST
+        JPanel east = new JPanel(new BorderLayout())
+        east.add createOptionPanel(), BorderLayout.NORTH
+        // east.add new ImageDetailsPanel(). BorderLayout.CENTER
+        add east, BorderLayout.EAST
     }
 
     JPanel createOptionPanel(){
-        JPanel panel = new JPanel()
         checkBox = new JCheckBox("Full size pictures")
         checkBox.setSelected(false)
         checkBox.addActionListener { e -> checkBoxAction() }
+
+        sizeField = new JTextField(20)
+        sizeField.setEnabled false
+        JPanel line1 = new JPanel()
+        line1.add new JLabel("Size:")
+        line1.add sizeField
+
+        JPanel panel = new JPanel()
+        panel.setLayout new BoxLayout(panel, BoxLayout.Y_AXIS)
         panel.add checkBox
+        panel.add line1
         panel
     }
 
@@ -60,17 +75,22 @@ class ImagePanel extends JPanel{
     void setPicture(Picture picture){
         this.picture = picture
         try {
-            Story story = Main.activeStory
-            File startFolder = Main.getSubFolder(story)
-            String subFolderName = picture.getSubFolderName()
-            if(subFolderName){
-                startFolder = new File(startFolder, subFolderName)
-            }
-            String fileName = "${picture.getFileName()}.${picture.getExtension()}"
-            imageFile = new File(startFolder, fileName)
+            if(picture) {
+                sizeField.setText "${picture.getWidth()} x ${picture.getHeigth()}"
+                Story story = Main.activeStory
+                File startFolder = Main.getSubFolder(story)
+                String subFolderName = picture.getSubFolderName()
+                if (subFolderName) {
+                    startFolder = new File(startFolder, subFolderName)
+                }
+                String fileName = "${picture.getFileName()}.${picture.getExtension()}"
+                imageFile = new File(startFolder, fileName)
 //            System.out.println("file: ${imageFile.getAbsolutePath()}")
 
-            bufferedImage = ImageIO.read(imageFile)
+                bufferedImage = ImageIO.read(imageFile)
+            } else {
+                sizeField.setText ''
+            }
         } catch (IOException ex) {
             // handle exception...
         } finally {

@@ -1,7 +1,5 @@
 package be.dafke.MediaViewer.Application.Media
 
-import be.dafke.MediaViewer.Application.NewStory.NewStoryPanel
-
 import javax.swing.*
 
 import static java.util.ResourceBundle.getBundle

@@ -1,7 +1,6 @@
 package be.dafke.MediaViewer.Application.NewStory
 
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.BoxLayout

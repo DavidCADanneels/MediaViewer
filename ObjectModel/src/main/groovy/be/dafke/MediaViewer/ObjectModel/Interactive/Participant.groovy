@@ -4,11 +4,14 @@ class Participant {
     String firstName, lastName
 
     Participant() {
+        firstName = ''
+        lastName = ''
     }
 
-//    String getId(){
-//        return "${firstName} ${lastName}"
-//    }
+    @Override
+    String toString(){
+        return firstName
+    }
 
     String getFirstName() {
         return firstName

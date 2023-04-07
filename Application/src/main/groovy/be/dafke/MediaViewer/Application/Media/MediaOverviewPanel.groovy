@@ -2,11 +2,14 @@ package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.Application.IoTools
 import be.dafke.MediaViewer.Application.Main
+import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
+import javax.swing.DefaultCellEditor
 import javax.swing.DefaultListSelectionModel
 import javax.swing.JButton
+import javax.swing.JComboBox
 import javax.swing.JFileChooser
 import javax.swing.JPanel
 import javax.swing.JScrollPane
@@ -15,6 +18,7 @@ import javax.swing.JTable
 import javax.swing.RowSorter
 import javax.swing.event.ListSelectionEvent
 import javax.swing.event.ListSelectionListener
+import javax.swing.table.TableColumn
 import javax.swing.table.TableModel
 import java.awt.BorderLayout
 import java.awt.Dimension
@@ -80,6 +84,10 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
         this.story = story
         dataModel.setStory(story)
         imagePanel.setStory(story)
+        JComboBox<Participant> comboBox = new JComboBox<>()
+        story.getParticipants().each { comboBox.addItem(it) }
+        TableColumn column = overviewTable.getColumnModel().getColumn(dataModel.OWNER_COL)
+        column.setCellEditor(new DefaultCellEditor(comboBox))
     }
 
     void valueChanged(ListSelectionEvent e) {

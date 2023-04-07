@@ -84,8 +84,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
 
     @Override
     boolean isCellEditable(int rowIndex, int columnIndex) {
-        return false
-//        return columnIndex == OWNER_COL
+        return columnIndex == OWNER_COL
     }
 
     @Override
@@ -101,7 +100,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
             } else if (columnIndex == OWNER_COL) {
                 Integer id = picture.getOwner()
                 if(id != null) {
-                    return story.participants.get(id)
+                    return story.getParticipants().get(id)
                 } else return null
             } else if (columnIndex == CREATION_DATE_COL) {
                 return picture.getCreationDate()
@@ -128,8 +127,13 @@ class MediaOverviewDataModel extends AbstractTableModel {
 
     @Override
     void setValueAt(Object value, int rowIndex, int columnIndex) {
+        Picture picture = getObject(rowIndex, columnIndex)
         if (columnIndex == OWNER_COL) {
-
+            List<Participant> list = story.getParticipants()
+            Participant participant = (Participant)value
+            Integer id = list.indexOf(participant)
+            System.out.println("Participant: ${participant} has ID: ${id}")
+            picture.setOwner(id)
         }
     }
 }

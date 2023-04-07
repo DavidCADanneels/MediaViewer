@@ -20,7 +20,7 @@ import java.awt.Dimension
 class ImageTablePanel extends JScrollPane implements ListSelectionListener {
     MediaOverviewDataModel dataModel
     JTable overviewTable
-    boolean singleSelection = true
+    boolean singleSelection
     ImagePanel imagePanel
 //    Story story
 
@@ -34,11 +34,7 @@ class ImageTablePanel extends JScrollPane implements ListSelectionListener {
         DefaultListSelectionModel selection = new DefaultListSelectionModel()
         selection.addListSelectionListener(this)
         overviewTable.setSelectionModel(selection)
-        if(singleSelection) {
-            overviewTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION)
-        } else {
-            overviewTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION)
-        }
+        setSingleSelection(true)
         setViewportView(overviewTable)
     }
 
@@ -49,6 +45,15 @@ class ImageTablePanel extends JScrollPane implements ListSelectionListener {
         story.getParticipants().each { comboBox.addItem(it) }
         TableColumn column = overviewTable.getColumnModel().getColumn(dataModel.OWNER_COL)
         column.setCellEditor(new DefaultCellEditor(comboBox))
+    }
+
+    void setSingleSelection(boolean singleSelection) {
+        this.singleSelection = singleSelection
+        if(singleSelection) {
+            overviewTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION)
+        } else {
+            overviewTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION)
+        }
     }
 
     void valueChanged(ListSelectionEvent e) {

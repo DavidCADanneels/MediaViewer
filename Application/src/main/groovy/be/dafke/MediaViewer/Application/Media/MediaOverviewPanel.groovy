@@ -2,61 +2,32 @@ package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.Application.IoTools
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
-import javax.swing.DefaultCellEditor
-import javax.swing.DefaultListSelectionModel
 import javax.swing.JButton
-import javax.swing.JComboBox
 import javax.swing.JFileChooser
 import javax.swing.JPanel
-import javax.swing.JScrollPane
 import javax.swing.JSplitPane
-import javax.swing.JTable
-import javax.swing.ListSelectionModel
-import javax.swing.RowSorter
-import javax.swing.event.ListSelectionEvent
-import javax.swing.event.ListSelectionListener
-import javax.swing.table.TableColumn
-import javax.swing.table.TableModel
 import java.awt.BorderLayout
-import java.awt.Dimension
 
 import static java.util.ResourceBundle.getBundle
 
-class MediaOverviewPanel extends JPanel implements ListSelectionListener {
-    MediaOverviewDataModel dataModel
+class MediaOverviewPanel extends JPanel {
     JButton backToStoryDetailsButton, backToStoryOverViewButton, participantButton, addMediaButton
-    JTable overviewTable
-    boolean singleSelection = true
 
     ImagePanel imagePanel
+    ImageTablePanel imageTablePanel
     Story story
 
     MediaOverviewPanel() {
         setLayout(new BorderLayout())
-        dataModel = new MediaOverviewDataModel()
-        overviewTable = new JTable(dataModel)
-        overviewTable.setPreferredScrollableViewportSize(new Dimension(500, 200))
-//        overviewTable.setAutoCreateRowSorter(true)
-        overviewTable.setRowSorter(new MediaRowSorter(dataModel))
-        DefaultListSelectionModel selection = new DefaultListSelectionModel()
-        selection.addListSelectionListener(this)
-        overviewTable.setSelectionModel(selection)
-        if(singleSelection) {
-            overviewTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION)
-        } else {
-            overviewTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION)
-        }
-
-        JScrollPane overviewScrol = new JScrollPane(overviewTable)
 
         imagePanel = new ImagePanel()
+        imageTablePanel = new ImageTablePanel(imagePanel)
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT)
-        splitPane.add overviewScrol, JSplitPane.TOP
+        splitPane.add imageTablePanel, JSplitPane.TOP
         splitPane.add imagePanel, JSplitPane.BOTTOM
         add splitPane, BorderLayout.CENTER
 
@@ -89,65 +60,8 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
 
     void setStory(Story story) {
         this.story = story
-        dataModel.setStory(story)
+        imageTablePanel.setStory(story)
         imagePanel.setStory(story)
-        JComboBox<Participant> comboBox = new JComboBox<>()
-        story.getParticipants().each { comboBox.addItem(it) }
-        TableColumn column = overviewTable.getColumnModel().getColumn(dataModel.OWNER_COL)
-        column.setCellEditor(new DefaultCellEditor(comboBox))
-    }
-
-    void valueChanged(ListSelectionEvent e) {
-        if (!e.getValueIsAdjusting()) {
-            if(singleSelection) {
-                showSingleSelection()
-            } else {
-                showMultipleSelection()
-            }
-        }
-    }
-
-    Picture getSingleSelectedPicture() {
-        int row = overviewTable.getSelectedRow()
-        if (row == -1) return null
-        RowSorter<? extends TableModel> rowSorter = overviewTable.getRowSorter()
-        if (rowSorter) {
-            int rowInModel = rowSorter.convertRowIndexToModel(row)
-            return dataModel.getObject(rowInModel)
-        } else {
-            return dataModel.getObject(row)
-        }
-    }
-
-    List<Picture> getAllSelectedPictures(){
-        int[] selectedRows = overviewTable.getSelectedRows()
-        RowSorter<? extends TableModel> rowSorter = overviewTable.getRowSorter()
-        ArrayList<Picture> pictures = new ArrayList<>()
-        for(int selectedRow : selectedRows) {
-            Picture picture
-            if(rowSorter){
-                int rowInModel = rowSorter.convertRowIndexToModel(selectedRow)
-                picture = dataModel.getObject(rowInModel)
-            } else {
-                picture = dataModel.getObject(selectedRow)
-            }
-            if(picture){
-                pictures.add(picture)
-            }
-        }
-        return pictures
-    }
-
-    void showSingleSelection(){
-        Picture picture = getSingleSelectedPicture()
-        imagePanel.setPicture(picture)
-            // TODO: (add option to) show selected image in new ImageFrame
-    }
-
-    void showMultipleSelection(){
-        List<Picture> pictures = getAllSelectedPictures()
-        imagePanel.setPictures(pictures)
-            // TODO: (add option to) show selected image in new ImageFrame
     }
 
     void loadData(){
@@ -173,7 +87,7 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
                     // TODO: show popup to set owner
                 }
             }
-            Main.mediaOverviewPanel.dataModel.fireTableDataChanged()
+            imageTablePanel.dataModel.fireTableDataChanged()
         }
         // TODO: add support to read Movies, Text, etc. (not only pictures)
 //            Point locationOnScreen = getLocationOnScreen()

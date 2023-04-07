@@ -12,7 +12,6 @@ import javax.swing.JPanel
 import javax.swing.JScrollPane
 import javax.swing.JSplitPane
 import javax.swing.JTable
-import javax.swing.ListSelectionModel
 import javax.swing.RowSorter
 import javax.swing.event.ListSelectionEvent
 import javax.swing.event.ListSelectionListener
@@ -82,22 +81,21 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
     }
 
     void showSelection(){
-//        Picture picture = overviewTable.getSelectedObject()
         Picture picture
 
-
         int row = overviewTable.getSelectedRow()
-        if(row == -1) picture = null
-        RowSorter<? extends TableModel> rowSorter = overviewTable.getRowSorter()
-        int col = overviewTable.getSelectedColumn()
-        if(rowSorter) {
-            int rowInModel = rowSorter.convertRowIndexToModel(row)
-            picture = dataModel.getObject(rowInModel, col)
+        if(row == -1) {
+            picture = null
         } else {
-            picture = dataModel.getObject(row,col)
+            RowSorter<? extends TableModel> rowSorter = overviewTable.getRowSorter()
+            int col = overviewTable.getSelectedColumn()
+            if (rowSorter) {
+                int rowInModel = rowSorter.convertRowIndexToModel(row)
+                picture = dataModel.getObject(rowInModel, col)
+            } else {
+                picture = dataModel.getObject(row, col)
+            }
         }
-
-
         imagePanel.setPicture(picture)
             // TODO: (add option to) show selected image in new ImageFrame
     }

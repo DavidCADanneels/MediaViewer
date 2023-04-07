@@ -27,6 +27,8 @@ class FileMenu extends JMenu  {
                 if (story) {
                     Main.addStory(story, file)
                     Main.activeStory = story
+                    Main.mediaOverviewPanel.dataModel.setPictures(story.getPictures())
+                    Main.mediaOverviewPanel.dataModel.fireTableDataChanged()
                     Main.switchView(Main.VIEW_STORY_DETAILS)
                 }
             }

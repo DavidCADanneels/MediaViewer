@@ -1,28 +1,26 @@
 package be.dafke.MediaViewer.Application.Media
 
-import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
-import be.dafke.MediaViewer.ObjectModel.Stories.Story
+import be.dafke.MediaViewer.ObjectModel.Tables.SelectableTableModel
 
-import javax.swing.table.DefaultTableModel
 
 import static java.util.ResourceBundle.getBundle
 
-class MediaOverviewDataModel extends DefaultTableModel {
+class MediaOverviewDataModel extends SelectableTableModel<Picture> {
     static int ID_COL = 0
-    static int FOLDER_NAME_COL = 1
-    static int EXTENSION_COL = 2
-    static int FILE_NAME_COL = 3
-    static int SIZE_COL = 4
+    static int CREATION_DATE_COL = 1
+    static int FILE_NAME_COL = 2
+    static int SIZE_COL = 3
 //    static int AUTHOR_COL = 1
 //    static int FULL_PATH_COL = 2
-//    static int CREATION_DATE_COL = 2
-    static int NR_OF_COL = 5
+    static int EXTENSION_COL = 4
+    static int FOLDER_NAME_COL = 5
+    static int NR_OF_COL = 4
 
     HashMap<Integer,String> columnNames = [:]
     HashMap<Integer,Class> columnClasses = [:]
 
-//    Story story
+    List<Picture> pictures = []
 
     MediaOverviewDataModel() {
         columnClasses.put(ID_COL, String.class)
@@ -30,8 +28,8 @@ class MediaOverviewDataModel extends DefaultTableModel {
         columnClasses.put(EXTENSION_COL, String.class)
         columnClasses.put(FILE_NAME_COL, String.class)
         columnClasses.put(SIZE_COL, String.class)
+        columnClasses.put(CREATION_DATE_COL, Date.class)
 //        columnClasses.put(AUTHOR_COL, Participant.class)
-//        columnClasses.put(CREATION_DATE_COL, Date.class)
 //        columnClasses.put(FULL_PATH_COL, File.class)
 
         columnNames.put(ID_COL, getBundle("MediaViewer").getString("ID"))
@@ -39,8 +37,8 @@ class MediaOverviewDataModel extends DefaultTableModel {
         columnNames.put(EXTENSION_COL, getBundle("MediaViewer").getString("EXTENSION"))
         columnNames.put(FILE_NAME_COL, getBundle("MediaViewer").getString("FILE_NAME"))
         columnNames.put(SIZE_COL, getBundle("MediaViewer").getString("IMAGE_SIZE"))
+        columnNames.put(CREATION_DATE_COL, getBundle("MediaViewer").getString("CREATION_DATE"))
 //        columnNames.put(AUTHOR_COL, getBundle("MediaViewer").getString("AUTHOR"))
-//        columnNames.put(CREATION_DATE_COL, getBundle("MediaViewer").getString("CREATION_DATE"))
 //        columnNames.put(FULL_PATH_COL, getBundle("MediaViewer").getString("FULL_PATH"))
     }
 
@@ -49,17 +47,17 @@ class MediaOverviewDataModel extends DefaultTableModel {
 //        fireTableDataChanged()
 //    }
 
-    List<Picture> getMediaList(){
-        Story story = Main.activeStory
-        if(story){
-            story.getPictures()
-        } else null
+    void setPictures(List<Picture> pictures) {
+        this.pictures = pictures
+    }
+
+    Picture getObject(int row, int col) {
+        return pictures.get(row)
     }
 
     @Override
     int getRowCount() {
-        List<Picture> mediaList = getMediaList()
-        mediaList?.size()?:0
+        pictures.size()
     }
 
     @Override
@@ -85,9 +83,10 @@ class MediaOverviewDataModel extends DefaultTableModel {
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-        List<Picture> mediaList = getMediaList()
-        if(mediaList!=null) {
-            Picture picture = mediaList.get(rowIndex)
+//        List<Picture> mediaList = getMediaList()
+//        if(mediaList!=null) {
+//            Picture picture = mediaList.get(rowIndex)
+            Picture picture = getObject(rowIndex, columnIndex)
             if(picture) {
                 if (columnIndex == ID_COL) {
                     return picture.getFileName()
@@ -95,6 +94,8 @@ class MediaOverviewDataModel extends DefaultTableModel {
                     return picture.getSubFolderName()
                 } else if (columnIndex == EXTENSION_COL) {
                     return picture.getExtension()
+                } else if (columnIndex == CREATION_DATE_COL) {
+                    return picture.getCreationDate()
                 } else if (columnIndex == FILE_NAME_COL) {
                     return "${picture.getFileName()}.${picture.getExtension()}"
                 } else if (columnIndex == SIZE_COL) {
@@ -105,8 +106,8 @@ class MediaOverviewDataModel extends DefaultTableModel {
                 null
             }
             null
-        }
-        null
+//        }
+//        null
     }
 
     @Override

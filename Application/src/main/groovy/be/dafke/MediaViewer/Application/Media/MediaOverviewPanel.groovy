@@ -4,7 +4,6 @@ import be.dafke.MediaViewer.Application.IoTools
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
-import be.dafke.MediaViewer.ObjectModel.Tables.SelectableTable
 
 import javax.swing.DefaultListSelectionModel
 import javax.swing.JButton
@@ -26,14 +25,14 @@ import static java.util.ResourceBundle.getBundle
 class MediaOverviewPanel extends JPanel implements ListSelectionListener {
     MediaOverviewDataModel dataModel
     JButton backToStoryDetailsButton, backToStoryOverViewButton, participantButton, addMediaButton
-    SelectableTable<Picture> overviewTable
+    JTable overviewTable
 
     ImagePanel imagePanel
 
     MediaOverviewPanel() {
         setLayout(new BorderLayout())
         dataModel = new MediaOverviewDataModel()
-        overviewTable = new SelectableTable<>(dataModel)
+        overviewTable = new JTable(dataModel)
         overviewTable.setPreferredScrollableViewportSize(new Dimension(500, 200))
         overviewTable.setAutoCreateRowSorter(true)
         DefaultListSelectionModel selection = new DefaultListSelectionModel()

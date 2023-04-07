@@ -1,12 +1,12 @@
 package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
-import be.dafke.MediaViewer.ObjectModel.Tables.SelectableTableModel
 
+import javax.swing.table.AbstractTableModel
 
 import static java.util.ResourceBundle.getBundle
 
-class MediaOverviewDataModel extends SelectableTableModel<Picture> {
+class MediaOverviewDataModel extends AbstractTableModel {
     static int ID_COL = 0
     static int CREATION_DATE_COL = 1
     static int FILE_NAME_COL = 2

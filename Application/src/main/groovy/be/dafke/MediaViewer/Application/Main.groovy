@@ -46,9 +46,7 @@ class Main {
     static void setActiveStory(Story story) {
         activeStory = story
         Main.participantsOverviewPanel.setStory(story)
-//        Main.participantsOverviewPanel.dataModel.fireTableDataChanged()
         Main.mediaOverviewPanel.setStory(story)
-//        Main.mediaOverviewPanel.dataModel.fireTableDataChanged()
         storyDetailsPanel.setStory(story)
     }
 

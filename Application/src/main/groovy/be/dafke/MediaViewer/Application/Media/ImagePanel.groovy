@@ -78,7 +78,6 @@ class ImagePanel extends JPanel{
         try {
             if(picture) {
                 imageDetailPanel.setPicture(picture)
-//                Story story = Main.activeStory
                 File startFolder = Main.getSubFolder(story)
                 String subFolderName = picture.getSubFolderName()
                 if (subFolderName) {

@@ -27,10 +27,6 @@ class FileMenu extends JMenu  {
                 if (story) {
                     Main.addStory(story, file)
                     Main.activeStory = story
-//                    Main.participantsOverviewPanel.dataModel.setStory(story)
-//                    Main.participantsOverviewPanel.dataModel.fireTableDataChanged()
-//                    Main.mediaOverviewPanel.dataModel.setStory(story)
-//                    Main.mediaOverviewPanel.dataModel.fireTableDataChanged()
                     Main.switchView(Main.VIEW_STORY_DETAILS)
                 }
             }
@@ -42,7 +38,6 @@ class FileMenu extends JMenu  {
             if(story!=null) {
                 // TODO: disable button if no activeStory
                 saveStory(story)
-//                saveCatalog()
             }
         }
 

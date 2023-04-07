@@ -43,7 +43,6 @@ class AddParticipantPanel extends JPanel {
             Participant participant = new Participant()
             participant.setFirstName(firstName)
             participant.setLastName(lastName)
-//            Story story = Main.activeStory
             if (story!=null && story.getParticipants()!=null) {
                 List<Participant> participants = story.getParticipants()
                 participants.add(participant)

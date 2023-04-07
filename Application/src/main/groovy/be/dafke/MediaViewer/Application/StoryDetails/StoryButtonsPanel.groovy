@@ -27,10 +27,8 @@ class StoryButtonsPanel extends JPanel {
 
         participantButton = new JButton(getBundle("MediaViewer").getString("SHOW_PARTICIPANTS_FOR_STORY"))
         participantButton.addActionListener { e ->
-//            Story story = Main.activeStory
             if(story) {
-//                Main.participantsOverviewPanel.setStory(story)
-                Main.participantsOverviewPanel.dataModel.fireTableDataChanged()
+                Main.participantsOverviewPanel.setStory(story)
                 Main.switchView(Main.VIEW_PARTICIPANTS_FOR_STORY)
             } else {
                 System.err.println("Story is 'null'")
@@ -39,14 +37,7 @@ class StoryButtonsPanel extends JPanel {
 
         mediaButton = new JButton(getBundle("MediaViewer").getString("SHOW_MEDIA_FOR_STORY"))
         mediaButton.addActionListener { e ->
-//            Story story = Main.activeStory
-            if(story) {
-//                Main.mediaOverviewPanel.setStory(story)
-//                Main.mediaOverviewPanel.dataModel.fireTableDataChanged()
-                Main.switchView(Main.VIEW_MEDIA_FOR_STORY)
-            } else {
-                System.err.println("Story is 'null'")
-            }
+            Main.switchView(Main.VIEW_MEDIA_FOR_STORY)
         }
 
         backToStoryOverViewButton = new JButton("${getBundle("MediaViewer").getString("BACK_TO_MAIN")}")
@@ -63,14 +54,4 @@ class StoryButtonsPanel extends JPanel {
     void setStory(Story story) {
         this.story = story
     }
-
-//    Story getSelectedItem(){
-//        int row = overviewTable.getSelectedRow()
-//        if(row == -1){
-//            // TODO: disable button of none is selected
-//            return null
-//        } else {
-//            Main.stories.get(row)
-//        }
-//    }
 }

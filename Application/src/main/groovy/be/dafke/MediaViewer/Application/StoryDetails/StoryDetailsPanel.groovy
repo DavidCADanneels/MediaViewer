@@ -68,7 +68,6 @@ class StoryDetailsPanel extends JPanel {
     }
 
     void save(){
-//        Story story = Main.activeStory
         String title = nameField.getText().trim()
         String descr = descrField.text.trim()
         String intro = longText.text.trim()

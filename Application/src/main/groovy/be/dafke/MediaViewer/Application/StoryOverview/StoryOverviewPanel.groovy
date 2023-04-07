@@ -37,14 +37,4 @@ class StoryOverviewPanel extends JPanel {
     }
 
     // TODO: add listener on Table entry and open STORY_DETAILS of Selection
-
-//    Story getSelectedItem(){
-//        int row = overviewTable.getSelectedRow()
-//        if(row == -1){
-//            // TODO: disable button of none is selected
-//            return null
-//        } else {
-//            Main.stories.get(row)
-//        }
-//    }
 }

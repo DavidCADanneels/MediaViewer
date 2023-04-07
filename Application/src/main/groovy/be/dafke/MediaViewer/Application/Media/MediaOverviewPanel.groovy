@@ -61,8 +61,6 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
 
         participantButton = new JButton(getBundle("MediaViewer").getString("SHOW_PARTICIPANTS_FOR_STORY"))
         participantButton.addActionListener { e ->
-//            Main.participantsOverviewPanel.dataModel.setStory(Main.activeStory)
-//            Main.participantsOverviewPanel.dataModel.setStory(story)
             Main.switchView(Main.VIEW_PARTICIPANTS_FOR_STORY)
         }
 
@@ -111,7 +109,6 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
     }
 
     void loadData(){
-//        Story story = Main.activeStory
         File startFolder = Main.getSubFolder(story)
 
         JFileChooser chooser = new JFileChooser(startFolder)

@@ -26,9 +26,9 @@ class ImagePanel extends JPanel{
     ImageIcon imageIcon
     Picture picture
     File imageFile
-    JCheckBox checkBox
     JScrollPane scrollPane
     ImageDetailPanel imageDetailPanel
+    ImageShowOptionsPanel imageShowOptionsPanel
     Story story
 
     ImagePanel() {
@@ -45,22 +45,12 @@ class ImagePanel extends JPanel{
         this.story = story
     }
 
-    JPanel createOptionPanel(){
-        checkBox = new JCheckBox("Full size pictures")
-        checkBox.setSelected(false)
-        checkBox.addActionListener { e -> checkBoxAction() }
-
-        imageDetailPanel = new ImageDetailPanel()
-
-        JPanel panel = new JPanel()
-        panel.setLayout new BoxLayout(panel, BoxLayout.Y_AXIS)
-        panel.add checkBox
-        panel.add imageDetailPanel
-        panel
+    void setFullSize(boolean fullSize) {
+        this.fullSize = fullSize
+        showPicture()
     }
 
-    void checkBoxAction(){
-        fullSize = checkBox.isSelected()
+    void showPicture(){
         if(fullSize){
             remove(label)
             scrollPane = new JScrollPane(label)
@@ -71,6 +61,17 @@ class ImagePanel extends JPanel{
         }
         revalidate()
         repaint()
+    }
+
+    JPanel createOptionPanel(){
+        imageShowOptionsPanel = new ImageShowOptionsPanel(this)
+        imageDetailPanel = new ImageDetailPanel()
+
+        JPanel panel = new JPanel()
+        panel.setLayout new BoxLayout(panel, BoxLayout.Y_AXIS)
+        panel.add imageShowOptionsPanel
+        panel.add imageDetailPanel
+        panel
     }
 
     void setPictures(List<Picture> picture){

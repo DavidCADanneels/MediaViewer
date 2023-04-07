@@ -43,9 +43,13 @@ class Main {
         return activeStory
     }
 
-    static void setActiveStory(Story activeStory) {
-        this.activeStory = activeStory
-        storyDetailsPanel.setStory(activeStory)
+    static void setActiveStory(Story story) {
+        activeStory = story
+        Main.participantsOverviewPanel.setStory(story)
+//        Main.participantsOverviewPanel.dataModel.fireTableDataChanged()
+        Main.mediaOverviewPanel.setStory(story)
+//        Main.mediaOverviewPanel.dataModel.fireTableDataChanged()
+        storyDetailsPanel.setStory(story)
     }
 
     static File getSubFolder(Story story){

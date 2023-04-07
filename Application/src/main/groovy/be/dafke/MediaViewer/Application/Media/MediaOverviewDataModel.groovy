@@ -51,6 +51,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
     void setStory(Story story) {
         this.story = story
         pictures = story.getPictures()
+        fireTableDataChanged()
     }
 
 //    void setPictures(List<Picture> pictures) {

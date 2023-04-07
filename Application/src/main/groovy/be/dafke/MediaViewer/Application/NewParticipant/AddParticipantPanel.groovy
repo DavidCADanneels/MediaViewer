@@ -15,6 +15,7 @@ import static java.util.ResourceBundle.getBundle
 class AddParticipantPanel extends JPanel {
     JTextField firstNameField, lastNameField
     JButton createButton
+    Story story
 
     AddParticipantPanel() {
         firstNameField = new JTextField(20)
@@ -42,7 +43,7 @@ class AddParticipantPanel extends JPanel {
             Participant participant = new Participant()
             participant.setFirstName(firstName)
             participant.setLastName(lastName)
-            Story story = Main.activeStory
+//            Story story = Main.activeStory
             if (story!=null && story.getParticipants()!=null) {
                 List<Participant> participants = story.getParticipants()
                 participants.add(participant)

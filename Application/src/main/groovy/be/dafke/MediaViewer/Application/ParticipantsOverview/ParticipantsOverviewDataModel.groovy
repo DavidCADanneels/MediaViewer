@@ -16,23 +16,25 @@ class ParticipantsOverviewDataModel extends DefaultTableModel {
     HashMap<Integer,String> columnNames = [:]
     HashMap<Integer,Class> columnClasses = [:]
 
+    Story story
+    List<Participant> participants
+
     ParticipantsOverviewDataModel() {
+        participants = []
         columnClasses.put(FIRST_NAME_COL, String.class)
         columnClasses.put(LAST_NAME_COL, String.class)
         columnNames.put(FIRST_NAME_COL, getBundle("MediaViewer").getString("FIRST_NAME"))
         columnNames.put(LAST_NAME_COL, getBundle("MediaViewer").getString("LAST_NAME"))
     }
 
-    List<Participant> getParticipants(){
-        Story story = Main.activeStory
-        if(story){
-            story.getParticipants()
-        } else null
+    void setStory(Story story) {
+        this.story = story
+        participants = story.getParticipants()
+        fireTableDataChanged()
     }
 
     @Override
     int getRowCount() {
-        List<Participant> participants = getParticipants()
         participants?.size()?:0
     }
 
@@ -58,24 +60,20 @@ class ParticipantsOverviewDataModel extends DefaultTableModel {
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-        List<Participant> participants = getParticipants()
-        if(participants) {
-            Participant participant = participants.get(rowIndex)
-            if (participant != null) {
-                if (columnIndex == FIRST_NAME_COL) {
-                    participant.getFirstName()
-                } else if (columnIndex == LAST_NAME_COL) {
-                    participant.getLastName()
-                } else null
-            } else {
-                null
-            }
-        } else null
+        Participant participant = participants.get(rowIndex)
+        if (participant != null) {
+            if (columnIndex == FIRST_NAME_COL) {
+                participant.getFirstName()
+            } else if (columnIndex == LAST_NAME_COL) {
+                participant.getLastName()
+            } else null
+        } else {
+            null
+        }
     }
 
     @Override
     void setValueAt(Object value, int rowIndex, int columnIndex) {
-        List<Participant> participants = getParticipants()
         Participant participant = participants.get(rowIndex)
         if(participant != null) {
             if (columnIndex == FIRST_NAME_COL) {

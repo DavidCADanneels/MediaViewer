@@ -2,6 +2,7 @@ package be.dafke.MediaViewer.Application.ParticipantsOverview
 
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.Application.NewParticipant.NewParticipantDialog
+import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.JButton
 import javax.swing.JPanel
@@ -15,6 +16,7 @@ class ParticipantsOverviewPanel extends JPanel {
     ParticipantsOverviewDataModel dataModel
     JButton backToStoryDetailsButton, backToStoryOverViewButton, mediaButton, addParticipantButton
     JTable overviewTable
+    Story story
 
     ParticipantsOverviewPanel() {
         setLayout(new BorderLayout())
@@ -53,6 +55,10 @@ class ParticipantsOverviewPanel extends JPanel {
         add south, BorderLayout.SOUTH
     }
 
+    void setStory(Story story) {
+        this.story = story
+        dataModel.setStory(story)
+    }
 //    ParticipantsOverviewDataModel getDataModel() {
 //        return dataModel
 //    }

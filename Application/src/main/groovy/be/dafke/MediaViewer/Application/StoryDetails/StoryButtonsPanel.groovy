@@ -11,6 +11,8 @@ import static java.util.ResourceBundle.getBundle
 class StoryButtonsPanel extends JPanel {
     JButton chaptersButton, participantButton, mediaButton, backToStoryOverViewButton
 
+    Story story
+
     StoryButtonsPanel() {
 //        chaptersButton = new JButton(getBundle("MediaViewer").getString("SHOW_CHAPTERS_FOR_STORY"))
 //        chaptersButton.addActionListener { e ->
@@ -25,7 +27,7 @@ class StoryButtonsPanel extends JPanel {
 
         participantButton = new JButton(getBundle("MediaViewer").getString("SHOW_PARTICIPANTS_FOR_STORY"))
         participantButton.addActionListener { e ->
-            Story story = Main.activeStory
+//            Story story = Main.activeStory
             if(story) {
 //                Main.participantsOverviewPanel.setStory(story)
                 Main.participantsOverviewPanel.dataModel.fireTableDataChanged()
@@ -37,10 +39,10 @@ class StoryButtonsPanel extends JPanel {
 
         mediaButton = new JButton(getBundle("MediaViewer").getString("SHOW_MEDIA_FOR_STORY"))
         mediaButton.addActionListener { e ->
-            Story story = Main.activeStory
+//            Story story = Main.activeStory
             if(story) {
 //                Main.mediaOverviewPanel.setStory(story)
-                Main.mediaOverviewPanel.dataModel.fireTableDataChanged()
+//                Main.mediaOverviewPanel.dataModel.fireTableDataChanged()
                 Main.switchView(Main.VIEW_MEDIA_FOR_STORY)
             } else {
                 System.err.println("Story is 'null'")
@@ -56,6 +58,10 @@ class StoryButtonsPanel extends JPanel {
 //        add chaptersButton
         add participantButton
         add mediaButton
+    }
+
+    void setStory(Story story) {
+        this.story = story
     }
 
 //    Story getSelectedItem(){

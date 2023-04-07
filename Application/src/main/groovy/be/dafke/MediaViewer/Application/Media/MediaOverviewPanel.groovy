@@ -27,6 +27,7 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
     JTable overviewTable
 
     ImagePanel imagePanel
+    Story story
 
     MediaOverviewPanel() {
         setLayout(new BorderLayout())
@@ -60,6 +61,8 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
 
         participantButton = new JButton(getBundle("MediaViewer").getString("SHOW_PARTICIPANTS_FOR_STORY"))
         participantButton.addActionListener { e ->
+//            Main.participantsOverviewPanel.dataModel.setStory(Main.activeStory)
+//            Main.participantsOverviewPanel.dataModel.setStory(story)
             Main.switchView(Main.VIEW_PARTICIPANTS_FOR_STORY)
         }
 
@@ -73,6 +76,12 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
         south.add addMediaButton
 
         add south, BorderLayout.SOUTH
+    }
+
+    void setStory(Story story) {
+        this.story = story
+        dataModel.setStory(story)
+        imagePanel.setStory(story)
     }
 
     void valueChanged(ListSelectionEvent e) {
@@ -102,7 +111,7 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
     }
 
     void loadData(){
-        Story story = Main.activeStory
+//        Story story = Main.activeStory
         File startFolder = Main.getSubFolder(story)
 
         JFileChooser chooser = new JFileChooser(startFolder)

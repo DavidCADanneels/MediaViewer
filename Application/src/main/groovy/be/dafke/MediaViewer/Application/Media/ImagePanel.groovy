@@ -29,6 +29,7 @@ class ImagePanel extends JPanel{
     JCheckBox checkBox
     JScrollPane scrollPane
     ImageDetailPanel imageDetailPanel
+    Story story
 
     ImagePanel() {
         setLayout new BorderLayout()
@@ -38,6 +39,10 @@ class ImagePanel extends JPanel{
         east.add createOptionPanel(), BorderLayout.NORTH
         // east.add new ImageDetailsPanel(). BorderLayout.CENTER
         add east, BorderLayout.EAST
+    }
+
+    void setStory(Story story) {
+        this.story = story
     }
 
     JPanel createOptionPanel(){
@@ -73,7 +78,7 @@ class ImagePanel extends JPanel{
         try {
             if(picture) {
                 imageDetailPanel.setPicture(picture)
-                Story story = Main.activeStory
+//                Story story = Main.activeStory
                 File startFolder = Main.getSubFolder(story)
                 String subFolderName = picture.getSubFolderName()
                 if (subFolderName) {

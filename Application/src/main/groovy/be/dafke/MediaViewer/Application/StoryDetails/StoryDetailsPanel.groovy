@@ -19,6 +19,8 @@ class StoryDetailsPanel extends JPanel {
     JTextField nameField, descrField
     JTextArea longText
     JButton saveChanges
+    StoryButtonsPanel storyButtonsPanel
+    Story story
 
     StoryDetailsPanel() {
         setLayout(new BorderLayout())
@@ -48,21 +50,25 @@ class StoryDetailsPanel extends JPanel {
         JPanel center = new JPanel()
         center.add scrollPane
 
+        storyButtonsPanel = new StoryButtonsPanel()
+
         add north, BorderLayout.NORTH
         add center, BorderLayout.CENTER
-        add new StoryButtonsPanel(), BorderLayout.SOUTH
+        add storyButtonsPanel, BorderLayout.SOUTH
     }
 
     void setStory(Story story) {
+        this.story = story
         if(story) {
             nameField.setText(story.getTitle())
             descrField.setText(story.getShortDescription())
             longText.setText(story.getIntroText())
+            storyButtonsPanel.setStory(story)
         }
     }
 
     void save(){
-        Story story = Main.activeStory
+//        Story story = Main.activeStory
         String title = nameField.getText().trim()
         String descr = descrField.text.trim()
         String intro = longText.text.trim()

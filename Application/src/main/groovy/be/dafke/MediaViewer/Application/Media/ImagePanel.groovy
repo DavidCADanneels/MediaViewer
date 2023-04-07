@@ -6,10 +6,8 @@ import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.BoxLayout
 import javax.swing.ImageIcon
-import javax.swing.JCheckBox
 import javax.swing.JLabel
 import javax.swing.JScrollPane
-import javax.swing.JTextField
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.Graphics
@@ -35,10 +33,12 @@ class ImagePanel extends JPanel{
         setLayout new BorderLayout()
         label = new JLabel()
         add label, BorderLayout.CENTER
-        JPanel east = new JPanel(new BorderLayout())
-        east.add createOptionPanel(), BorderLayout.NORTH
-        // east.add new ImageDetailsPanel(). BorderLayout.CENTER
-        add east, BorderLayout.EAST
+
+        imageShowOptionsPanel = new ImageShowOptionsPanel(this)
+        imageDetailPanel = new ImageDetailPanel()
+
+        add imageShowOptionsPanel, BorderLayout.NORTH
+        add imageDetailPanel, BorderLayout.EAST
     }
 
     void setStory(Story story) {
@@ -61,17 +61,6 @@ class ImagePanel extends JPanel{
         }
         revalidate()
         repaint()
-    }
-
-    JPanel createOptionPanel(){
-        imageShowOptionsPanel = new ImageShowOptionsPanel(this)
-        imageDetailPanel = new ImageDetailPanel()
-
-        JPanel panel = new JPanel()
-        panel.setLayout new BoxLayout(panel, BoxLayout.Y_AXIS)
-        panel.add imageShowOptionsPanel
-        panel.add imageDetailPanel
-        panel
     }
 
     void setPictures(List<Picture> picture){

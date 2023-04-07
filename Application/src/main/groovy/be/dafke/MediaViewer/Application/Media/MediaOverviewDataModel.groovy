@@ -42,11 +42,6 @@ class MediaOverviewDataModel extends SelectableTableModel<Picture> {
 //        columnNames.put(FULL_PATH_COL, getBundle("MediaViewer").getString("FULL_PATH"))
     }
 
-//    void setStory(Story story) {
-//        this.story = story
-//        fireTableDataChanged()
-//    }
-
     void setPictures(List<Picture> pictures) {
         this.pictures = pictures
     }
@@ -83,31 +78,26 @@ class MediaOverviewDataModel extends SelectableTableModel<Picture> {
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-//        List<Picture> mediaList = getMediaList()
-//        if(mediaList!=null) {
-//            Picture picture = mediaList.get(rowIndex)
-            Picture picture = getObject(rowIndex, columnIndex)
-            if(picture) {
-                if (columnIndex == ID_COL) {
-                    return picture.getFileName()
-                } else if (columnIndex == FOLDER_NAME_COL) {
-                    return picture.getSubFolderName()
-                } else if (columnIndex == EXTENSION_COL) {
-                    return picture.getExtension()
-                } else if (columnIndex == CREATION_DATE_COL) {
-                    return picture.getCreationDate()
-                } else if (columnIndex == FILE_NAME_COL) {
-                    return "${picture.getFileName()}.${picture.getExtension()}"
-                } else if (columnIndex == SIZE_COL) {
-                    return "${picture.getWidth()} x ${picture.getHeigth()}"
-                } else {
-                    null
-                }
+        Picture picture = getObject(rowIndex, columnIndex)
+        if (picture) {
+            if (columnIndex == ID_COL) {
+                return picture.getFileName()
+            } else if (columnIndex == FOLDER_NAME_COL) {
+                return picture.getSubFolderName()
+            } else if (columnIndex == EXTENSION_COL) {
+                return picture.getExtension()
+            } else if (columnIndex == CREATION_DATE_COL) {
+                return picture.getCreationDate()
+            } else if (columnIndex == FILE_NAME_COL) {
+                return "${picture.getFileName()}.${picture.getExtension()}"
+            } else if (columnIndex == SIZE_COL) {
+                return "${picture.getWidth()} x ${picture.getHeigth()}"
+            } else {
                 null
             }
             null
-//        }
-//        null
+        }
+        null
     }
 
     @Override

@@ -5,7 +5,6 @@ import be.dafke.MediaViewer.Application.Menu.MediaMenuBar
 import be.dafke.MediaViewer.Application.ParticipantsOverview.ParticipantsOverviewPanel
 import be.dafke.MediaViewer.Application.StoryDetails.StoryDetailsPanel
 import be.dafke.MediaViewer.Application.StoryOverview.StoryOverviewPanel
-import be.dafke.MediaViewer.ObjectModel.Media.Media
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.JFrame
@@ -101,10 +100,6 @@ class Main {
         center.add participantsOverviewPanel, VIEW_PARTICIPANTS_FOR_STORY
     }
 
-    static void setStory(Story story){
-        storyDetailsPanel.setSt
-    }
-
     static JMenuBar createMenuBar(){
         JMenuBar bar = new MediaMenuBar()
         bar
@@ -114,6 +109,5 @@ class Main {
         cardLayoutCenter.show(center, view)
         String title = getBundle("MediaViewer").getString(view)
         frame.title = title
-//        frame.revalidate()
     }
 }

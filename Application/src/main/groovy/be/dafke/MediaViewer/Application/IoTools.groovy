@@ -69,17 +69,8 @@ class IoTools {
                         System.out.println("Exception handled when trying to get file " +
                                 "attributes: " + exception.getMessage());
                     }
-                    long milliseconds = attributes.creationTime().to(TimeUnit.MILLISECONDS);
-                    if((milliseconds > Long.MIN_VALUE) && (milliseconds < Long.MAX_VALUE))
-                    {
-                        Date creationDate =
-                                new Date(attributes.creationTime().to(TimeUnit.MILLISECONDS));
-
-                        System.out.println """\
-File ${path.toString()} created on ${creationDate.getDate()}/${creationDate.getMonth() + 1}/${creationDate.getYear() + 1900} \
-at ${creationDate.getHours()}:${creationDate.getMinutes()}:${creationDate.getSeconds()}"""
-                        picture.setCreationDate creationDate
-                    }
+                    long milliseconds = attributes.creationTime().to(TimeUnit.MILLISECONDS)
+                    picture.setCreationDate new Date(milliseconds)
                     return picture
                 } else {
                     return null

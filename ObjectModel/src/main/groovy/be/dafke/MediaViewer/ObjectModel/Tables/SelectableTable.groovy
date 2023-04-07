@@ -10,7 +10,6 @@ class SelectableTable<T> extends JTable{
         super(model)
         this.model = model
 //        setAutoCreateRowSorter(true)
-//        setRowSorter(null)
     }
 
     ArrayList<T> getSelectedObjects() {

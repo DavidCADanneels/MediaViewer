@@ -36,21 +36,11 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
         overviewTable = new SelectableTable<>(dataModel)
         overviewTable.setPreferredScrollableViewportSize(new Dimension(500, 200))
         overviewTable.setAutoCreateRowSorter(true)
-//        overviewTable.setRowSorter(new RowSorter<TableModel>() {})
         DefaultListSelectionModel selection = new DefaultListSelectionModel()
         selection.addListSelectionListener(this)
         overviewTable.setSelectionModel(selection)
 
         JScrollPane overviewScrol = new JScrollPane(overviewTable)
-
-//        ListSelectionModel selection = overviewTable.getSelectionModel()
-////        DefaultListSelectionModel selection = new DefaultListSelectionModel()
-//        selectionModel.addListSelectionListener{ e ->
-//            if (!e.getValueIsAdjusting()) {
-//                showSelection()
-//            }
-//        }
-//        overviewTable.setSelectionModel(selection)
 
         imagePanel = new ImagePanel()
 
@@ -115,10 +105,6 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
 
     void loadData(){
         Story story = Main.activeStory
-
-//        File storyFile = Main.storyMap.get(story)
-//        File metaDataFolder = storyFile.getParentFile()
-//        File startFolder = metaDataFolder.getParentFile()
         File startFolder = Main.getSubFolder(story)
 
         JFileChooser chooser = new JFileChooser(startFolder)

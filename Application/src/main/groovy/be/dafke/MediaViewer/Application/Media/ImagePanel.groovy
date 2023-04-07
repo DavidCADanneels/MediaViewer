@@ -73,6 +73,10 @@ class ImagePanel extends JPanel{
         repaint()
     }
 
+    void setPictures(List<Picture> picture){
+        // TODO: show all pictures in FlowLayout or GridLayout
+    }
+
     void setPicture(Picture picture){
         this.picture = picture
         try {

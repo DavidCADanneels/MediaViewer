@@ -15,6 +15,7 @@ import javax.swing.JPanel
 import javax.swing.JScrollPane
 import javax.swing.JSplitPane
 import javax.swing.JTable
+import javax.swing.ListSelectionModel
 import javax.swing.RowSorter
 import javax.swing.event.ListSelectionEvent
 import javax.swing.event.ListSelectionListener
@@ -29,6 +30,7 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
     MediaOverviewDataModel dataModel
     JButton backToStoryDetailsButton, backToStoryOverViewButton, participantButton, addMediaButton
     JTable overviewTable
+    boolean singleSelection = true
 
     ImagePanel imagePanel
     Story story
@@ -43,6 +45,11 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
         DefaultListSelectionModel selection = new DefaultListSelectionModel()
         selection.addListSelectionListener(this)
         overviewTable.setSelectionModel(selection)
+        if(singleSelection) {
+            overviewTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION)
+        } else {
+            overviewTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION)
+        }
 
         JScrollPane overviewScrol = new JScrollPane(overviewTable)
 
@@ -92,27 +99,54 @@ class MediaOverviewPanel extends JPanel implements ListSelectionListener {
 
     void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
-            showSelection()
+            if(singleSelection) {
+                showSingleSelection()
+            } else {
+                showMultipleSelection()
+            }
         }
     }
 
-    void showSelection(){
-        Picture picture
-
+    Picture getSingleSelectedPicture() {
         int row = overviewTable.getSelectedRow()
-        if(row == -1) {
-            picture = null
+        if (row == -1) return null
+        RowSorter<? extends TableModel> rowSorter = overviewTable.getRowSorter()
+        if (rowSorter) {
+            int rowInModel = rowSorter.convertRowIndexToModel(row)
+            return dataModel.getObject(rowInModel)
         } else {
-            RowSorter<? extends TableModel> rowSorter = overviewTable.getRowSorter()
-            int col = overviewTable.getSelectedColumn()
-            if (rowSorter) {
-                int rowInModel = rowSorter.convertRowIndexToModel(row)
-                picture = dataModel.getObject(rowInModel, col)
+            return dataModel.getObject(row)
+        }
+    }
+
+    List<Picture> getAllSelectedPictures(){
+        int[] selectedRows = overviewTable.getSelectedRows()
+        RowSorter<? extends TableModel> rowSorter = overviewTable.getRowSorter()
+        ArrayList<Picture> pictures = new ArrayList<>()
+        for(int selectedRow : selectedRows) {
+            Picture picture
+            if(rowSorter){
+                int rowInModel = rowSorter.convertRowIndexToModel(selectedRow)
+                picture = dataModel.getObject(rowInModel)
             } else {
-                picture = dataModel.getObject(row, col)
+                picture = dataModel.getObject(selectedRow)
+            }
+            if(picture){
+                pictures.add(picture)
             }
         }
+        return pictures
+    }
+
+    void showSingleSelection(){
+        Picture picture = getSingleSelectedPicture()
         imagePanel.setPicture(picture)
+            // TODO: (add option to) show selected image in new ImageFrame
+    }
+
+    void showMultipleSelection(){
+        List<Picture> pictures = getAllSelectedPictures()
+        imagePanel.setPictures(pictures)
             // TODO: (add option to) show selected image in new ImageFrame
     }
 

@@ -58,7 +58,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
 //        this.pictures = pictures
 //    }
 
-    Picture getObject(int row, int col) {
+    Picture getObject(int row) {
         return pictures.get(row)
     }
 
@@ -89,7 +89,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-        Picture picture = getObject(rowIndex, columnIndex)
+        Picture picture = getObject(rowIndex)
         if (picture) {
             if (columnIndex == ID_COL) {
                 return picture.getFileName()
@@ -127,7 +127,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
 
     @Override
     void setValueAt(Object value, int rowIndex, int columnIndex) {
-        Picture picture = getObject(rowIndex, columnIndex)
+        Picture picture = getObject(rowIndex)
         if (columnIndex == OWNER_COL) {
             List<Participant> list = story.getParticipants()
             Participant participant = (Participant)value

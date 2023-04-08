@@ -34,8 +34,8 @@ class ImagePanel extends JPanel{
         label = new JLabel()
         add label, BorderLayout.CENTER
 
-        imageShowOptionsPanel = new ImageShowOptionsPanel(this)
         this.imageDetailPanel = imageDetailPanel
+        imageShowOptionsPanel = new ImageShowOptionsPanel(this, imageDetailPanel)
 
         add imageShowOptionsPanel, BorderLayout.NORTH
 //        add imageDetailPanel, BorderLayout.EAST

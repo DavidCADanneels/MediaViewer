@@ -27,8 +27,8 @@ class MediaOverviewPanel extends JPanel {
 
         imageDetailPanel = new ImageDetailPanel()
         imageShowOptionsPanel = new ImageShowOptionsPanel(this)
-        imagePanel = new ImagePanel(imageShowOptionsPanel)
-        imageTablePanel = new ImageTablePanel(imagePanel, imageDetailPanel)
+        imagePanel = new ImagePanel(imageShowOptionsPanel) // dependency only needed to include in Layout
+        imageTablePanel = new ImageTablePanel(this)
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT)
         splitPane.add imageTablePanel, JSplitPane.TOP
@@ -73,6 +73,17 @@ class MediaOverviewPanel extends JPanel {
 
     void setSingleSelection(boolean singleSelection) {
         imageTablePanel.setSingleSelection(singleSelection)
+    }
+
+    void setPicture(Picture picture){
+        // TODO: (add option to) show selected image in new ImageFrame
+        imagePanel.setPicture(picture)
+        imageDetailPanel.setPicture(picture)
+    }
+
+    void setPictures(List<Picture> pictures){
+        imagePanel.setPictures(pictures)
+//        imageDetailPanel.setPictures(pictures)
     }
 
     void setStory(Story story) {

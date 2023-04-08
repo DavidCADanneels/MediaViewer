@@ -22,10 +22,12 @@ class ImageTablePanel extends JScrollPane implements ListSelectionListener {
     JTable overviewTable
     boolean singleSelection
     ImagePanel imagePanel
+    ImageDetailPanel imageDetailPanel
 //    Story story
 
-    ImageTablePanel(ImagePanel imagePanel) {
+    ImageTablePanel(ImagePanel imagePanel, ImageDetailPanel imageDetailPanel) {
         this.imagePanel = imagePanel
+        this.imageDetailPanel = imageDetailPanel
         dataModel = new MediaOverviewDataModel()
         overviewTable = new JTable(dataModel)
         overviewTable.setPreferredScrollableViewportSize(new Dimension(500, 200))
@@ -100,12 +102,14 @@ class ImageTablePanel extends JScrollPane implements ListSelectionListener {
     void showSingleSelection(){
         Picture picture = getSingleSelectedPicture()
         imagePanel.setPicture(picture)
+        imageDetailPanel.setPicture(picture)
         // TODO: (add option to) show selected image in new ImageFrame
     }
 
     void showMultipleSelection(){
         List<Picture> pictures = getAllSelectedPictures()
         imagePanel.setPictures(pictures)
+//        imageDetailPanel.setPictures(pictures)
         // TODO: (add option to) show selected image in new ImageFrame
     }
 }

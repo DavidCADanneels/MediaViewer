@@ -47,10 +47,6 @@ class ImagePanel extends JPanel{
 
     void setFullSize(boolean fullSize) {
         this.fullSize = fullSize
-        showPicture()
-    }
-
-    void showPicture(){
         if(fullSize){
             remove(label)
             scrollPane = new JScrollPane(label)

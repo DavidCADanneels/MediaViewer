@@ -16,6 +16,7 @@ import static java.util.ResourceBundle.getBundle
 class MediaOverviewPanel extends JPanel {
     JButton backToStoryDetailsButton, backToStoryOverViewButton, participantButton, addMediaButton
 
+    ImageDetailPanel imageDetailPanel
     ImagePanel imagePanel
     ImageTablePanel imageTablePanel
     Story story
@@ -23,7 +24,8 @@ class MediaOverviewPanel extends JPanel {
     MediaOverviewPanel() {
         setLayout(new BorderLayout())
 
-        imagePanel = new ImagePanel()
+        imageDetailPanel = new ImageDetailPanel()
+        imagePanel = new ImagePanel(imageDetailPanel)
         imageTablePanel = new ImageTablePanel(imagePanel)
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT)

@@ -29,13 +29,13 @@ class ImagePanel extends JPanel{
     ImageShowOptionsPanel imageShowOptionsPanel
     Story story
 
-    ImagePanel() {
+    ImagePanel(ImageDetailPanel imageDetailPanel) {
         setLayout new BorderLayout()
         label = new JLabel()
         add label, BorderLayout.CENTER
 
         imageShowOptionsPanel = new ImageShowOptionsPanel(this)
-        imageDetailPanel = new ImageDetailPanel()
+        this.imageDetailPanel = imageDetailPanel
 
         add imageShowOptionsPanel, BorderLayout.NORTH
         add imageDetailPanel, BorderLayout.EAST

@@ -4,7 +4,6 @@ import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
-import javax.swing.BoxLayout
 import javax.swing.ImageIcon
 import javax.swing.JLabel
 import javax.swing.JScrollPane
@@ -26,8 +25,10 @@ class ImagePanel extends JPanel{
     File imageFile
     JScrollPane scrollPane
     Story story
+    ImageShowOptionsPanel imageShowOptionsPanel
 
     ImagePanel(ImageShowOptionsPanel imageShowOptionsPanel) {
+        this.imageShowOptionsPanel = imageShowOptionsPanel
         setLayout new BorderLayout()
         label = new JLabel()
         add label, BorderLayout.CENTER
@@ -40,13 +41,12 @@ class ImagePanel extends JPanel{
 
     void setFullSize(boolean fullSize) {
         this.fullSize = fullSize
-        // TODO: remove all + re-add all needed
+        removeAll()
+        add imageShowOptionsPanel, BorderLayout.NORTH
         if(fullSize){
-            remove(label)
             scrollPane = new JScrollPane(label)
             add scrollPane, BorderLayout.CENTER
         } else {
-            remove(scrollPane)
             add label, BorderLayout.CENTER
         }
         revalidate()

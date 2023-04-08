@@ -38,7 +38,6 @@ class ImagePanel extends JPanel{
         imageShowOptionsPanel = new ImageShowOptionsPanel(this, imageDetailPanel)
 
         add imageShowOptionsPanel, BorderLayout.NORTH
-//        add imageDetailPanel, BorderLayout.EAST
     }
 
     void setStory(Story story) {
@@ -67,7 +66,6 @@ class ImagePanel extends JPanel{
         this.picture = picture
         try {
             if(picture) {
-//                imageDetailPanel.setPicture(picture)
                 File startFolder = Main.getSubFolder(story)
                 String subFolderName = picture.getSubFolderName()
                 if (subFolderName) {

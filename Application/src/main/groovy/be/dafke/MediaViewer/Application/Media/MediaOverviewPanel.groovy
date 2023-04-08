@@ -25,7 +25,7 @@ class MediaOverviewPanel extends JPanel {
         setLayout(new BorderLayout())
 
         imageDetailPanel = new ImageDetailPanel()
-        imagePanel = new ImagePanel(imageDetailPanel)
+        imagePanel = new ImagePanel(this, imageDetailPanel)
         imageTablePanel = new ImageTablePanel(imagePanel, imageDetailPanel)
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT)
@@ -59,6 +59,10 @@ class MediaOverviewPanel extends JPanel {
         south.add addMediaButton
 
         add south, BorderLayout.SOUTH
+    }
+
+    void setFullSize(boolean fullSize){
+        imagePanel.setFullSize(fullSize)
     }
 
     void setStory(Story story) {

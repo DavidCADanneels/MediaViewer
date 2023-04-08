@@ -7,11 +7,11 @@ import javax.swing.JPanel
 class ImageShowOptionsPanel extends JPanel {
 
     JCheckBox singleSelectionCheckBox, fullSizeCheckBox, showDetailsCheckBox
-    ImagePanel imagePanel
     ImageDetailPanel imageDetailPanel
+    MediaOverviewPanel mediaOverviewPanel
 
-    ImageShowOptionsPanel(ImagePanel imagePanel, ImageDetailPanel imageDetailPanel) {
-        this.imagePanel = imagePanel
+    ImageShowOptionsPanel(MediaOverviewPanel mediaOverviewPanel, ImageDetailPanel imageDetailPanel) {
+        this.mediaOverviewPanel = mediaOverviewPanel
         this.imageDetailPanel = imageDetailPanel
         singleSelectionCheckBox = new JCheckBox("Single Selection")
         singleSelectionCheckBox.setSelected(true)
@@ -38,7 +38,7 @@ class ImageShowOptionsPanel extends JPanel {
 
     void fullSizeImage(){
         boolean fullSize = fullSizeCheckBox.isSelected()
-        imagePanel.setFullSize(fullSize)
+        mediaOverviewPanel.setFullSize(fullSize)
     }
 
     void checkShowDetails(){

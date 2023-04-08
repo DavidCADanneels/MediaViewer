@@ -21,9 +21,8 @@ class ImagePanel extends JPanel{
     JLabel label
     boolean fullSize = false
     boolean singleSelection = true
-    BufferedImage bufferedImage
-    ImageIcon imageIcon
     Picture picture
+    List<Picture> pictures
     JScrollPane scrollPane
     Story story
     ImageShowOptionsPanel imageShowOptionsPanel
@@ -34,7 +33,6 @@ class ImagePanel extends JPanel{
         label = new JLabel()
         scrollPane = new JScrollPane(label)
         add scrollPane, BorderLayout.CENTER
-//        add label, BorderLayout.CENTER
         add imageShowOptionsPanel, BorderLayout.NORTH
     }
 
@@ -44,24 +42,12 @@ class ImagePanel extends JPanel{
 
     void setFullSize(boolean fullSize) {
         this.fullSize = fullSize
-//        if (fullSize) {
-//            imageIcon = new ImageIcon(bufferedImage)
-//        } else {
-//            Dimension available = scrollPane.getSize()
-//            Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeight())
-//            Dimension newDimension = rescale(oldDimension, available)
-//
-//            Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
-//            imageIcon = new ImageIcon(image)
-//        }
-//        label.setIcon(imageIcon)
-
         if(singleSelection){
             if(picture) {
                 setPicture(picture)
             }
         } else {
-//            setPictures(pictures)
+            setPictures(pictures)
         }
         revalidate()
         repaint()
@@ -72,27 +58,33 @@ class ImagePanel extends JPanel{
         if(singleSelection){
             setFullSize(false)
         } else {
-            removeAll()
-            add imageShowOptionsPanel, BorderLayout.NORTH
-            JPanel panel = new JPanel()
-            panel.add label
-            add panel, BorderLayout.CENTER
-            revalidate()
-            repaint()
+            pictures = []
+            if(picture) {
+                pictures.add(picture)
+            }
+            setPictures(pictures)
+//            removeAll()
+//            add imageShowOptionsPanel, BorderLayout.NORTH
+//            JPanel panel = new JPanel()
+//            panel.add label
+//            add panel, BorderLayout.CENTER
+//            revalidate()
+//            repaint()
         }
     }
 
     void setPictures(List<Picture> pictures){
-        // TODO: show all pictures in FlowLayout or GridLayout
-        removeAll()
-        add imageShowOptionsPanel, BorderLayout.NORTH
+        picture = pictures.size()==0?null:pictures.get(0)
+        this.pictures = pictures
+//        scrollPane.removeAll()
+        remove scrollPane
         JPanel panel = new JPanel()
         int nrOfPictures = pictures.size()
         if(nrOfPictures > 0) {
             Double totalNr = (Double) nrOfPictures
             Double squaredNumber = Math.sqrt(totalNr)
             System.out.println("nr: ${totalNr} -> ${squaredNumber}")
-            Dimension available = getSize()
+            Dimension available = scrollPane.getSize()
             Double widthPerPicture = available.getWidth() / squaredNumber
             Double heightPerPicture = available.getHeight() / squaredNumber
             System.out.println("available: ${available.getWidth()} x ${available.getHeight()} -> ${widthPerPicture} x ${heightPerPicture} -> ${widthPerPicture.intValue()} x ${heightPerPicture.intValue()}")
@@ -112,7 +104,10 @@ class ImagePanel extends JPanel{
                 panel.add new JLabel(imageIcon)
             }
         }
-        add panel, BorderLayout.CENTER
+        scrollPane = new JScrollPane(panel)
+        add scrollPane, BorderLayout.CENTER
+//        scrollPane.add panel
+//        scrollPane.revalidate()
         revalidate()
         repaint()
     }
@@ -134,8 +129,11 @@ class ImagePanel extends JPanel{
     }
 
     void setPicture(Picture picture){
+        pictures = []
+        pictures.add(picture)
         this.picture = picture
-        bufferedImage = readImage(picture)
+        BufferedImage bufferedImage = readImage(picture)
+        ImageIcon imageIcon
         if (fullSize) {
             imageIcon = new ImageIcon(bufferedImage)
         } else {

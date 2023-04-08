@@ -1,6 +1,5 @@
 package be.dafke.MediaViewer.Application.Media
 
-
 import javax.swing.JCheckBox
 import javax.swing.JPanel
 
@@ -42,7 +41,6 @@ class ImageShowOptionsPanel extends JPanel {
     void checkShowDetails(){
         boolean showDetails = showDetailsCheckBox.isSelected()
         mediaOverviewPanel.showImageDetails(showDetails)
-//        imageDetailPanel.setVisible(showDetails)
     }
 
     void checkSingleSelection(){
@@ -54,5 +52,6 @@ class ImageShowOptionsPanel extends JPanel {
             fullSizeImage()
             fullSizeCheckBox.setEnabled(false)
         }
+        mediaOverviewPanel.setSingleSelection(single)
     }
 }

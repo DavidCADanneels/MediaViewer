@@ -71,6 +71,10 @@ class MediaOverviewPanel extends JPanel {
         imageDetailPanel.setVisible(showDetails)
     }
 
+    void setSingleSelection(boolean singleSelection) {
+        imageTablePanel.setSingleSelection(singleSelection)
+    }
+
     void setStory(Story story) {
         this.story = story
         imageTablePanel.setStory(story)

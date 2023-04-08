@@ -25,16 +25,12 @@ class ImagePanel extends JPanel{
     Picture picture
     File imageFile
     JScrollPane scrollPane
-    ImageShowOptionsPanel imageShowOptionsPanel
     Story story
 
     ImagePanel(ImageShowOptionsPanel imageShowOptionsPanel) {
         setLayout new BorderLayout()
         label = new JLabel()
         add label, BorderLayout.CENTER
-
-        this.imageShowOptionsPanel = imageShowOptionsPanel
-
         add imageShowOptionsPanel, BorderLayout.NORTH
     }
 

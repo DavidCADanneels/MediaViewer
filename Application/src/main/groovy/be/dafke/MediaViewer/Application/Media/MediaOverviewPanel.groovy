@@ -27,7 +27,7 @@ class MediaOverviewPanel extends JPanel {
 
         imageDetailPanel = new ImageDetailPanel()
         imageShowOptionsPanel = new ImageShowOptionsPanel(this)
-        imagePanel = new ImagePanel(imageDetailPanel, imageShowOptionsPanel)
+        imagePanel = new ImagePanel(imageShowOptionsPanel)
         imageTablePanel = new ImageTablePanel(imagePanel, imageDetailPanel)
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT)

@@ -25,16 +25,14 @@ class ImagePanel extends JPanel{
     Picture picture
     File imageFile
     JScrollPane scrollPane
-    ImageDetailPanel imageDetailPanel
     ImageShowOptionsPanel imageShowOptionsPanel
     Story story
 
-    ImagePanel(ImageDetailPanel imageDetailPanel, ImageShowOptionsPanel imageShowOptionsPanel) {
+    ImagePanel(ImageShowOptionsPanel imageShowOptionsPanel) {
         setLayout new BorderLayout()
         label = new JLabel()
         add label, BorderLayout.CENTER
 
-        this.imageDetailPanel = imageDetailPanel
         this.imageShowOptionsPanel = imageShowOptionsPanel
 
         add imageShowOptionsPanel, BorderLayout.NORTH
@@ -46,6 +44,7 @@ class ImagePanel extends JPanel{
 
     void setFullSize(boolean fullSize) {
         this.fullSize = fullSize
+        // TODO: remove all + re-add all needed
         if(fullSize){
             remove(label)
             scrollPane = new JScrollPane(label)

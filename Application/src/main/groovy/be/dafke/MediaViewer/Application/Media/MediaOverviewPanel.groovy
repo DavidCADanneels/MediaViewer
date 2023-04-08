@@ -32,6 +32,7 @@ class MediaOverviewPanel extends JPanel {
         splitPane.add imageTablePanel, JSplitPane.TOP
         splitPane.add imagePanel, JSplitPane.BOTTOM
         add splitPane, BorderLayout.CENTER
+        add imageDetailPanel, BorderLayout.EAST
 
         backToStoryOverViewButton = new JButton("${getBundle("MediaViewer").getString("BACK_TO_MAIN")}")
         backToStoryOverViewButton.addActionListener { e ->

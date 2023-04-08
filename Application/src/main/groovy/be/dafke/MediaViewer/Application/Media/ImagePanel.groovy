@@ -38,7 +38,7 @@ class ImagePanel extends JPanel{
         this.imageDetailPanel = imageDetailPanel
 
         add imageShowOptionsPanel, BorderLayout.NORTH
-        add imageDetailPanel, BorderLayout.EAST
+//        add imageDetailPanel, BorderLayout.EAST
     }
 
     void setStory(Story story) {

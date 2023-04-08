@@ -24,7 +24,7 @@ class ImageDetailPanel extends JPanel{
 
     void setPicture(Picture picture){
         if(picture) {
-            sizeField.setText "${picture.getWidth()} x ${picture.getHeigth()}"
+            sizeField.setText "${picture.getWidth()} x ${picture.getHeight()}"
         } else {
             sizeField.setText ''
         }

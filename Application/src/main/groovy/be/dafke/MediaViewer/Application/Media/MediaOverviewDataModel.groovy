@@ -116,7 +116,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
             } else if (columnIndex == FILE_NAME_COL) {
                 return "${picture.getFileName()}.${picture.getExtension()}"
             } else if (columnIndex == SIZE_COL) {
-                return "${picture.getWidth()} x ${picture.getHeigth()}"
+                return "${picture.getWidth()} x ${picture.getHeight()}"
             } else {
                 null
             }

@@ -1,7 +1,7 @@
 package be.dafke.MediaViewer.ObjectModel.Media
 
 class Picture extends Media {
-    int width, heigth
+    int width, height
     /**
      * index of Participant in Story.participants List
      */
@@ -29,11 +29,11 @@ class Picture extends Media {
         this.width = width
     }
 
-    int getHeigth() {
-        return heigth
+    int getHeight() {
+        return height
     }
 
-    void setHeigth(int heigth) {
-        this.heigth = heigth
+    void setHeight(int height) {
+        this.height = height
     }
 }

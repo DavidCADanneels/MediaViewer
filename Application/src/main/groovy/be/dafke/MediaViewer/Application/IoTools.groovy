@@ -59,7 +59,7 @@ class IoTools {
                     int width = jpegImageReader.getWidth(index)
                     int height = jpegImageReader.getHeight(index)
                     picture.setWidth(width)
-                    picture.setHeigth(height)
+                    picture.setHeight(height)
 
                     Path path = file.toPath()
                     BasicFileAttributes attributes = null

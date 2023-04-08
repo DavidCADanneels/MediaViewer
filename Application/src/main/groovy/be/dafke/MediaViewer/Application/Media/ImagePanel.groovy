@@ -32,7 +32,9 @@ class ImagePanel extends JPanel{
         this.imageShowOptionsPanel = imageShowOptionsPanel
         setLayout new BorderLayout()
         label = new JLabel()
-        add label, BorderLayout.CENTER
+        scrollPane = new JScrollPane(label)
+        add scrollPane, BorderLayout.CENTER
+//        add label, BorderLayout.CENTER
         add imageShowOptionsPanel, BorderLayout.NORTH
     }
 
@@ -42,13 +44,24 @@ class ImagePanel extends JPanel{
 
     void setFullSize(boolean fullSize) {
         this.fullSize = fullSize
-        removeAll()
-        add imageShowOptionsPanel, BorderLayout.NORTH
-        if(fullSize){
-            scrollPane = new JScrollPane(label)
-            add scrollPane, BorderLayout.CENTER
+//        if (fullSize) {
+//            imageIcon = new ImageIcon(bufferedImage)
+//        } else {
+//            Dimension available = scrollPane.getSize()
+//            Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeight())
+//            Dimension newDimension = rescale(oldDimension, available)
+//
+//            Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
+//            imageIcon = new ImageIcon(image)
+//        }
+//        label.setIcon(imageIcon)
+
+        if(singleSelection){
+            if(picture) {
+                setPicture(picture)
+            }
         } else {
-            add label, BorderLayout.CENTER
+//            setPictures(pictures)
         }
         revalidate()
         repaint()
@@ -78,17 +91,21 @@ class ImagePanel extends JPanel{
         if(nrOfPictures > 0) {
             Double totalNr = (Double) nrOfPictures
             Double squaredNumber = Math.sqrt(totalNr)
+            System.out.println("nr: ${totalNr} -> ${squaredNumber}")
             Dimension available = getSize()
             Double widthPerPicture = available.getWidth() / squaredNumber
             Double heightPerPicture = available.getHeight() / squaredNumber
+            System.out.println("available: ${available.getWidth()} x ${available.getHeight()} -> ${widthPerPicture} x ${heightPerPicture} -> ${widthPerPicture.intValue()} x ${heightPerPicture.intValue()}")
             Dimension dimPerPicture = new Dimension(widthPerPicture.intValue(), heightPerPicture.intValue())
 
             panel.setLayout(new GridLayout(squaredNumber.intValue(), 0))
 
             pictures.each { Picture picture ->
                 BufferedImage bufferedImage = readImage(picture)
-                Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeigth())
+                Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeight())
+                System.out.println("oldDimension: ${oldDimension.getWidth()} x ${oldDimension.getHeight()}")
                 Dimension newDimension = rescale(oldDimension, dimPerPicture)
+                System.out.println("oldDimension: ${newDimension.getWidth()} x ${newDimension.getHeight()}")
 
                 Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
                 ImageIcon imageIcon = new ImageIcon(image)
@@ -119,6 +136,17 @@ class ImagePanel extends JPanel{
     void setPicture(Picture picture){
         this.picture = picture
         bufferedImage = readImage(picture)
+        if (fullSize) {
+            imageIcon = new ImageIcon(bufferedImage)
+        } else {
+            Dimension available = scrollPane.getSize()
+            Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeight())
+            Dimension newDimension = rescale(oldDimension, available)
+
+            Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
+            imageIcon = new ImageIcon(image)
+        }
+        label.setIcon(imageIcon)
         repaint()
     }
 
@@ -134,25 +162,5 @@ class ImagePanel extends JPanel{
         Double newWidth = oldWidth / scale
         Double newHeigth = oldHeigth / scale
         return new Dimension(newWidth.intValue(),newHeigth.intValue())
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g)
-        if (picture) {
-            if(singleSelection) {
-                if (fullSize) {
-                    imageIcon = new ImageIcon(bufferedImage)
-                } else {
-                    Dimension available = getSize()
-                    Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeigth())
-                    Dimension newDimension = rescale(oldDimension, available)
-
-                    Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
-                    imageIcon = new ImageIcon(image)
-                }
-                label.setIcon(imageIcon)
-            }
-        }
     }
 }

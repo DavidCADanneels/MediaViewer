@@ -47,10 +47,15 @@ class ImageShowOptionsPanel extends JPanel {
         boolean single = singleSelectionCheckBox.isSelected()
         if(single){
             fullSizeCheckBox.setEnabled(true)
+            showDetailsCheckBox.setEnabled(true)
         } else {
             fullSizeCheckBox.setSelected(false)
             fullSizeImage()
             fullSizeCheckBox.setEnabled(false)
+
+            showDetailsCheckBox.setSelected(false)
+            checkShowDetails()
+            showDetailsCheckBox.setEnabled(false)
         }
         mediaOverviewPanel.setSingleSelection(single)
     }

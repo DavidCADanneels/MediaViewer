@@ -75,6 +75,7 @@ class MediaOverviewPanel extends JPanel {
     }
 
     void setSingleSelection(boolean singleSelection) {
+        imagePanel.setSingleSelection(singleSelection)
         imageTablePanel.setSingleSelection(singleSelection)
     }
 

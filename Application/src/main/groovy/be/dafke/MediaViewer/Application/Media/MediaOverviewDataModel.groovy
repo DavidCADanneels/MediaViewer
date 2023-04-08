@@ -99,7 +99,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
                 return picture.getExtension()
             } else if (columnIndex == OWNER_COL) {
                 Integer id = picture.getOwner()
-                if(id != null) {
+                if(id != null && id != -1) {
                     return story.getParticipants().get(id)
                 } else return null
             } else if (columnIndex == CREATION_DATE_COL) {
@@ -132,8 +132,10 @@ class MediaOverviewDataModel extends AbstractTableModel {
             List<Participant> list = story.getParticipants()
             Participant participant = (Participant)value
             Integer id = list.indexOf(participant)
-            System.out.println("Participant: ${participant} has ID: ${id}")
-            picture.setOwner(id)
+            if(id != -1) {
+                System.out.println("Participant: ${participant} has ID: ${id}")
+                picture.setOwner(id)
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ import javax.swing.JScrollPane
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.Graphics
+import java.awt.GridLayout
 import java.awt.Image
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
@@ -19,6 +20,7 @@ class ImagePanel extends JPanel{
 
     JLabel label
     boolean fullSize = false
+    boolean singleSelection = true
     BufferedImage bufferedImage
     ImageIcon imageIcon
     Picture picture
@@ -52,8 +54,50 @@ class ImagePanel extends JPanel{
         repaint()
     }
 
+    void setSingleSelection(boolean singleSelection) {
+        this.singleSelection = singleSelection
+        if(singleSelection){
+            setFullSize(false)
+        } else {
+            removeAll()
+            add imageShowOptionsPanel, BorderLayout.NORTH
+            JPanel panel = new JPanel()
+            panel.add label
+            add panel, BorderLayout.CENTER
+            revalidate()
+            repaint()
+        }
+    }
+
     void setPictures(List<Picture> pictures){
         // TODO: show all pictures in FlowLayout or GridLayout
+        removeAll()
+        add imageShowOptionsPanel, BorderLayout.NORTH
+        JPanel panel = new JPanel()
+        int nrOfPictures = pictures.size()
+        if(nrOfPictures > 0) {
+            Double totalNr = (Double) nrOfPictures
+            Double squaredNumber = Math.sqrt(totalNr)
+            Dimension available = getSize()
+            Double widthPerPicture = available.getWidth() / squaredNumber
+            Double heightPerPicture = available.getHeight() / squaredNumber
+            Dimension dimPerPicture = new Dimension(widthPerPicture.intValue(), heightPerPicture.intValue())
+
+            panel.setLayout(new GridLayout(squaredNumber.intValue(), 0))
+
+            pictures.each { Picture picture ->
+                BufferedImage bufferedImage = readImage(picture)
+                Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeigth())
+                Dimension newDimension = rescale(oldDimension, dimPerPicture)
+
+                Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
+                ImageIcon imageIcon = new ImageIcon(image)
+                panel.add new JLabel(imageIcon)
+            }
+        }
+        add panel, BorderLayout.CENTER
+        revalidate()
+        repaint()
     }
 
     BufferedImage readImage(Picture picture){
@@ -96,17 +140,19 @@ class ImagePanel extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g)
         if (picture) {
-            if (fullSize) {
-                imageIcon = new ImageIcon(bufferedImage)
-            } else {
-                Dimension available = getSize()
-                Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeigth())
-                Dimension newDimension = rescale(oldDimension, available)
+            if(singleSelection) {
+                if (fullSize) {
+                    imageIcon = new ImageIcon(bufferedImage)
+                } else {
+                    Dimension available = getSize()
+                    Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeigth())
+                    Dimension newDimension = rescale(oldDimension, available)
 
-                Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
-                imageIcon = new ImageIcon(image)
+                    Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
+                    imageIcon = new ImageIcon(image)
+                }
+                label.setIcon(imageIcon)
             }
-            label.setIcon(imageIcon)
         }
     }
 }

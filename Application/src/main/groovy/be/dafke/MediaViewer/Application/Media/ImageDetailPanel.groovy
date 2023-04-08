@@ -9,14 +9,17 @@ import javax.swing.JTextField
 
 class ImageDetailPanel extends JPanel{
     JTextField sizeField
+    JLabel sizeLabel
+    JPanel line1
 
     ImageDetailPanel() {
         setLayout new BoxLayout(this, BoxLayout.Y_AXIS)
 
         sizeField = new JTextField(20)
         sizeField.setEnabled false
-        JPanel line1 = new JPanel()
-        line1.add new JLabel("Size:")
+        line1 = new JPanel()
+        sizeLabel = new JLabel("Size:")
+        line1.add sizeLabel
         line1.add sizeField
 
         add line1
@@ -28,5 +31,9 @@ class ImageDetailPanel extends JPanel{
         } else {
             sizeField.setText ''
         }
+    }
+
+    void setSingleSelection(boolean singleSelection) {
+        line1.setVisible(singleSelection)
     }
 }

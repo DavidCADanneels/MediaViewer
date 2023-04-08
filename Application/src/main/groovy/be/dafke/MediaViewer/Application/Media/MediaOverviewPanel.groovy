@@ -65,6 +65,10 @@ class MediaOverviewPanel extends JPanel {
         imagePanel.setFullSize(fullSize)
     }
 
+    void showImageDetails(boolean showDetails){
+        imageDetailPanel.setVisible(showDetails)
+    }
+
     void setStory(Story story) {
         this.story = story
         imageTablePanel.setStory(story)

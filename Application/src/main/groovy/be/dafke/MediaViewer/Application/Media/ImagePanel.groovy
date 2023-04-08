@@ -9,7 +9,6 @@ import javax.swing.JLabel
 import javax.swing.JScrollPane
 import java.awt.BorderLayout
 import java.awt.Dimension
-import java.awt.Graphics
 import java.awt.GridLayout
 import java.awt.Image
 import java.awt.image.BufferedImage
@@ -63,20 +62,12 @@ class ImagePanel extends JPanel{
                 pictures.add(picture)
             }
             setPictures(pictures)
-//            removeAll()
-//            add imageShowOptionsPanel, BorderLayout.NORTH
-//            JPanel panel = new JPanel()
-//            panel.add label
-//            add panel, BorderLayout.CENTER
-//            revalidate()
-//            repaint()
         }
     }
 
     void setPictures(List<Picture> pictures){
         picture = pictures.size()==0?null:pictures.get(0)
         this.pictures = pictures
-//        scrollPane.removeAll()
         remove scrollPane
         JPanel panel = new JPanel()
         int nrOfPictures = pictures.size()
@@ -106,8 +97,6 @@ class ImagePanel extends JPanel{
         }
         scrollPane = new JScrollPane(panel)
         add scrollPane, BorderLayout.CENTER
-//        scrollPane.add panel
-//        scrollPane.revalidate()
         revalidate()
         repaint()
     }
@@ -149,9 +138,6 @@ class ImagePanel extends JPanel{
     }
 
     Dimension rescale(Dimension pictureSize, Dimension available){
-//        int availableWidth = available.getWidth()
-//        int availableHeight = available.getHeight()
-//        System.out.println("Available: ${availableWidth} x ${availableHeight}")
         Double oldWidth = pictureSize.getWidth()
         Double oldHeigth = pictureSize.getHeight()
         Double scaleWidth = oldWidth / available.getWidth()

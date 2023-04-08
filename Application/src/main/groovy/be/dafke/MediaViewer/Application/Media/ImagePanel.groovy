@@ -22,7 +22,6 @@ class ImagePanel extends JPanel{
     BufferedImage bufferedImage
     ImageIcon imageIcon
     Picture picture
-    File imageFile
     JScrollPane scrollPane
     Story story
     ImageShowOptionsPanel imageShowOptionsPanel
@@ -53,30 +52,30 @@ class ImagePanel extends JPanel{
         repaint()
     }
 
-    void setPictures(List<Picture> picture){
+    void setPictures(List<Picture> pictures){
         // TODO: show all pictures in FlowLayout or GridLayout
+    }
+
+    BufferedImage readImage(Picture picture){
+        try {
+            File startFolder = Main.getSubFolder(story)
+            String subFolderName = picture.getSubFolderName()
+            if (subFolderName) {
+                startFolder = new File(startFolder, subFolderName)
+            }
+            String fileName = "${picture.getFileName()}.${picture.getExtension()}"
+            File imageFile = new File(startFolder, fileName)
+            return ImageIO.read(imageFile)
+        } catch (IOException ex) {
+            // handle exception...
+            return null
+        }
     }
 
     void setPicture(Picture picture){
         this.picture = picture
-        try {
-            if(picture) {
-                File startFolder = Main.getSubFolder(story)
-                String subFolderName = picture.getSubFolderName()
-                if (subFolderName) {
-                    startFolder = new File(startFolder, subFolderName)
-                }
-                String fileName = "${picture.getFileName()}.${picture.getExtension()}"
-                imageFile = new File(startFolder, fileName)
-//            System.out.println("file: ${imageFile.getAbsolutePath()}")
-
-                bufferedImage = ImageIO.read(imageFile)
-            }
-        } catch (IOException ex) {
-            // handle exception...
-        } finally {
-            repaint()
-        }
+        bufferedImage = readImage(picture)
+        repaint()
     }
 
     Dimension rescale(Dimension pictureSize, Dimension available){

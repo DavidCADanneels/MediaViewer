@@ -25,7 +25,7 @@ class MediaOverviewPanel extends JPanel {
     MediaOverviewPanel() {
         setLayout(new BorderLayout())
 
-        imageDetailPanel = new ImageDetailPanel()
+        imageDetailPanel = new ImageDetailPanel(this)
         imageShowOptionsPanel = new ImageShowOptionsPanel(this)
         imagePanel = new ImagePanel(imageShowOptionsPanel) // dependency only needed to include in Layout
         imageTablePanel = new ImageTablePanel(this)
@@ -88,13 +88,14 @@ class MediaOverviewPanel extends JPanel {
 
     void setPictures(List<Picture> pictures){
         imagePanel.setPictures(pictures)
-//        imageDetailPanel.setPictures(pictures)
+        imageDetailPanel.setPictures(pictures)
     }
 
     void setStory(Story story) {
         this.story = story
         imageTablePanel.setStory(story)
         imagePanel.setStory(story)
+        imageDetailPanel.setStory(story)
     }
 
     void loadData(){

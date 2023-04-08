@@ -45,8 +45,8 @@ class Main {
 
     static void setActiveStory(Story story) {
         activeStory = story
-        Main.participantsOverviewPanel.setStory(story)
-        Main.mediaOverviewPanel.setStory(story)
+        participantsOverviewPanel.setStory(story)
+        mediaOverviewPanel.setStory(story)
         storyDetailsPanel.setStory(story)
     }
 

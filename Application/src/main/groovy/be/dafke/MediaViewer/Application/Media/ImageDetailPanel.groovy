@@ -1,10 +1,12 @@
 package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
+import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.BoxLayout
 import javax.swing.JButton
 import javax.swing.JLabel
+import javax.swing.JOptionPane
 import javax.swing.JPanel
 import javax.swing.JTextField
 
@@ -13,13 +15,16 @@ class ImageDetailPanel extends JPanel{
     JLabel sizeLabel
     JPanel line1
     Picture picture
+    Story story
     List<Picture> pictures
     boolean singleSelection
     JButton assignOwnerButton
+    MediaOverviewPanel mediaOverviewPanel
     static String singleText = "Assign Owner to Picture"
     static String multiText = "Assign Owner to Pictures"
 
-    ImageDetailPanel() {
+    ImageDetailPanel(MediaOverviewPanel mediaOverviewPanel) {
+        this.mediaOverviewPanel = mediaOverviewPanel
         setLayout new BoxLayout(this, BoxLayout.Y_AXIS)
 
         sizeField = new JTextField(20)
@@ -31,9 +36,33 @@ class ImageDetailPanel extends JPanel{
 
         singleSelection = true
         assignOwnerButton = new JButton(singleText)
+        assignOwnerButton.addActionListener {e ->
+            assignOwner()
+        }
 
         add line1
         add assignOwnerButton
+    }
+
+    void assignOwner(){
+        Object [] participants = story.getParticipants().toArray()
+        int nr = JOptionPane.showOptionDialog(this, "Select Owner", "Assign Owner",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                participants, null)
+        if(nr != -1) {
+            if(singleSelection){
+                picture.setOwner(nr)
+            } else {
+                pictures.each {Picture picture ->
+                    picture.setOwner(nr)
+                }
+            }
+            mediaOverviewPanel.imageTablePanel.dataModel.fireTableDataChanged()
+        }
+    }
+
+    void setStory(Story story) {
+        this.story = story
     }
 
     void setPictures(List<Picture> pictures){

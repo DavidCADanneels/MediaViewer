@@ -75,7 +75,7 @@ class ImagePanel extends JPanel{
             Double totalNr = (Double) nrOfPictures
             Double squaredNumber = Math.sqrt(totalNr)
             System.out.println("nr: ${totalNr} -> ${squaredNumber}")
-            Dimension available = scrollPane.getSize()
+            Dimension available = getSize()
             Double widthPerPicture = available.getWidth() / squaredNumber
             Double heightPerPicture = available.getHeight() / squaredNumber
             System.out.println("available: ${available.getWidth()} x ${available.getHeight()} -> ${widthPerPicture} x ${heightPerPicture} -> ${widthPerPicture.intValue()} x ${heightPerPicture.intValue()}")
@@ -88,7 +88,7 @@ class ImagePanel extends JPanel{
                 Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeight())
                 System.out.println("oldDimension: ${oldDimension.getWidth()} x ${oldDimension.getHeight()}")
                 Dimension newDimension = rescale(oldDimension, dimPerPicture)
-                System.out.println("oldDimension: ${newDimension.getWidth()} x ${newDimension.getHeight()}")
+                System.out.println("newDimension: ${newDimension.getWidth()} x ${newDimension.getHeight()}")
 
                 Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
                 ImageIcon imageIcon = new ImageIcon(image)

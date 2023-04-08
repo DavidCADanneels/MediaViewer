@@ -33,6 +33,9 @@ class MediaOverviewPanel extends JPanel {
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT)
         splitPane.add imageTablePanel, JSplitPane.TOP
         splitPane.add imagePanel, JSplitPane.BOTTOM
+
+        // TODO: add imageShowOptionsPanel to NORTH and remove it from ImagePanel
+//        add imageShowOptionsPanel, BorderLayout.NORTH
         add splitPane, BorderLayout.CENTER
         add imageDetailPanel, BorderLayout.EAST
 

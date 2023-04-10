@@ -20,20 +20,4 @@ class Picture extends Media {
 //        participantsInMiddleGround = []
 //        participantsBackGround = []
     }
-
-    int getWidth() {
-        return width
-    }
-
-    void setWidth(int width) {
-        this.width = width
-    }
-
-    int getHeight() {
-        return height
-    }
-
-    void setHeight(int height) {
-        this.height = height
-    }
 }

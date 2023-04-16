@@ -106,11 +106,17 @@ class MediaOverviewPanel extends JPanel {
         if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File[] files = chooser.getSelectedFiles()
             files.each { File file ->
+                String jpgExtension = null
                 if(file.name.toLowerCase().endsWith('.jpg')) {
+                    jpgExtension = 'jpg'
+                } else if(file.name.toLowerCase().endsWith('.jpeg')) {
+                    jpgExtension = 'jpeg'
+                }
+                if(jpgExtension){
                     Picture picture = new Picture()
-                    String fileName = file.name - '.jpg'
+                    String fileName = file.name - ".${jpgExtension}"
                     picture.setFileName(fileName)
-                    picture.setExtension('jpg')
+                    picture.setExtension(jpgExtension)
                     picture.setSubFolderName('jpg')
                     // TODO: no need to reassign picture to picture ?
                     picture = IoTools.readAndDisplayMetadata(file, picture)

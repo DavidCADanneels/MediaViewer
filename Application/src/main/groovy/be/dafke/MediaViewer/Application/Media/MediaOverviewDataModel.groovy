@@ -107,6 +107,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
                 return picture.getCreationDate()
             } else if (columnIndex == CREATION_TIME_COL) {
                 Date date = picture.getCreationDate()
+                if(date == null) return null
                 Calendar calendar = Calendar.getInstance()
                 calendar.setTime(date)
                 int hours = calendar.get(Calendar.HOUR_OF_DAY)

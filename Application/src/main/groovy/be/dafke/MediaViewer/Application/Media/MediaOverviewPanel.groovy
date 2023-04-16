@@ -106,21 +106,19 @@ class MediaOverviewPanel extends JPanel {
         if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File[] files = chooser.getSelectedFiles()
             files.each { File file ->
-                String jpgExtension = null
-                if(file.name.toLowerCase().endsWith('.jpg')) {
-                    jpgExtension = 'jpg'
-                } else if(file.name.toLowerCase().endsWith('.jpeg')) {
-                    jpgExtension = 'jpeg'
-                }
-                if(jpgExtension){
+                int index = file.name.lastIndexOf('.')
+                String extension = file.name.substring(index+1)
+                System.out.println("extension: $extension")
+                if(['jpg','jpeg','heic'].contains(extension.toLowerCase())){
                     Picture picture = new Picture()
-                    String fileName = file.name - ".${jpgExtension}"
+                    String fileName = file.name - ".${extension}"
+                    System.out.println("fileName: $fileName")
                     picture.setFileName(fileName)
-                    picture.setExtension(jpgExtension)
-                    // TODO: calculate 'subFolderName' by subtracting 'startFolder' path
-                    picture.setSubFolderName('jpg')
-                    // TODO: no need to reassign picture to picture ?
-                    picture = IoTools.readAndDisplayMetadata(file, picture)
+                    picture.setExtension(extension)
+                    String subFolder = file.parentFile.name
+                    System.out.println("subFolder: $subFolder")
+                    picture.setSubFolderName(subFolder)
+                    IoTools.readAndDisplayMetadata(file, picture)
 
                     List<Picture> pictures = story.getPictures()
                     pictures.add(picture)

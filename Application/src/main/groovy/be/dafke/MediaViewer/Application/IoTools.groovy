@@ -41,7 +41,7 @@ class IoTools {
         }
     }
 
-    static Picture readAndDisplayMetadata(File file, Picture picture) {
+    static void readAndDisplayMetadata(File file, Picture picture) {
         try {
             ImageInputStream iis = ImageIO.createImageInputStream(file);
             Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
@@ -53,28 +53,24 @@ class IoTools {
                 // attach source to the reader
                 reader.setInput(iis, true);
 
-                if(reader instanceof JPEGImageReader){
-                    JPEGImageReader jpegImageReader = (JPEGImageReader)reader
+                if (reader instanceof JPEGImageReader) {
+                    JPEGImageReader jpegImageReader = (JPEGImageReader) reader
                     int index = 0
                     int width = jpegImageReader.getWidth(index)
                     int height = jpegImageReader.getHeight(index)
                     picture.setWidth(width)
                     picture.setHeight(height)
-
-                    Path path = file.toPath()
-                    BasicFileAttributes attributes = null
-                    try {
-                        attributes = Files.readAttributes(path, BasicFileAttributes.class)
-                    } catch (IOException exception) {
-                        System.out.println("Exception handled when trying to get file " +
-                                "attributes: " + exception.getMessage());
-                    }
-                    long milliseconds = attributes.creationTime().to(TimeUnit.MILLISECONDS)
-                    picture.setCreationDate new Date(milliseconds)
-                    return picture
-                } else {
-                    return null
                 }
+                Path path = file.toPath()
+                BasicFileAttributes attributes = null
+                try {
+                    attributes = Files.readAttributes(path, BasicFileAttributes.class)
+                } catch (IOException exception) {
+                    System.out.println("Exception handled when trying to get file " +
+                            "attributes: " + exception.getMessage());
+                }
+                long milliseconds = attributes.creationTime().to(TimeUnit.MILLISECONDS)
+                picture.setCreationDate new Date(milliseconds)
             }
         } catch (Exception e) {
             e.printStackTrace();

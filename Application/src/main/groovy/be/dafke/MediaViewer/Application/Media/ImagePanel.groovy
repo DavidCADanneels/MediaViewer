@@ -90,9 +90,11 @@ class ImagePanel extends JPanel{
                 Dimension newDimension = rescale(oldDimension, dimPerPicture)
                 System.out.println("newDimension: ${newDimension.getWidth()} x ${newDimension.getHeight()}")
 
-                Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
-                ImageIcon imageIcon = new ImageIcon(image)
-                panel.add new JLabel(imageIcon)
+                if(bufferedImage) {
+                    Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
+                    ImageIcon imageIcon = new ImageIcon(image)
+                    panel.add new JLabel(imageIcon)
+                }
             }
         }
         scrollPane = new JScrollPane(panel)
@@ -112,7 +114,7 @@ class ImagePanel extends JPanel{
             File imageFile = new File(startFolder, fileName)
             return ImageIO.read(imageFile)
         } catch (IOException ex) {
-            // handle exception...
+            ex.printStackTrace()
             return null
         }
     }
@@ -129,9 +131,10 @@ class ImagePanel extends JPanel{
             Dimension available = scrollPane.getSize()
             Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeight())
             Dimension newDimension = rescale(oldDimension, available)
-
-            Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
-            imageIcon = new ImageIcon(image)
+            if(bufferedImage) {
+                Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
+                imageIcon = new ImageIcon(image)
+            }
         }
         label.setIcon(imageIcon)
         repaint()

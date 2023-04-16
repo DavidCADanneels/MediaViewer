@@ -84,7 +84,8 @@ class MediaOverviewDataModel extends AbstractTableModel {
 
     @Override
     boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == OWNER_COL
+        return false
+//        return columnIndex == OWNER_COL
     }
 
     @Override

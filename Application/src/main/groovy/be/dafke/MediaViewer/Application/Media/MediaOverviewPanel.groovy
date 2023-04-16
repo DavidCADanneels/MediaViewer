@@ -117,6 +117,7 @@ class MediaOverviewPanel extends JPanel {
                     String fileName = file.name - ".${jpgExtension}"
                     picture.setFileName(fileName)
                     picture.setExtension(jpgExtension)
+                    // TODO: calculate 'subFolderName' by subtracting 'startFolder' path
                     picture.setSubFolderName('jpg')
                     // TODO: no need to reassign picture to picture ?
                     picture = IoTools.readAndDisplayMetadata(file, picture)

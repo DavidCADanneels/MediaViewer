@@ -15,13 +15,13 @@ import static java.util.ResourceBundle.getBundle
 class AddParticipantPanel extends JPanel {
     JTextField firstNameField, lastNameField
     JButton createButton
-    Story story
 
     AddParticipantPanel() {
         firstNameField = new JTextField(20)
         lastNameField = new JTextField(30)
         createButton = new JButton("Create")
         createButton.addActionListener({ e -> showDialog() })
+
         JPanel line1 = new JPanel()
         line1.add new JLabel("${getBundle("MediaViewer").getString("FIRST_NAME")}:")
         line1.add firstNameField
@@ -43,6 +43,7 @@ class AddParticipantPanel extends JPanel {
             Participant participant = new Participant()
             participant.setFirstName(firstName)
             participant.setLastName(lastName)
+            Story story = Main.activeStory
             if (story!=null && story.getParticipants()!=null) {
                 List<Participant> participants = story.getParticipants()
                 participants.add(participant)

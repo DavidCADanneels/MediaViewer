@@ -1,7 +1,6 @@
 package be.dafke.MediaViewer.ObjectModel.Stories
 
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
-import be.dafke.MediaViewer.ObjectModel.Media.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 
 
@@ -9,13 +8,13 @@ class Story {
     String title
     String shortDescription
     String introText
-//    List<Chapter> chapters
+    List<Chapter> chapters
     List<Participant> participants
     List<Picture> pictures
     File projectFolder
 
     Story() {
-//        chapters = []
+        chapters = []
         pictures = []
         participants = []
     }

@@ -14,7 +14,7 @@ import static java.util.ResourceBundle.getBundle
 
 class ParticipantsOverviewPanel extends JPanel {
     ParticipantsOverviewDataModel dataModel
-//    JButton addParticipantButton
+    JButton addParticipantButton
     JTable overviewTable
     Story story
 
@@ -25,18 +25,18 @@ class ParticipantsOverviewPanel extends JPanel {
         add new JScrollPane(overviewTable), BorderLayout.CENTER
 
 
-//        addParticipantButton = new JButton(getBundle("MediaViewer").getString("ADD_PARTICIPANTS_BUTTON"))
-//        addParticipantButton.addActionListener({ e ->
-//            NewParticipantDialog newParticipantDialog = new NewParticipantDialog()
-//            newParticipantDialog.setLocation(getLocationOnScreen())
-//            newParticipantDialog.visible = true
-//        })
+        addParticipantButton = new JButton(getBundle("MediaViewer").getString("ADD_PARTICIPANTS_BUTTON"))
+        addParticipantButton.addActionListener({ e ->
+            NewParticipantDialog newParticipantDialog = new NewParticipantDialog()
+            newParticipantDialog.setLocation(getLocationOnScreen())
+            newParticipantDialog.visible = true
+        })
         
-//        JPanel south = new JPanel()
-//
-//        south.add addParticipantButton
-//
-//        add south, BorderLayout.SOUTH
+        JPanel south = new JPanel()
+
+        south.add addParticipantButton
+
+        add south, BorderLayout.SOUTH
     }
 
     void setStory(Story story) {

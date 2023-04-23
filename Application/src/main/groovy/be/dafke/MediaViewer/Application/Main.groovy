@@ -51,6 +51,7 @@ class Main {
         activeStory = story
         storyButtonsPanel.setStory(story)
         participantsOverviewPanel.setStory(story)
+        chaptersOverviewPanel.setStory(story)
         mediaOverviewPanel.setStory(story)
         storyDetailsPanel.setStory(story)
     }

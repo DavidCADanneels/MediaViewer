@@ -1,6 +1,7 @@
 package be.dafke.MediaViewer.Application.Chapter
 
 import be.dafke.MediaViewer.Application.NewChapter.NewChapterDialog
+import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.JButton
 import javax.swing.JPanel
@@ -33,8 +34,7 @@ class ChaptersOverviewPanel extends JPanel {
         add south, BorderLayout.SOUTH
     }
 
-//    void setStory(Story story) {
-//        this.story = story
-//        dataModel.setStory(story)
-//    }
+    void setStory(Story story) {
+        chapterTablePanel.setStory(story)
+    }
 }

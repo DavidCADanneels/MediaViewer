@@ -29,11 +29,13 @@ class ImageTablePanel extends JScrollPane implements ListSelectionListener {
         dataModel = new MediaOverviewDataModel()
         overviewTable = new JTable(dataModel)
         overviewTable.setPreferredScrollableViewportSize(new Dimension(500, 200))
+
 //        overviewTable.setAutoCreateRowSorter(true)
         overviewTable.setRowSorter(new MediaRowSorter(dataModel))
         DefaultListSelectionModel selection = new DefaultListSelectionModel()
         selection.addListSelectionListener(this)
         overviewTable.setSelectionModel(selection)
+
         setSingleSelection(true)
         setViewportView(overviewTable)
     }

@@ -14,7 +14,7 @@ import static java.util.ResourceBundle.getBundle
 
 class ParticipantsOverviewPanel extends JPanel {
     ParticipantsOverviewDataModel dataModel
-    JButton backToStoryDetailsButton, backToStoryOverViewButton, mediaButton, addParticipantButton
+//    JButton addParticipantButton
     JTable overviewTable
     Story story
 
@@ -24,35 +24,19 @@ class ParticipantsOverviewPanel extends JPanel {
         overviewTable = new JTable(dataModel)
         add new JScrollPane(overviewTable), BorderLayout.CENTER
 
-        backToStoryOverViewButton = new JButton("${getBundle("MediaViewer").getString("BACK_TO_MAIN")}")
-        backToStoryOverViewButton.addActionListener { e ->
-            Main.switchView(Main.VIEW_STORY_OVERVIEW)
-        }
 
-        backToStoryDetailsButton = new JButton("${getBundle("MediaViewer").getString("BACK_TO_MAIN")}")
-        backToStoryDetailsButton.addActionListener { e ->
-            Main.switchView(Main.VIEW_STORY_DETAILS)
-        }
-
-        mediaButton = new JButton(getBundle("MediaViewer").getString("SHOW_MEDIA_FOR_STORY"))
-        mediaButton.addActionListener { e ->
-            Main.switchView(Main.VIEW_MEDIA_FOR_STORY)
-        }
-
-        addParticipantButton = new JButton(getBundle("MediaViewer").getString("ADD_PARTICIPANTS_BUTTON"))
-        addParticipantButton.addActionListener({ e ->
-            NewParticipantDialog newParticipantDialog = new NewParticipantDialog()
-            newParticipantDialog.setLocation(getLocationOnScreen())
-            newParticipantDialog.visible = true
-        })
+//        addParticipantButton = new JButton(getBundle("MediaViewer").getString("ADD_PARTICIPANTS_BUTTON"))
+//        addParticipantButton.addActionListener({ e ->
+//            NewParticipantDialog newParticipantDialog = new NewParticipantDialog()
+//            newParticipantDialog.setLocation(getLocationOnScreen())
+//            newParticipantDialog.visible = true
+//        })
         
-        JPanel south = new JPanel()
-        south.add backToStoryOverViewButton
-        south.add backToStoryDetailsButton
-        south.add mediaButton
+//        JPanel south = new JPanel()
+//
 //        south.add addParticipantButton
-
-        add south, BorderLayout.SOUTH
+//
+//        add south, BorderLayout.SOUTH
     }
 
     void setStory(Story story) {

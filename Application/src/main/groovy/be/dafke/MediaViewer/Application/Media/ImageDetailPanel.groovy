@@ -18,10 +18,12 @@ class ImageDetailPanel extends JPanel{
     Story story
     List<Picture> pictures
     boolean singleSelection
-    JButton assignOwnerButton
+    JButton assignOwnerButton, assignIndexButton
     MediaOverviewPanel mediaOverviewPanel
-    static String singleText = "Assign Owner to Picture"
-    static String multiText = "Assign Owner to Pictures"
+    static String singleTextOwner = "Assign Owner to Picture"
+    static String multiTextOwner = "Assign Owner to Pictures"
+    static String singleTextIndex = "Assign Index to Picture"
+    static String multiTextIndex = "Assign Index to Pictures"
 
     ImageDetailPanel(MediaOverviewPanel mediaOverviewPanel) {
         this.mediaOverviewPanel = mediaOverviewPanel
@@ -35,13 +37,18 @@ class ImageDetailPanel extends JPanel{
         line1.add sizeField
 
         singleSelection = true
-        assignOwnerButton = new JButton(singleText)
+        assignOwnerButton = new JButton(singleTextOwner)
         assignOwnerButton.addActionListener {e ->
             assignOwner()
+        }
+        assignIndexButton = new JButton(singleTextIndex)
+        assignIndexButton.addActionListener {e ->
+            assignIndex()
         }
 
         add line1
         add assignOwnerButton
+        add assignIndexButton
     }
 
     void assignOwner(){
@@ -55,6 +62,20 @@ class ImageDetailPanel extends JPanel{
             } else {
                 pictures.each {Picture picture ->
                     picture.setOwner(nr)
+                }
+            }
+            mediaOverviewPanel.imageTablePanel.dataModel.fireTableDataChanged()
+        }
+    }
+
+    void assignIndex(){
+        String reply = JOptionPane.showInputDialog('Enter Index:').trim()
+        if(reply != null){
+            if(singleSelection){
+                picture.setIndexNumber(reply)
+            } else {
+                pictures.each {Picture picture ->
+                    picture.setIndexNumber(reply)
                 }
             }
             mediaOverviewPanel.imageTablePanel.dataModel.fireTableDataChanged()
@@ -82,9 +103,11 @@ class ImageDetailPanel extends JPanel{
         this.singleSelection = singleSelection
         line1.setVisible(singleSelection)
         if(singleSelection){
-            assignOwnerButton.setText(singleText)
+            assignOwnerButton.setText(singleTextOwner)
+            assignIndexButton.setText(singleTextIndex)
         } else {
-            assignOwnerButton.setText(multiText)
+            assignOwnerButton.setText(multiTextOwner)
+            assignIndexButton.setText(multiTextIndex)
         }
     }
 }

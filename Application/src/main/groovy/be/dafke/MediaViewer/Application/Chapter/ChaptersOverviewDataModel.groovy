@@ -63,9 +63,9 @@ class ChaptersOverviewDataModel extends DefaultTableModel {
         Chapter chapter = chapters.get(rowIndex)
         if(chapter != null) {
             if (columnIndex == INDEX_COL) {
-                chapter.prefix
+                chapter.getPrefix()
             } else if (columnIndex == TITLE_COL) {
-                chapter.title
+                chapter.getTitle()
             } else null
         } else null
     }

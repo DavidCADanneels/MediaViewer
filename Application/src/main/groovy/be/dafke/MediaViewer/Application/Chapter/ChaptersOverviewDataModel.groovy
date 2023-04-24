@@ -60,11 +60,27 @@ class ChaptersOverviewDataModel extends DefaultTableModel {
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-
+        Chapter chapter = chapters.get(rowIndex)
+        if(chapter != null) {
+            if (columnIndex == INDEX_COL) {
+                chapter.prefix
+            } else if (columnIndex == TITLE_COL) {
+                chapter.title
+            } else null
+        } else null
     }
 
     @Override
     void setValueAt(Object value, int rowIndex, int columnIndex) {
-
+        Chapter chapter = chapters.get(rowIndex)
+        if(chapter != null) {
+            if(columnIndex == INDEX_COL){
+                String index = (String) value
+                chapter.setPrefix(index)
+            } else if(columnIndex == TITLE_COL){
+                String title = (String) value
+                chapter.setTitle(title)
+            }
+        }
     }
 }

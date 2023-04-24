@@ -6,4 +6,5 @@ abstract class Media {
     String extension
     Date creationDate
     Integer owner
+    String indexNumber
 }

@@ -2,6 +2,7 @@ package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
+import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.table.AbstractTableModel
@@ -49,6 +50,11 @@ class MediaOverviewDataModel extends AbstractTableModel {
         columnNames.put(CREATION_TIME_COL, getBundle("MediaViewer").getString("CREATION_TIME"))
         columnNames.put(OWNER_COL, getBundle("MediaViewer").getString("OWNER"))
 //        columnNames.put(FULL_PATH_COL, getBundle("MediaViewer").getString("FULL_PATH"))
+    }
+
+    void setChapter(Chapter chapter) {
+        pictures = chapter.getMediaList()
+        fireTableDataChanged()
     }
 
     void setStory(Story story) {

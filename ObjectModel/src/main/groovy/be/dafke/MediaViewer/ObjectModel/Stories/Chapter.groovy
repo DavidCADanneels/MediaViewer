@@ -1,9 +1,12 @@
 package be.dafke.MediaViewer.ObjectModel.Stories
 
+import be.dafke.MediaViewer.ObjectModel.Media.Picture
+
 class Chapter{
 //    Story story = null
     String prefix = '00'
     String title = ''
+    List<Picture> mediaList = []
 //    String description = ''
 //    Chapter parentChapter = null
 //    String path

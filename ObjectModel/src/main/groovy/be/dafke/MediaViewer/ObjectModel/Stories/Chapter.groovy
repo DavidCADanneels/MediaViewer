@@ -6,7 +6,7 @@ class Chapter{
 //    Story story = null
     String prefix = '00'
     String title = ''
-    List<Picture> mediaList = []
+//    List<Picture> mediaList = []
 //    String description = ''
 //    Chapter parentChapter = null
 //    String path
@@ -67,7 +67,8 @@ public void paintComponent(Graphics g) {
 
     String toString(){
         // TODO: add prefices from parent Chapters
-        return prefix + '/' + title
+//        return prefix + '/' + title
+        prefix
     }
 
 //    Story getStory() {

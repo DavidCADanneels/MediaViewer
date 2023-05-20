@@ -1,5 +1,7 @@
 package be.dafke.MediaViewer.ObjectModel.Media
 
+import java.util.function.Predicate
+
 class Picture extends Media {
     int width, height
     /**
@@ -19,5 +21,9 @@ class Picture extends Media {
 //        participantsInForeGround = []
 //        participantsInMiddleGround = []
 //        participantsBackGround = []
+    }
+
+    static Predicate<Picture> inChapter(String prefix){
+        { picture -> picture.getChapter() != null && prefix == picture.chapter }
     }
 }

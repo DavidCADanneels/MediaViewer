@@ -1,11 +1,13 @@
 package be.dafke.MediaViewer.Application.Media
 
+import be.dafke.MediaViewer.ObjectModel.Media.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.table.AbstractTableModel
+import java.util.function.Predicate
 
 import static java.util.ResourceBundle.getBundle
 
@@ -53,7 +55,19 @@ class MediaOverviewDataModel extends AbstractTableModel {
     }
 
     void setChapter(Chapter chapter) {
-        pictures = chapter.getMediaList()
+        String prefix = chapter.getPrefix()
+        if(prefix) {
+            pictures = []
+            List<Picture> allPictures = story.getPictures()
+            allPictures.each { Picture picture ->
+                String myChapter = picture.getChapter()
+                if(myChapter != null && myChapter == prefix){
+                    pictures.add picture
+                }
+            }
+        } else  {
+            pictures = story.getPictures()
+        }
         fireTableDataChanged()
     }
 

@@ -1,6 +1,8 @@
 package be.dafke.MediaViewer.Application.Media
 
+import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
+import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.BoxLayout
@@ -18,12 +20,14 @@ class ImageDetailPanel extends JPanel{
     Story story
     List<Picture> pictures
     boolean singleSelection
-    JButton assignOwnerButton, assignIndexButton
+    JButton assignOwnerButton, assignIndexButton, assignChapterButton
     MediaOverviewPanel mediaOverviewPanel
     static String singleTextOwner = "Assign Owner to Picture"
     static String multiTextOwner = "Assign Owner to Pictures"
     static String singleTextIndex = "Assign Index to Picture"
     static String multiTextIndex = "Assign Index to Pictures"
+    static String singleTextChapter = "Assign Chapter to Picture"
+    static String multiTextChapter = "Assign Chapter to Pictures"
 
     ImageDetailPanel(MediaOverviewPanel mediaOverviewPanel) {
         this.mediaOverviewPanel = mediaOverviewPanel
@@ -45,10 +49,56 @@ class ImageDetailPanel extends JPanel{
         assignIndexButton.addActionListener {e ->
             assignIndex()
         }
+        assignChapterButton = new JButton(singleTextChapter)
+        assignChapterButton.addActionListener {e ->
+            assignChapter()
+        }
 
         add line1
         add assignOwnerButton
         add assignIndexButton
+        add assignChapterButton
+    }
+
+    void moveFile(Picture p, String newFolderName){
+        File rootFolder = Main.getSubFolder(story)
+        File sourceFolder = rootFolder
+        String subFolderName = p.getSubFolderName()
+        if (subFolderName != null) {
+            sourceFolder = new File(sourceFolder, subFolderName)
+        }
+        String fileName = "${picture.getFileName()}.${picture.getExtension()}"
+        File sourceFile = new File(sourceFolder, fileName)
+
+        File destinationFolder = new File(rootFolder, newFolderName)
+        File destinationFile = new File(destinationFolder, fileName)
+        sourceFile.renameTo(destinationFile)
+    }
+
+    void assignChapter(){
+        Object [] chapters = story.getChapters().toArray()
+        int nr = JOptionPane.showOptionDialog(this, "Select Chapter", "Assign Chapter",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                chapters, null)
+        if(nr != -1) {
+            Chapter chapter = chapters[nr]
+            String prefix = chapter.getPrefix()
+            if(singleSelection){
+                picture.setChapter(prefix)
+//                moveFile(picture, prefix)
+                picture.setSubFolderName(prefix)
+//                chapter.getMediaList().add(picture)
+                // picture
+            } else {
+                pictures.each {Picture p ->
+                    p.setChapter(prefix)
+//                    moveFile(p, prefix)
+                    p.setSubFolderName(prefix)
+//                    chapter.getMediaList().add(p)
+                }
+            }
+//            mediaOverviewPanel.imageTablePanel.dataModel.fireTableDataChanged()
+        }
     }
 
     void assignOwner(){
@@ -105,9 +155,11 @@ class ImageDetailPanel extends JPanel{
         if(singleSelection){
             assignOwnerButton.setText(singleTextOwner)
             assignIndexButton.setText(singleTextIndex)
+            assignChapterButton.setText(singleTextChapter)
         } else {
             assignOwnerButton.setText(multiTextOwner)
             assignIndexButton.setText(multiTextIndex)
+            assignChapterButton.setText(multiTextChapter)
         }
     }
 }

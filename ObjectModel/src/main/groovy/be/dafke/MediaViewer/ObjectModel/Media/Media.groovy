@@ -7,4 +7,9 @@ abstract class Media {
     Date creationDate
     Integer owner
     String indexNumber
+    String chapter
+
+    String getChapter() {
+        return chapter
+    }
 }

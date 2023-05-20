@@ -1,7 +1,10 @@
 package be.dafke.MediaViewer.ObjectModel.Stories
 
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
+import be.dafke.MediaViewer.ObjectModel.Media.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
+
+import java.util.function.Predicate
 
 
 class Story {
@@ -30,6 +33,10 @@ class Story {
     List<Picture> getPictures() {
         return pictures
     }
+
+//    List<Picture> getPictures(Predicate<Picture> filter) {
+//        getPictures().stream().filter(filter).collect().toList()
+//    }
 
     void setPictures(List<Picture> pictures) {
         this.pictures = pictures

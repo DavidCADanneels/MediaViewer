@@ -44,9 +44,11 @@ class ChaptersOverviewPanel extends JPanel {
 
     void setChapter(Chapter chapter){
         chapterPanel.setChapter(chapter)
+//        chapterTablePanel
     }
 
     void setStory(Story story) {
+        chapterPanel.setStory(story)
         chapterTablePanel.setStory(story)
     }
 }

@@ -4,6 +4,7 @@ import be.dafke.MediaViewer.Application.Media.ImageTablePanel
 import be.dafke.MediaViewer.Application.Media.MediaOverviewDataModel
 import be.dafke.MediaViewer.Application.Media.MediaRowSorter
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
+import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.DefaultListSelectionModel
 import javax.swing.JScrollPane
@@ -28,6 +29,10 @@ class ChapterPanel extends JScrollPane {
 
         setSingleSelection(true)
         setViewportView(overviewTable)
+    }
+
+    void setStory(Story story){
+        dataModel.setStory(story)
     }
 
     void setChapter(Chapter chapter){

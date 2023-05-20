@@ -33,6 +33,10 @@ class ChaptersOverviewDataModel extends DefaultTableModel {
         fireTableDataChanged()
     }
 
+    Chapter getObject(int row){
+        return chapters.get(row)
+    }
+
     @Override
     int getRowCount() {
         chapters?.size()?:0

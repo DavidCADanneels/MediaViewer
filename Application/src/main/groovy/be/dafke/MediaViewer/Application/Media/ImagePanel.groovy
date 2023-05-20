@@ -107,7 +107,7 @@ class ImagePanel extends JPanel{
         try {
             File startFolder = Main.getSubFolder(story)
             String subFolderName = picture.getSubFolderName()
-            if (subFolderName) {
+            if (subFolderName != null) {
                 startFolder = new File(startFolder, subFolderName)
             }
             String fileName = "${picture.getFileName()}.${picture.getExtension()}"

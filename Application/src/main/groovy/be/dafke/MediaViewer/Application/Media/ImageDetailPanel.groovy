@@ -60,20 +60,20 @@ class ImageDetailPanel extends JPanel{
         add assignChapterButton
     }
 
-    void moveFile(Picture p, String newFolderName){
-        File rootFolder = Main.getSubFolder(story)
-        File sourceFolder = rootFolder
-        String subFolderName = p.getSubFolderName()
-        if (subFolderName != null) {
-            sourceFolder = new File(sourceFolder, subFolderName)
-        }
-        String fileName = "${picture.getFileName()}.${picture.getExtension()}"
-        File sourceFile = new File(sourceFolder, fileName)
-
-        File destinationFolder = new File(rootFolder, newFolderName)
-        File destinationFile = new File(destinationFolder, fileName)
-        sourceFile.renameTo(destinationFile)
-    }
+//    void moveFile(Picture p, String newFolderName){
+//        File rootFolder = Main.getSubFolder(story)
+//        File sourceFolder = rootFolder
+//        String subFolderName = p.getSubFolderName()
+//        if (subFolderName != null) {
+//            sourceFolder = new File(sourceFolder, subFolderName)
+//        }
+//        String fileName = "${picture.getFileName()}.${picture.getExtension()}"
+//        File sourceFile = new File(sourceFolder, fileName)
+//
+//        File destinationFolder = new File(rootFolder, newFolderName)
+//        File destinationFile = new File(destinationFolder, fileName)
+//        sourceFile.renameTo(destinationFile)
+//    }
 
     void assignChapter(){
         Object [] chapters = story.getChapters().toArray()
@@ -81,23 +81,18 @@ class ImageDetailPanel extends JPanel{
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                 chapters, null)
         if(nr != -1) {
-            Chapter chapter = chapters[nr]
-            String prefix = chapter.getPrefix()
+            Chapter chapter = (Chapter) chapters[nr]
+            String chapterPrefix = chapter.getPrefix()
+            String subPrefix = ''
             if(singleSelection){
-                picture.setChapter(prefix)
-//                moveFile(picture, prefix)
-                picture.setSubFolderName(prefix)
-//                chapter.getMediaList().add(picture)
-                // picture
+                picture.setChapter(chapterPrefix)
+                picture.setSubFolderName(subPrefix)
             } else {
                 pictures.each {Picture p ->
-                    p.setChapter(prefix)
-//                    moveFile(p, prefix)
-                    p.setSubFolderName(prefix)
-//                    chapter.getMediaList().add(p)
+                    p.setChapter(chapterPrefix)
+                    p.setSubFolderName(subPrefix)
                 }
             }
-//            mediaOverviewPanel.imageTablePanel.dataModel.fireTableDataChanged()
         }
     }
 

@@ -2,6 +2,7 @@ package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
+import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.ImageIcon
@@ -106,6 +107,31 @@ class ImagePanel extends JPanel{
     BufferedImage readImage(Picture picture){
         try {
             File startFolder = Main.getSubFolder(story)
+            String chapterPrefix = picture.getChapter() // e.g. 0200
+            System.out.println "chapterPrefix=${chapterPrefix}"
+            if (chapterPrefix) {
+                while(chapterPrefix.size()>2){
+                    String parent = chapterPrefix.substring(0,2)
+                    System.out.println"parent=${parent}"
+                    startFolder = new File(startFolder, parent)
+                    chapterPrefix -= parent
+                    System.out.println"remaining chapterPrefix=${chapterPrefix}"
+                }
+                startFolder = new File(startFolder, chapterPrefix)
+//                Chapter chapter = story.getChapter(chapterPrefix)
+//                if (chapter) {
+//                    Chapter parentChapter = chapter.getParentChapter()
+//                    if (parentChapter) {
+//                        String parentPrefix = parentChapter.getPrefix()
+//                        System.out.println "parentPrefix=${parentPrefix}"
+//
+//                        startFolder = new File(startFolder, parentPrefix)
+//                        chapterPrefix -= parentPrefix
+//                        System.out.println "chapterPrefix=${chapterPrefix}"
+//                    }
+//                    startFolder = new File(startFolder, chapterPrefix)
+//                }
+            }
             String subFolderName = picture.getSubFolderName()
             if (subFolderName != null) {
                 startFolder = new File(startFolder, subFolderName)

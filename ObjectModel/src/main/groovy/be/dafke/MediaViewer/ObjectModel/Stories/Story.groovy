@@ -1,11 +1,7 @@
 package be.dafke.MediaViewer.ObjectModel.Stories
 
 import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
-import be.dafke.MediaViewer.ObjectModel.Media.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
-
-import java.util.function.Predicate
-
 
 class Story {
     String title
@@ -21,6 +17,26 @@ class Story {
         pictures = []
         participants = []
     }
+
+    List<Chapter> getChapters() {
+        return chapters
+    }
+
+//    Chapter getChapter(String index){
+//        List<Chapter> foundChapters = []
+////        def allChapters = getChapters()
+//        chapters.each {Chapter chapter ->
+//            String prefix = chapter.getPrefix()
+//            if(index.equals(prefix)){
+//                foundChapters.add chapter
+//            }
+//        }
+//        System.out.println"found: ${foundChapters.size()}"
+//        if(foundChapters.size()>0){
+//            return foundChapters[0]
+//        } else return null
+////        getChapters().find { Chapter chapter -> chapter.getPrefix().equals(index)}
+//    }
 
     File getProjectFolder() {
         return projectFolder

@@ -6,6 +6,8 @@ class Chapter{
 //    Story story = null
     String prefix = '00'
     String title = ''
+    String parentChapter
+    List<String> subChapters = []
 //    List<Picture> mediaList = []
 //    String description = ''
 //    Chapter parentChapter = null
@@ -56,6 +58,10 @@ public void paintComponent(Graphics g) {
 //        story = null
         title = ""
         prefix = ""
+    }
+
+    String getPrefix() {
+        return prefix
     }
 //    Chapter(Story story, String title, String prefix) { //}, String description) {//}, String path) {
 //        this.story = story

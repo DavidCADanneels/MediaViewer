@@ -18,11 +18,12 @@ class MediaOverviewDataModel extends AbstractTableModel {
     static int SIZE_COL = 3
     static int OWNER_COL = 4
     static int INDEX_COL = 5
-    static int NR_OF_COL = 6
-    static int FILE_NAME_COL = 6
-    static int EXTENSION_COL = 7
-    static int FOLDER_NAME_COL = 8
-//    static int FULL_PATH_COL = 9
+    static int CHAPTER_COL = 6
+    static int NR_OF_COL = 7
+    static int FILE_NAME_COL = 7
+    static int EXTENSION_COL = 8
+    static int FOLDER_NAME_COL = 9
+//    static int FULL_PATH_COL = 10
 
     HashMap<Integer,String> columnNames = [:]
     HashMap<Integer,Class> columnClasses = [:]
@@ -36,6 +37,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
         columnClasses.put(EXTENSION_COL, String.class)
         columnClasses.put(FILE_NAME_COL, String.class)
         columnClasses.put(INDEX_COL, String.class)
+        columnClasses.put(CHAPTER_COL, String.class)
         columnClasses.put(SIZE_COL, String.class)
         columnClasses.put(CREATION_DATE_COL, Date.class)
         columnClasses.put(CREATION_TIME_COL, String.class)
@@ -48,6 +50,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
         columnNames.put(FILE_NAME_COL, getBundle("MediaViewer").getString("FILE_NAME"))
         columnNames.put(INDEX_COL, getBundle("MediaViewer").getString("MEDIA_INDEX"))
         columnNames.put(SIZE_COL, getBundle("MediaViewer").getString("IMAGE_SIZE"))
+        columnNames.put(CHAPTER_COL, getBundle("MediaViewer").getString("CHAPTER"))
         columnNames.put(CREATION_DATE_COL, getBundle("MediaViewer").getString("CREATION_DATE"))
         columnNames.put(CREATION_TIME_COL, getBundle("MediaViewer").getString("CREATION_TIME"))
         columnNames.put(OWNER_COL, getBundle("MediaViewer").getString("OWNER"))
@@ -56,8 +59,8 @@ class MediaOverviewDataModel extends AbstractTableModel {
 
     void setChapter(Chapter chapter) {
         String prefix = chapter.getPrefix()
+        pictures = []
         if(prefix) {
-            pictures = []
             List<Picture> allPictures = story.getPictures()
             allPictures.each { Picture picture ->
                 String myChapter = picture.getChapter()
@@ -65,8 +68,6 @@ class MediaOverviewDataModel extends AbstractTableModel {
                     pictures.add picture
                 }
             }
-        } else  {
-            pictures = story.getPictures()
         }
         fireTableDataChanged()
     }
@@ -124,6 +125,8 @@ class MediaOverviewDataModel extends AbstractTableModel {
                 return picture.getExtension()
             } else if (columnIndex == INDEX_COL) {
                 return picture.getIndexNumber()
+            } else if (columnIndex == CHAPTER_COL) {
+                return picture.getChapter()
             } else if (columnIndex == OWNER_COL) {
                 Integer id = picture.getOwner()
                 if(id != null && id != -1) {
@@ -159,6 +162,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
         if (columnIndex == INDEX_COL) {
             String indexNumber = (String) value
             picture.setIndexNumber(indexNumber)
+//        } else if (columnIndex == CHAPTER_COL) {
         } else if (columnIndex == OWNER_COL) {
             List<Participant> list = story.getParticipants()
             Participant participant = (Participant) value

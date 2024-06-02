@@ -92,7 +92,7 @@ class StoryButtonsPanel extends JPanel {
                     // TODO: show popup to set owner
                 }
             }
-            imageTablePanel.dataModel.fireTableDataChanged()
+//            imageTablePanel.dataModel.fireTableDataChanged()
         }
         // TODO: add support to read Movies, Text, etc. (not only pictures)
 //            Point locationOnScreen = getLocationOnScreen()

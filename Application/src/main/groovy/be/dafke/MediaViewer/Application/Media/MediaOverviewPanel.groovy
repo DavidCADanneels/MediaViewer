@@ -22,15 +22,15 @@ class MediaOverviewPanel extends JPanel {
 
         imageDetailPanel = new ImageDetailPanel(this)
         imageShowOptionsPanel = new ImageShowOptionsPanel(this)
-        imagePanel = new ImagePanel(imageShowOptionsPanel) // dependency only needed to include in Layout
+        imagePanel = new ImagePanel() // dependency only needed to include in Layout
         imageTablePanel = new ImageTablePanel(this)
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT)
         splitPane.add imageTablePanel, JSplitPane.TOP
         splitPane.add imagePanel, JSplitPane.BOTTOM
 
-        // TODO: add imageShowOptionsPanel to NORTH and remove it from ImagePanel
-//        add imageShowOptionsPanel, BorderLayout.NORTH
+        // FIXME: hide ImagePanel if 'Display Selection' == false
+        add imageShowOptionsPanel, BorderLayout.NORTH
         add splitPane, BorderLayout.CENTER
         add imageDetailPanel, BorderLayout.EAST
     }

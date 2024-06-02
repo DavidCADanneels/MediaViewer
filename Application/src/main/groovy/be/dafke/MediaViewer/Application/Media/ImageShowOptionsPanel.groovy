@@ -52,14 +52,11 @@ class ImageShowOptionsPanel extends JPanel {
 
     void checkShowSelection(){
         boolean selected = displaySelectedImages.isSelected()
-        singleSelectionCheckBox.selected = !(!selected || !singleSelectionCheckBox.selected)
-//        checkSingleSelection()
-
-        fullSizeCheckBox.selected = fullSizeCheckBox.selected && selected
-        fullSizeCheckBox.enabled = selected
-//        fullSizeImage()
-
-        showDetailsCheckBox.selected = showDetailsCheckBox.selected || !selected
+        if(!selected) {
+            singleSelectionCheckBox.selected = false
+            showDetailsCheckBox.selected = true
+        }
+        checkSingleSelection() // this will update fullSizeCheckBox as well
         checkShowDetails()
 
         mediaOverviewPanel.setShowSelection(selected)
@@ -70,15 +67,11 @@ class ImageShowOptionsPanel extends JPanel {
         // FIXME: re-validate which checkboxes to enable/select
         if (single) {
             fullSizeCheckBox.enabled = true
-            fullSizeImage()
-
-            showDetailsCheckBox.enabled = true
-            checkShowDetails()
         } else {
             fullSizeCheckBox.selected = false
             fullSizeCheckBox.enabled = false
-            fullSizeImage()
         }
+        fullSizeImage()
         mediaOverviewPanel.setSingleSelection(single)
     }
 }

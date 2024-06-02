@@ -25,19 +25,15 @@ class ImagePanel extends JPanel{
     List<Picture> pictures
     JScrollPane scrollPane
     Story story
-    // FIXME: move ImageShowOptionsPanel to NORTH panel of MediaOverviewPanel + hide ImagePanel if 'Display Selection' == false
-    ImageShowOptionsPanel imageShowOptionsPanel
     // FIXME: tmp workaround to not update the view.
     // This boolean should be else where: when false, this ImagePanel should be hidden
     boolean showSelection = true
 
-    ImagePanel(ImageShowOptionsPanel imageShowOptionsPanel) {
-        this.imageShowOptionsPanel = imageShowOptionsPanel
+    ImagePanel() {
         setLayout new BorderLayout()
         label = new JLabel()
         scrollPane = new JScrollPane(label)
         add scrollPane, BorderLayout.CENTER
-        add imageShowOptionsPanel, BorderLayout.NORTH
     }
 
     void setStory(Story story) {

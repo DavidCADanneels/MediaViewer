@@ -3,6 +3,7 @@ package be.dafke.MediaViewer.Application.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
+import javax.swing.JCheckBox
 import javax.swing.JPanel
 import javax.swing.JSplitPane
 import java.awt.BorderLayout
@@ -12,6 +13,8 @@ class MediaOverviewPanel extends JPanel {
     ImagePanel imagePanel
     ImageTablePanel imageTablePanel
     ImageShowOptionsPanel imageShowOptionsPanel
+    // FIXME: use this checkbox iso ImageShowOptionsPanel.displaySelectedImages
+    JCheckBox displaySelectedImages
     Story story
 
     MediaOverviewPanel() {
@@ -40,6 +43,11 @@ class MediaOverviewPanel extends JPanel {
         imageDetailPanel.setVisible(showDetails)
     }
 
+    void setShowSelection(boolean selected){
+        imageTablePanel.showSelection = selected
+        imagePanel.showSelection = selected
+    }
+
     void setSingleSelection(boolean singleSelection) {
         imagePanel.setSingleSelection(singleSelection)
         imageTablePanel.setSingleSelection(singleSelection)
@@ -53,7 +61,12 @@ class MediaOverviewPanel extends JPanel {
     }
 
     void setPictures(List<Picture> pictures){
-        imagePanel.setPictures(pictures)
+        // FIXME: add Checkbox to set 'showSelection' in imagePanel
+        // TODO: do not call the setPicture(s) method if showSelection == false
+        // and remov the if clause in imagePanel.setPicture(s)
+//        if(showSelection) {
+            imagePanel.setPictures(pictures)
+//        }
         imageDetailPanel.setPictures(pictures)
     }
 

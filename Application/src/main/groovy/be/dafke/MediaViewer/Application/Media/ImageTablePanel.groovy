@@ -21,6 +21,7 @@ class ImageTablePanel extends JScrollPane implements ListSelectionListener {
     MediaOverviewDataModel dataModel
     JTable overviewTable
     boolean singleSelection
+    boolean showSelection
     MediaOverviewPanel mediaOverviewPanel
 //    Story story
 
@@ -37,6 +38,7 @@ class ImageTablePanel extends JScrollPane implements ListSelectionListener {
         overviewTable.setSelectionModel(selection)
 
         setSingleSelection(true)
+        setShowSelection(true)
         setViewportView(overviewTable)
     }
 
@@ -49,6 +51,10 @@ class ImageTablePanel extends JScrollPane implements ListSelectionListener {
         column.setCellEditor(new DefaultCellEditor(comboBox))
     }
 
+    void setShowSelection(boolean showSelection) {
+        this.showSelection = showSelection
+    }
+
     void setSingleSelection(boolean singleSelection) {
         this.singleSelection = singleSelection
         if(singleSelection) {
@@ -59,6 +65,8 @@ class ImageTablePanel extends JScrollPane implements ListSelectionListener {
     }
 
     void valueChanged(ListSelectionEvent e) {
+        // FIXME: add 'showSelection &&' condition
+//        if (showSelection && !e.getValueIsAdjusting()) {
         if (!e.getValueIsAdjusting()) {
             if(singleSelection) {
                 showSingleSelection()

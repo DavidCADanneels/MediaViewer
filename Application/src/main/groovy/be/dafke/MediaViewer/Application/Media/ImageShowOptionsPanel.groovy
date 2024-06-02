@@ -5,11 +5,17 @@ import javax.swing.JPanel
 
 class ImageShowOptionsPanel extends JPanel {
 
-    JCheckBox singleSelectionCheckBox, fullSizeCheckBox, showDetailsCheckBox
+    JCheckBox displaySelectedImages, singleSelectionCheckBox, fullSizeCheckBox, showDetailsCheckBox
     MediaOverviewPanel mediaOverviewPanel
 
     ImageShowOptionsPanel(MediaOverviewPanel mediaOverviewPanel) {
         this.mediaOverviewPanel = mediaOverviewPanel
+        displaySelectedImages = new JCheckBox("Display Selection")
+        displaySelectedImages.setSelected(true)
+        displaySelectedImages.addActionListener { e ->
+            checkShowSelection()
+        }
+
         singleSelectionCheckBox = new JCheckBox("Single Selection")
         singleSelectionCheckBox.setSelected(true)
         singleSelectionCheckBox.addActionListener { e ->
@@ -28,6 +34,7 @@ class ImageShowOptionsPanel extends JPanel {
             checkShowDetails()
         }
 
+        add displaySelectedImages
         add singleSelectionCheckBox
         add fullSizeCheckBox
         add showDetailsCheckBox
@@ -43,15 +50,34 @@ class ImageShowOptionsPanel extends JPanel {
         mediaOverviewPanel.showImageDetails(showDetails)
     }
 
-    void checkSingleSelection(){
+    void checkShowSelection(){
+        boolean selected = displaySelectedImages.isSelected()
+        singleSelectionCheckBox.selected = !(!selected || !singleSelectionCheckBox.selected)
+//        checkSingleSelection()
+
+        fullSizeCheckBox.selected = fullSizeCheckBox.selected && selected
+        fullSizeCheckBox.enabled = selected
+//        fullSizeImage()
+
+        showDetailsCheckBox.selected = showDetailsCheckBox.selected || !selected
+        checkShowDetails()
+
+        mediaOverviewPanel.setShowSelection(selected)
+    }
+
+    void checkSingleSelection() {
         boolean single = singleSelectionCheckBox.isSelected()
-        if(single){
-            fullSizeCheckBox.setEnabled(true)
-            showDetailsCheckBox.setEnabled(true)
-        } else {
-            fullSizeCheckBox.setSelected(false)
+        // FIXME: re-validate which checkboxes to enable/select
+        if (single) {
+            fullSizeCheckBox.enabled = true
             fullSizeImage()
-            fullSizeCheckBox.setEnabled(false)
+
+            showDetailsCheckBox.enabled = true
+            checkShowDetails()
+        } else {
+            fullSizeCheckBox.selected = false
+            fullSizeCheckBox.enabled = false
+            fullSizeImage()
         }
         mediaOverviewPanel.setSingleSelection(single)
     }

@@ -25,7 +25,11 @@ class ImagePanel extends JPanel{
     List<Picture> pictures
     JScrollPane scrollPane
     Story story
+    // FIXME: move ImageShowOptionsPanel to NORTH panel of MediaOverviewPanel + hide ImagePanel if 'Display Selection' == false
     ImageShowOptionsPanel imageShowOptionsPanel
+    // FIXME: tmp workaround to not update the view.
+    // This boolean should be else where: when false, this ImagePanel should be hidden
+    boolean showSelection = true
 
     ImagePanel(ImageShowOptionsPanel imageShowOptionsPanel) {
         this.imageShowOptionsPanel = imageShowOptionsPanel
@@ -66,42 +70,51 @@ class ImagePanel extends JPanel{
         }
     }
 
+    // FIXME: no tmp workaround, boolean can stay, but checkbox must move
+    void setShowSelection(boolean showSelection) {
+        this.showSelection = showSelection
+    }
+
     void setPictures(List<Picture> pictures){
-        picture = pictures.size()==0?null:pictures.get(0)
-        this.pictures = pictures
-        remove scrollPane
-        JPanel panel = new JPanel()
-        int nrOfPictures = pictures.size()
-        if(nrOfPictures > 0) {
-            Double totalNr = (Double) nrOfPictures
-            Double squaredNumber = Math.sqrt(totalNr)
-            System.out.println("nr: ${totalNr} -> ${squaredNumber}")
-            Dimension available = getSize()
-            Double widthPerPicture = available.getWidth() / squaredNumber
-            Double heightPerPicture = available.getHeight() / squaredNumber
-            System.out.println("available: ${available.getWidth()} x ${available.getHeight()} -> ${widthPerPicture} x ${heightPerPicture} -> ${widthPerPicture.intValue()} x ${heightPerPicture.intValue()}")
-            Dimension dimPerPicture = new Dimension(widthPerPicture.intValue(), heightPerPicture.intValue())
+        // FIXME: tmp workaround
+        // TODO: remove 'if' and hide ImagePanel if showSelection == false (elsewhere)
+        if(showSelection) {
+            picture = pictures.size() == 0 ? null : pictures.get(0)
+            this.pictures = pictures
+            remove scrollPane
+            JPanel panel = new JPanel()
+            int nrOfPictures = pictures.size()
+            if (nrOfPictures > 0) {
+                Double totalNr = (Double) nrOfPictures
+                Double squaredNumber = Math.sqrt(totalNr)
+                System.out.println("nr: ${totalNr} -> ${squaredNumber}")
+                Dimension available = getSize()
+                Double widthPerPicture = available.getWidth() / squaredNumber
+                Double heightPerPicture = available.getHeight() / squaredNumber
+                System.out.println("available: ${available.getWidth()} x ${available.getHeight()} -> ${widthPerPicture} x ${heightPerPicture} -> ${widthPerPicture.intValue()} x ${heightPerPicture.intValue()}")
+                Dimension dimPerPicture = new Dimension(widthPerPicture.intValue(), heightPerPicture.intValue())
 
-            panel.setLayout(new GridLayout(squaredNumber.intValue(), 0))
+                panel.setLayout(new GridLayout(squaredNumber.intValue(), 0))
 
-            pictures.each { Picture picture ->
-                BufferedImage bufferedImage = readImage(picture)
-                Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeight())
-                System.out.println("oldDimension: ${oldDimension.getWidth()} x ${oldDimension.getHeight()}")
-                Dimension newDimension = rescale(oldDimension, dimPerPicture)
-                System.out.println("newDimension: ${newDimension.getWidth()} x ${newDimension.getHeight()}")
+                pictures.each { Picture picture ->
+                    BufferedImage bufferedImage = readImage(picture)
+                    Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeight())
+                    System.out.println("oldDimension: ${oldDimension.getWidth()} x ${oldDimension.getHeight()}")
+                    Dimension newDimension = rescale(oldDimension, dimPerPicture)
+                    System.out.println("newDimension: ${newDimension.getWidth()} x ${newDimension.getHeight()}")
 
-                if(bufferedImage) {
-                    Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
-                    ImageIcon imageIcon = new ImageIcon(image)
-                    panel.add new JLabel(imageIcon)
+                    if (bufferedImage) {
+                        Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
+                        ImageIcon imageIcon = new ImageIcon(image)
+                        panel.add new JLabel(imageIcon)
+                    }
                 }
             }
+            scrollPane = new JScrollPane(panel)
+            add scrollPane, BorderLayout.CENTER
+            revalidate()
+            repaint()
         }
-        scrollPane = new JScrollPane(panel)
-        add scrollPane, BorderLayout.CENTER
-        revalidate()
-        repaint()
     }
 
     BufferedImage readImage(Picture picture){
@@ -153,24 +166,27 @@ class ImagePanel extends JPanel{
     }
 
     void setPicture(Picture picture){
-        pictures = []
-        pictures.add(picture)
-        this.picture = picture
-        BufferedImage bufferedImage = readImage(picture)
-        ImageIcon imageIcon
-        if (fullSize) {
-            imageIcon = new ImageIcon(bufferedImage)
-        } else {
-            Dimension available = scrollPane.getSize()
-            Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeight())
-            Dimension newDimension = rescale(oldDimension, available)
-            if(bufferedImage) {
-                Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
-                imageIcon = new ImageIcon(image)
+        // FIXME: tmp. workaround
+        if(showSelection && picture) {
+            pictures = []
+            pictures.add(picture)
+            this.picture = picture
+            BufferedImage bufferedImage = readImage(picture)
+            ImageIcon imageIcon
+            if (fullSize) {
+                imageIcon = new ImageIcon(bufferedImage)
+            } else {
+                Dimension available = scrollPane.getSize()
+                Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeight())
+                Dimension newDimension = rescale(oldDimension, available)
+                if (bufferedImage) {
+                    Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
+                    imageIcon = new ImageIcon(image)
+                }
             }
+            label.setIcon(imageIcon)
+            repaint()
         }
-        label.setIcon(imageIcon)
-        repaint()
     }
 
     Dimension rescale(Dimension pictureSize, Dimension available){

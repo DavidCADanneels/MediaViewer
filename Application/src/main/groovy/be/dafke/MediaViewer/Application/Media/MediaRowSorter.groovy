@@ -18,6 +18,7 @@ class MediaRowSorter extends TableRowSorter {
         return column == MediaOverviewDataModel.ID_COL ||
                 column == MediaOverviewDataModel.CREATION_DATE_COL ||
                 column == MediaOverviewDataModel.OWNER_COL ||
+                column == MediaOverviewDataModel.CHAPTER_COL ||
                 column == MediaOverviewDataModel.INDEX_COL
     }
 }

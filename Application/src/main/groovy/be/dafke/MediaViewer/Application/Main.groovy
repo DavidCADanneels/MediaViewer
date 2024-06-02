@@ -2,6 +2,7 @@ package be.dafke.MediaViewer.Application
 
 import be.dafke.MediaViewer.Application.Chapter.ChaptersOverviewPanel
 import be.dafke.MediaViewer.Application.Media.MediaOverviewPanel
+import be.dafke.MediaViewer.Application.Media.NewMediaDialog
 import be.dafke.MediaViewer.Application.Menu.MediaMenuBar
 import be.dafke.MediaViewer.Application.ParticipantsOverview.ParticipantsOverviewPanel
 import be.dafke.MediaViewer.Application.StoryDetails.StoryButtonsPanel
@@ -134,6 +135,10 @@ class Main {
         JMenuBar bar = new MediaMenuBar()
         bar
     }
+
+//    static addMedia(Story story){
+//
+//    }
 
     static switchView(String view){
         storyButtonsPanel.enableAllButtons()

@@ -56,10 +56,11 @@ class ImageDetailPanel extends JPanel{
 
         add line1
         add assignOwnerButton
-        add assignIndexButton
         add assignChapterButton
+        add assignIndexButton
     }
 
+    // FIXME:
 //    void moveFile(Picture p, String newFolderName){
 //        File rootFolder = Main.getSubFolder(story)
 //        File sourceFolder = rootFolder
@@ -82,16 +83,10 @@ class ImageDetailPanel extends JPanel{
                 chapters, null)
         if(nr != -1) {
             Chapter chapter = (Chapter) chapters[nr]
-            String chapterPrefix = chapter.getPrefix()
-            String subPrefix = ''
             if(singleSelection){
-                picture.setChapter(chapterPrefix)
-                picture.setSubFolderName(subPrefix)
+                picture.setChapter(chapter.getPrefix())
             } else {
-                pictures.each {Picture p ->
-                    p.setChapter(chapterPrefix)
-                    p.setSubFolderName(subPrefix)
-                }
+                pictures.each { it.setChapter(chapter.getPrefix()) }
             }
         }
     }

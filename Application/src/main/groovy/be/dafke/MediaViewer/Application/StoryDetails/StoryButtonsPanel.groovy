@@ -1,12 +1,10 @@
 package be.dafke.MediaViewer.Application.StoryDetails
 
-import be.dafke.MediaViewer.Application.IoTools
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.ObjectModel.Media.Picture
+import be.dafke.MediaViewer.Application.Media.NewMediaDialog
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.JButton
-import javax.swing.JFileChooser
 import javax.swing.JPanel
 
 import static java.util.ResourceBundle.getBundle
@@ -65,8 +63,6 @@ class StoryButtonsPanel extends JPanel {
     }
 
     void loadData(){
-        File startFolder = Main.getSubFolder(story)
-        Integer participant = Main.selectParticipant(story, this)
         // FIXME:
         // 1. Ask to Select Chapter as well, use same value for index (for now)
         // 2. Create new Dialog with input fields for:
@@ -76,41 +72,11 @@ class StoryButtonsPanel extends JPanel {
 //        Chapter chapter = null
 //        String pictureIndex = ""
 
-        List<Picture> pictures = story.getPictures()
+        NewMediaDialog newMediaDialog = new NewMediaDialog(story)
+        newMediaDialog.setLocation(getLocationOnScreen())
+        newMediaDialog.visible = true
 
-        JFileChooser chooser = new JFileChooser(startFolder)
-        chooser.setMultiSelectionEnabled(true)
-        if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File[] files = chooser.getSelectedFiles()
-            files.each { File file ->
-                int index = file.name.lastIndexOf('.')
-                String extension = file.name.substring(index+1)
-                System.out.println("extension: $extension")
-                if(['jpg','jpeg','heic'].contains(extension.toLowerCase())){
-                    Picture picture = new Picture()
-                    String fileName = file.name - ".${extension}"
-                    System.out.println("fileName: $fileName")
-                    picture.setFileName(fileName)
-                    picture.setExtension(extension)
-                    String subFolder = file.parentFile.name
-                    System.out.println("subFolder: $subFolder")
-                    picture.setSubFolderName(subFolder)
-                    IoTools.readAndDisplayMetadata(file, picture)
-
-                    picture.setOwner(participant)
-                    pictures.add(picture)
-
-                    // TODO: show popup to set owner
-                }
-            }
-//            imageTablePanel.dataModel.fireTableDataChanged()
-        }
-        // TODO: add support to read Movies, Text, etc. (not only pictures)
-//            Point locationOnScreen = getLocationOnScreen()
-//            NewMediaDialog newMediaDialog = new NewMediaDialog()
-//            newMediaDialog.setLocation(locationOnScreen)
-//            newMediaDialog.visible = true
-
+//        Main.addMedia(story)
     }
 
     void enableAllButtons(){

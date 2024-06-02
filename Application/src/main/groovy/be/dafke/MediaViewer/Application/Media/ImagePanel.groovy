@@ -122,6 +122,7 @@ class ImagePanel extends JPanel{
                     System.out.println"remaining chapterPrefix=${chapterPrefix}"
                 }
                 startFolder = new File(startFolder, chapterPrefix)
+                // FIXME: validate this
 //                Chapter chapter = story.getChapter(chapterPrefix)
 //                if (chapter) {
 //                    Chapter parentChapter = chapter.getParentChapter()

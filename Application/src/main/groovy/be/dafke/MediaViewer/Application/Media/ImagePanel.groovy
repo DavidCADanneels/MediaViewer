@@ -105,8 +105,12 @@ class ImagePanel extends JPanel{
     }
 
     BufferedImage readImage(Picture picture){
+        if(picture == null){
+            return null
+        }
         try {
             File startFolder = Main.getSubFolder(story)
+            System.out.println "startFolder=${startFolder.getPath()}"
             String chapterPrefix = picture.getChapter() // e.g. 0200
             System.out.println "chapterPrefix=${chapterPrefix}"
             if (chapterPrefix) {
@@ -137,7 +141,9 @@ class ImagePanel extends JPanel{
                 startFolder = new File(startFolder, subFolderName)
             }
             String fileName = "${picture.getFileName()}.${picture.getExtension()}"
+            System.out.println "fileName=${fileName}"
             File imageFile = new File(startFolder, fileName)
+            System.out.println "imageFile=${imageFile.getPath()}"
             return ImageIO.read(imageFile)
         } catch (IOException ex) {
             ex.printStackTrace()

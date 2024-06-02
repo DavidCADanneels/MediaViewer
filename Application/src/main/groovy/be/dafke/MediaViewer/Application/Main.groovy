@@ -7,14 +7,17 @@ import be.dafke.MediaViewer.Application.ParticipantsOverview.ParticipantsOvervie
 import be.dafke.MediaViewer.Application.StoryDetails.StoryButtonsPanel
 import be.dafke.MediaViewer.Application.StoryDetails.StoryDetailsPanel
 import be.dafke.MediaViewer.Application.StoryOverview.StoryOverviewPanel
+import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.JFrame
 import javax.swing.JMenuBar
+import javax.swing.JOptionPane
 import javax.swing.JPanel
 import javax.swing.WindowConstants
 import java.awt.BorderLayout
 import java.awt.CardLayout
+import java.awt.Component
 
 import static java.util.ResourceBundle.getBundle
 
@@ -54,6 +57,21 @@ class Main {
         chaptersOverviewPanel.setStory(story)
         mediaOverviewPanel.setStory(story)
         storyDetailsPanel.setStory(story)
+    }
+
+    static int selectParticipant(Story story, Component component){
+        Object [] participants = story.getParticipants().toArray()
+        return JOptionPane.showOptionDialog(component, "Select Owner", "Assign Owner",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                participants, null)
+    }
+
+    static void setOwners(List<Picture> pictures, Integer owner){
+        pictures.each {it.setOwner(owner) }
+    }
+
+    static void setOwner(Picture picture, Integer owner){
+        picture.setOwner(owner)
     }
 
     static File getSubFolder(Story story){

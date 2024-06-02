@@ -66,6 +66,17 @@ class StoryButtonsPanel extends JPanel {
 
     void loadData(){
         File startFolder = Main.getSubFolder(story)
+        Integer participant = Main.selectParticipant(story, this)
+        // FIXME:
+        // 1. Ask to Select Chapter as well, use same value for index (for now)
+        // 2. Create new Dialog with input fields for:
+        //      - Owner
+        //      - Chapter
+        //      - Index (auto-update proposal == Chapter-index) (editable: 0100 -> 010001)
+//        Chapter chapter = null
+//        String pictureIndex = ""
+
+        List<Picture> pictures = story.getPictures()
 
         JFileChooser chooser = new JFileChooser(startFolder)
         chooser.setMultiSelectionEnabled(true)
@@ -86,7 +97,7 @@ class StoryButtonsPanel extends JPanel {
                     picture.setSubFolderName(subFolder)
                     IoTools.readAndDisplayMetadata(file, picture)
 
-                    List<Picture> pictures = story.getPictures()
+                    picture.setOwner(participant)
                     pictures.add(picture)
 
                     // TODO: show popup to set owner

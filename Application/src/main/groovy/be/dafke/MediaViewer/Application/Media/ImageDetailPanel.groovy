@@ -97,17 +97,17 @@ class ImageDetailPanel extends JPanel{
     }
 
     void assignOwner(){
-        Object [] participants = story.getParticipants().toArray()
-        int nr = JOptionPane.showOptionDialog(this, "Select Owner", "Assign Owner",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                participants, null)
+        Integer nr = Main.selectParticipant(story, this)
         if(nr != -1) {
             if(singleSelection){
-                picture.setOwner(nr)
+                // FIXME: Main method only contains this:
+                // picture.setOwner(nr)
+                // do we need to call the Main method here?
+                Main.setOwner(picture,nr)
             } else {
-                pictures.each {Picture picture ->
-                    picture.setOwner(nr)
-                }
+                // FIXME: same question here:
+                // pictures.each { it.setOwner(nr) }
+                Main.setOwners(pictures,nr)
             }
             mediaOverviewPanel.imageTablePanel.dataModel.fireTableDataChanged()
         }

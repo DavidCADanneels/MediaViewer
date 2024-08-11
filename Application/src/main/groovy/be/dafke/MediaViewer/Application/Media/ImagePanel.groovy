@@ -127,10 +127,13 @@ class ImagePanel extends JPanel{
                     String parent = chapterPrefix.substring(0,2)
                     System.out.println"parent=${parent}"
                     startFolder = new File(startFolder, parent)
+                    System.out.println"loop: startFolder=${startFolder}"
                     chapterPrefix -= parent
                     System.out.println"remaining chapterPrefix=${chapterPrefix}"
                 }
+                System.out.println"chapterPrefix=${chapterPrefix}"
                 startFolder = new File(startFolder, chapterPrefix)
+                System.out.println"startFolder=${startFolder}"
                 // FIXME: validate this
 //                Chapter chapter = story.getChapter(chapterPrefix)
 //                if (chapter) {

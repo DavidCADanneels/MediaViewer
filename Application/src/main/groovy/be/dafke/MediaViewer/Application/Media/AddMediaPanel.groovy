@@ -17,7 +17,7 @@ import javax.swing.JTextField
 
 class AddMediaPanel extends JPanel {
     Story story
-
+    Chapter chapter = null
     File[] files
 
     JButton browseForFiles//, browseForFolders
@@ -32,12 +32,13 @@ class AddMediaPanel extends JPanel {
 
     JButton saveAction
 
-    AddMediaPanel(Story story) {
+    AddMediaPanel(Story story, Chapter chapter) {
         this.story = story
+        this.chapter = chapter
 
-        JPanel filePanel = createFilePanel()
+        JPanel filePanel = createFilePanel(chapter)
         JPanel ownerPanel = createOwnerPanel()
-        JPanel chapterAndIndexPanel = createChapterAndIndexPanel()
+        JPanel chapterAndIndexPanel = createChapterAndIndexPanel(chapter)
 
         saveAction = new JButton("Add to Story")
         saveAction.addActionListener { e -> saveAction() }
@@ -49,7 +50,7 @@ class AddMediaPanel extends JPanel {
         add saveAction
     }
 
-    JPanel createFilePanel(){
+    JPanel createFilePanel(Chapter chapter){
         filePathField = new JTextField(50)
         browseForFiles = new JButton("Browse ...")
         browseForFiles.addActionListener { e -> fileChoosenAction() }
@@ -84,30 +85,38 @@ class AddMediaPanel extends JPanel {
         return ownerPanel
     }
 
-    JPanel createChapterAndIndexPanel(){
-        setChapter = new JCheckBox("Set Chapter and Index")
-        setChapter.setSelected true
-        setChapter.addActionListener{ e ->
-            if(setChapter.selected){
-//                chapterComboBox.enabled = true
-//                indexField.enabled = true
-            } else {
-                chapterComboBox.setSelectedIndex(-1)
-//                chapterComboBox.enabled = false
-//                indexField.enabled = true
-            }
-            chapterComboBox.enabled = setChapter.selected
-            indexField.enabled = setChapter.selected
-        }
-        chapterComboBox = new JComboBox<>()
-        story.getChapters().each { chapterComboBox.addItem(it) }
-
+    JPanel createChapterAndIndexPanel(Chapter chapter){
+        JPanel panel = new JPanel()
+        panel.add new JLabel("Chapter:")
         indexField = new JTextField(30)
 
-        JPanel panel = new JPanel()
-        panel.add setChapter
-        panel.add new JLabel("Chapter:")
-        panel.add chapterComboBox
+        if(chapter != null) {
+            JTextField chapterField = new JTextField(chapter.toString())
+            chapterField.editable = false
+            panel.add chapterField
+            indexField.text = chapter.toString()
+        } else {
+            setChapter = new JCheckBox("Set Chapter and Index")
+            setChapter.setSelected true
+            setChapter.addActionListener { e ->
+                if (setChapter.selected) {
+//                chapterComboBox.enabled = true
+//                indexField.enabled = true
+                } else {
+                    chapterComboBox.setSelectedIndex(-1)
+//                chapterComboBox.enabled = false
+//                indexField.enabled = true
+                }
+                chapterComboBox.enabled = setChapter.selected
+                indexField.enabled = setChapter.selected
+            }
+            panel.add setChapter
+            //
+            chapterComboBox = new JComboBox<>()
+            story.getChapters().each { chapterComboBox.addItem(it) }
+            panel.add chapterComboBox
+        }
+
         panel.add new JLabel("Index:")
         panel.add indexField
         return panel
@@ -145,12 +154,13 @@ class AddMediaPanel extends JPanel {
                 picture.setSubFolderName(subFolder)
                 IoTools.readAndDisplayMetadata(file, picture)
 
-                int chapterIndex = chapterComboBox.getSelectedIndex()
-                Chapter chapter
-                if(chapterIndex == -1){
-                    chapter = null
-                } else {
-                    chapter = story.getChapters().get(chapterIndex)
+                if (chapter == null) {
+                    int chapterIndex = chapterComboBox.getSelectedIndex()
+                    if (chapterIndex == -1) {
+                        chapter = null
+                    } else {
+                        chapter = story.getChapters().get(chapterIndex)
+                    }
                 }
                 picture.setOwner(ownerComboBox.getSelectedIndex())
                 picture.setChapter(chapter.getPrefix())

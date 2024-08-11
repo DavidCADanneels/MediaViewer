@@ -77,8 +77,7 @@ class Main {
 
     static File getSubFolder(Story story){
         File storyFile = Main.storyMap.get(story)
-        File metaDataFolder = storyFile.getParentFile()
-        metaDataFolder.getParentFile()
+        storyFile?.getParentFile()?.getParentFile()
     }
 
     static void main(String[] args) {

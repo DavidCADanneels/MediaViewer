@@ -1,5 +1,6 @@
 package be.dafke.MediaViewer.Application.Chapter
 
+import be.dafke.MediaViewer.Application.Media.NewMediaDialog
 import be.dafke.MediaViewer.Application.NewChapter.NewChapterDialog
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
@@ -13,7 +14,7 @@ import java.awt.BorderLayout
 import static java.util.ResourceBundle.getBundle
 
 class ChaptersOverviewPanel extends JPanel {
-    JButton addChapterButton, subChapterButton
+    JButton addChapterButton, subChapterButton, addMediaToChapterButton
     ChapterTablePanel chapterTablePanel
     ChapterPanel chapterPanel
     Story story
@@ -43,12 +44,24 @@ class ChaptersOverviewPanel extends JPanel {
             assignSubChapter()
         }
 
+        addMediaToChapterButton = new JButton(getBundle("MediaViewer").getString("ADD_MEDIA_TO_CHAPTER_BUTTON"))
+        addMediaToChapterButton.addActionListener{e ->
+            addMediaToChapter()
+        }
+
         JPanel south = new JPanel()
 
         south.add addChapterButton
         south.add subChapterButton
+        south.add addMediaToChapterButton
 
         add south, BorderLayout.SOUTH
+    }
+
+    void addMediaToChapter(){
+        NewMediaDialog newMediaDialog = new NewMediaDialog(story, selectedChapter)
+        newMediaDialog.setLocation(getLocationOnScreen())
+        newMediaDialog.visible = true
     }
 
     void assignSubChapter(){

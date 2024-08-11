@@ -72,7 +72,7 @@ class StoryButtonsPanel extends JPanel {
 //        Chapter chapter = null
 //        String pictureIndex = ""
 
-        NewMediaDialog newMediaDialog = new NewMediaDialog(story)
+        NewMediaDialog newMediaDialog = new NewMediaDialog(story, null)
         newMediaDialog.setLocation(getLocationOnScreen())
         newMediaDialog.visible = true
 

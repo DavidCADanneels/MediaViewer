@@ -58,14 +58,16 @@ class MediaOverviewDataModel extends AbstractTableModel {
     }
 
     void setChapter(Chapter chapter) {
-        String prefix = chapter.getPrefix()
-        pictures = []
-        if(prefix) {
-            List<Picture> allPictures = story.getPictures()
-            allPictures.each { Picture picture ->
-                String myChapter = picture.getChapter()
-                if(myChapter != null && myChapter == prefix){
-                    pictures.add picture
+        if(chapter != null) {
+            String prefix = chapter.getPrefix()
+            pictures = []
+            if (prefix) {
+                List<Picture> allPictures = story.getPictures()
+                allPictures.each { Picture picture ->
+                    String myChapter = picture.getChapter()
+                    if (myChapter != null && myChapter == prefix) {
+                        pictures.add picture
+                    }
                 }
             }
         }

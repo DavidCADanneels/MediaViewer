@@ -5,6 +5,7 @@ import be.dafke.MediaViewer.Application.NewChapter.NewChapterDialog
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
+import javax.swing.BoxLayout
 import javax.swing.JButton
 import javax.swing.JOptionPane
 import javax.swing.JPanel
@@ -26,11 +27,19 @@ class ChaptersOverviewPanel extends JPanel {
         chapterTablePanel = new ChapterTablePanel(this)
         chapterPanel = new ChapterPanel()
 
+        JPanel north = new JPanel()
+        north.setLayout(new BorderLayout())
+        north.add chapterTablePanel, BorderLayout.CENTER
+        north.add addChapterButtons(), BorderLayout.EAST
+
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT)
-        splitPane.add chapterTablePanel, JSplitPane.TOP
+        splitPane.add north, JSplitPane.TOP
         splitPane.add chapterPanel, JSplitPane.BOTTOM
 
         add splitPane, BorderLayout.CENTER
+    }
+
+    JPanel addChapterButtons(){
 
         addChapterButton = new JButton(getBundle("MediaViewer").getString("ADD_CHAPTER_BUTTON"))
         addChapterButton.addActionListener { e ->
@@ -49,13 +58,12 @@ class ChaptersOverviewPanel extends JPanel {
             addMediaToChapter()
         }
 
-        JPanel south = new JPanel()
-
-        south.add addChapterButton
-        south.add subChapterButton
-        south.add addMediaToChapterButton
-
-        add south, BorderLayout.SOUTH
+        JPanel panel = new JPanel()
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS))
+        panel.add addChapterButton
+        panel.add subChapterButton
+        panel.add addMediaToChapterButton
+        return panel
     }
 
     void addMediaToChapter(){

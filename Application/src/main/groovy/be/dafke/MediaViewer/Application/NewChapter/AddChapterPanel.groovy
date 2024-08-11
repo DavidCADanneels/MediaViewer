@@ -4,11 +4,11 @@ import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
-import javax.swing.BoxLayout
 import javax.swing.JButton
 import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JTextField
+import java.awt.GridLayout
 
 import static java.util.ResourceBundle.getBundle
 
@@ -31,7 +31,7 @@ class AddChapterPanel extends JPanel {
         line2.add titleField
         line2.add createButton
 
-        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS))
+        setLayout(new GridLayout(0,1))
         add line1
         add line2
     }

@@ -1,5 +1,7 @@
 package be.dafke.MediaViewer.ObjectModel.Media
 
+import be.dafke.MediaViewer.ObjectModel.People.Author
+
 class Book extends Media {
     String title
     List<Author> authors

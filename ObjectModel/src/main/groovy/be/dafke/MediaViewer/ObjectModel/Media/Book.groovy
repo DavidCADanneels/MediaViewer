@@ -1,0 +1,35 @@
+package be.dafke.MediaViewer.ObjectModel.Media
+
+class Book extends Media {
+    String title
+    List<Author> authors
+    int nrOfPages
+
+    Book(String title) {
+        this.title = title
+    }
+
+    String getTitle() {
+        return title
+    }
+
+    void setTitle(String title) {
+        this.title = title
+    }
+
+    List<Author> getAuthors() {
+        return authors
+    }
+
+    void setAuthors(List<Author> authors) {
+        this.authors = authors
+    }
+
+    int getNrOfPages() {
+        return nrOfPages
+    }
+
+    void setNrOfPages(int nrOfPages) {
+        this.nrOfPages = nrOfPages
+    }
+}

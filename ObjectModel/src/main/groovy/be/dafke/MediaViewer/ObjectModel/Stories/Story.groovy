@@ -1,6 +1,6 @@
 package be.dafke.MediaViewer.ObjectModel.Stories
 
-import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
+import be.dafke.MediaViewer.ObjectModel.People.Participant
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 
 class Story {

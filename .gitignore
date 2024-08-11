@@ -1,6 +1,8 @@
 # Default ignored files
 /.idea/
 *.iml
+*.mp4
 lib/
 out/
 */target/*
+/Application/dependency-reduced-pom.xml

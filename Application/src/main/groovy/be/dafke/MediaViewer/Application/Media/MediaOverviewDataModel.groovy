@@ -1,13 +1,11 @@
 package be.dafke.MediaViewer.Application.Media
 
-import be.dafke.MediaViewer.ObjectModel.Media.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
-import be.dafke.MediaViewer.ObjectModel.Interactive.Participant
+import be.dafke.MediaViewer.ObjectModel.People.Participant
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.table.AbstractTableModel
-import java.util.function.Predicate
 
 import static java.util.ResourceBundle.getBundle
 

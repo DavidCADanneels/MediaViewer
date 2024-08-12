@@ -20,8 +20,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
     static int NR_OF_COL = 7
     static int FILE_NAME_COL = 7
     static int EXTENSION_COL = 8
-    static int FOLDER_NAME_COL = 9
-//    static int FULL_PATH_COL = 10
+//    static int FULL_PATH_COL = 9
 
     HashMap<Integer,String> columnNames = [:]
     HashMap<Integer,Class> columnClasses = [:]
@@ -31,7 +30,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
 
     MediaOverviewDataModel() {
         columnClasses.put(ID_COL, String.class)
-        columnClasses.put(FOLDER_NAME_COL, String.class)
+//        columnClasses.put(FOLDER_NAME_COL, String.class)
         columnClasses.put(EXTENSION_COL, String.class)
         columnClasses.put(FILE_NAME_COL, String.class)
         columnClasses.put(INDEX_COL, String.class)
@@ -43,7 +42,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
 //        columnClasses.put(FULL_PATH_COL, File.class)
 
         columnNames.put(ID_COL, getBundle("MediaViewer").getString("ID"))
-        columnNames.put(FOLDER_NAME_COL, getBundle("MediaViewer").getString("FOLDER_NAME"))
+//        columnNames.put(FOLDER_NAME_COL, getBundle("MediaViewer").getString("FOLDER_NAME"))
         columnNames.put(EXTENSION_COL, getBundle("MediaViewer").getString("EXTENSION"))
         columnNames.put(FILE_NAME_COL, getBundle("MediaViewer").getString("FILE_NAME"))
         columnNames.put(INDEX_COL, getBundle("MediaViewer").getString("MEDIA_INDEX"))
@@ -119,8 +118,8 @@ class MediaOverviewDataModel extends AbstractTableModel {
         if (picture) {
             if (columnIndex == ID_COL) {
                 return picture.getFileName()
-            } else if (columnIndex == FOLDER_NAME_COL) {
-                return picture.getSubFolderName()
+//            } else if (columnIndex == FOLDER_NAME_COL) {
+//                return picture.getSubFolderName()
             } else if (columnIndex == EXTENSION_COL) {
                 return picture.getExtension()
             } else if (columnIndex == INDEX_COL) {

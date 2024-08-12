@@ -149,10 +149,6 @@ class ImagePanel extends JPanel{
 //                    startFolder = new File(startFolder, chapterPrefix)
 //                }
             }
-            String subFolderName = picture.getSubFolderName()
-            if (subFolderName != null) {
-                startFolder = new File(startFolder, subFolderName)
-            }
             String fileName = "${picture.getFileName()}.${picture.getExtension()}"
             System.out.println "fileName=${fileName}"
             File imageFile = new File(startFolder, fileName)

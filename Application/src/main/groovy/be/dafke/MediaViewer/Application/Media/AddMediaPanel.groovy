@@ -149,9 +149,6 @@ class AddMediaPanel extends JPanel {
                 System.out.println("fileName: $fileName")
                 picture.setFileName(fileName)
                 picture.setExtension(extension)
-                String subFolder = file.parentFile.name
-                System.out.println("subFolder: $subFolder")
-                picture.setSubFolderName(subFolder)
                 IoTools.readAndDisplayMetadata(file, picture)
 
                 if (chapter == null) {

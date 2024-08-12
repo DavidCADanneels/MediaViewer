@@ -1,7 +1,7 @@
 package be.dafke.MediaViewer.Application.NewParticipant
 
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.ObjectModel.People.Participant
+import be.dafke.MediaViewer.ObjectModel.People.Person
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.BoxLayout
@@ -40,12 +40,12 @@ class AddParticipantPanel extends JPanel {
         String firstName = firstNameField.text.trim()
         String lastName = lastNameField.text.trim()
         if(firstName && lastName) {
-            Participant participant = new Participant()
+            Person participant = new Person()
             participant.setFirstName(firstName)
             participant.setLastName(lastName)
             Story story = Main.activeStory
             if (story!=null && story.getParticipants()!=null) {
-                List<Participant> participants = story.getParticipants()
+                List<Person> participants = story.getParticipants()
                 participants.add(participant)
                 Main.participantsOverviewPanel.dataModel.fireTableDataChanged()
                 firstNameField.text = ''

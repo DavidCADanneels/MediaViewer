@@ -1,7 +1,6 @@
 package be.dafke.MediaViewer.Application.ParticipantsOverview
 
-import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.ObjectModel.People.Participant
+import be.dafke.MediaViewer.ObjectModel.People.Person
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.table.DefaultTableModel
@@ -17,7 +16,7 @@ class ParticipantsOverviewDataModel extends DefaultTableModel {
     HashMap<Integer,Class> columnClasses = [:]
 
     Story story
-    List<Participant> participants
+    List<Person> participants
 
     ParticipantsOverviewDataModel() {
         participants = []
@@ -60,7 +59,7 @@ class ParticipantsOverviewDataModel extends DefaultTableModel {
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-        Participant participant = participants.get(rowIndex)
+        Person participant = participants.get(rowIndex)
         if (participant != null) {
             if (columnIndex == FIRST_NAME_COL) {
                 participant.getFirstName()
@@ -74,7 +73,7 @@ class ParticipantsOverviewDataModel extends DefaultTableModel {
 
     @Override
     void setValueAt(Object value, int rowIndex, int columnIndex) {
-        Participant participant = participants.get(rowIndex)
+        Person participant = participants.get(rowIndex)
         if(participant != null) {
             if (columnIndex == FIRST_NAME_COL) {
                 String firstName = (String) value

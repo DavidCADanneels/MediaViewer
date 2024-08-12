@@ -1,7 +1,7 @@
 package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
-import be.dafke.MediaViewer.ObjectModel.People.Participant
+import be.dafke.MediaViewer.ObjectModel.People.Person
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
@@ -38,7 +38,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
         columnClasses.put(SIZE_COL, String.class)
         columnClasses.put(CREATION_DATE_COL, Date.class)
         columnClasses.put(CREATION_TIME_COL, String.class)
-        columnClasses.put(OWNER_COL, Participant.class)
+        columnClasses.put(OWNER_COL, Person.class)
 //        columnClasses.put(FULL_PATH_COL, File.class)
 
         columnNames.put(ID_COL, getBundle("MediaViewer").getString("ID"))
@@ -163,8 +163,8 @@ class MediaOverviewDataModel extends AbstractTableModel {
             picture.setIndexNumber(indexNumber)
 //        } else if (columnIndex == CHAPTER_COL) {
         } else if (columnIndex == OWNER_COL) {
-            List<Participant> list = story.getParticipants()
-            Participant participant = (Participant) value
+            List<Person> list = story.getParticipants()
+            Person participant = (Person) value
             Integer id = list.indexOf(participant)
             if (id != -1) {
                 System.out.println("Participant: ${participant} has ID: ${id}")

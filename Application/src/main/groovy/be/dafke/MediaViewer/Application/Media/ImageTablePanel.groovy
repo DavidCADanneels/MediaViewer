@@ -1,7 +1,7 @@
 package be.dafke.MediaViewer.Application.Media
 
-import be.dafke.MediaViewer.ObjectModel.People.Participant
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
+import be.dafke.MediaViewer.ObjectModel.People.Person
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.DefaultCellEditor
@@ -45,7 +45,7 @@ class ImageTablePanel extends JScrollPane implements ListSelectionListener {
     void setStory(Story story) {
 //        this.story = story
         dataModel.setStory(story)
-        JComboBox<Participant> comboBox = new JComboBox<>()
+        JComboBox<Person> comboBox = new JComboBox<>()
         story.getParticipants().each { comboBox.addItem(it) }
         TableColumn column = overviewTable.getColumnModel().getColumn(dataModel.OWNER_COL)
         column.setCellEditor(new DefaultCellEditor(comboBox))

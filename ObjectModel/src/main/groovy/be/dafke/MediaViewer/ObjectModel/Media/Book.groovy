@@ -23,6 +23,10 @@ class Book extends Media {
         return authors
     }
 
+    void addAuthor(Author author){
+        authors.add author
+    }
+
     void setAuthors(List<Author> authors) {
         this.authors = authors
     }

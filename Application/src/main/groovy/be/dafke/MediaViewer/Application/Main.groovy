@@ -99,7 +99,7 @@ class Main {
         center = new JPanel(cardLayoutCenter)
         JPanel contentPanel = new JPanel(new BorderLayout())
         contentPanel.add center, BorderLayout.CENTER
-        contentPanel.add storyButtonsPanel, BorderLayout.SOUTH
+        contentPanel.add storyButtonsPanel, BorderLayout.NORTH
         frame.setContentPane(contentPanel)
 
         // Cards:

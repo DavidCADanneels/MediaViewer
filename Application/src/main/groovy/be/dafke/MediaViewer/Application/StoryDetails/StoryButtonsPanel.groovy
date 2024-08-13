@@ -10,7 +10,7 @@ import javax.swing.JPanel
 import static java.util.ResourceBundle.getBundle
 
 class StoryButtonsPanel extends JPanel {
-    JButton chaptersButton, participantButton, mediaButton, backToStoryOverViewButton, backToStoryDetailsButton, addMediaButton
+    JButton chaptersButton, participantButton, mediaButton, backToStoryOverViewButton, backToStoryDetailsButton
 
     Story story
 
@@ -26,7 +26,7 @@ class StoryButtonsPanel extends JPanel {
             }
         }
 
-        participantButton = new JButton(getBundle("MediaViewer").getString("SHOW_PARTICIPANTS_FOR_STORY"))
+        participantButton = new JButton(getBundle("MediaViewer").getString("SHOW_PERSONS_FOR_STORY"))
         participantButton.addActionListener { e ->
             if(story) {
                 Main.participantsOverviewPanel.setStory(story)
@@ -51,32 +51,11 @@ class StoryButtonsPanel extends JPanel {
             Main.switchView(Main.VIEW_STORY_DETAILS)
         }
 
-        addMediaButton = new JButton(getBundle("MediaViewer").getString("ADD_MEDIA_BUTTON"))
-        addMediaButton.addActionListener { e -> loadData() }
-
         add backToStoryOverViewButton
         add backToStoryDetailsButton
         add chaptersButton
         add participantButton
         add mediaButton
-        add addMediaButton
-    }
-
-    void loadData(){
-        // FIXME:
-        // 1. Ask to Select Chapter as well, use same value for index (for now)
-        // 2. Create new Dialog with input fields for:
-        //      - Owner
-        //      - Chapter
-        //      - Index (auto-update proposal == Chapter-index) (editable: 0100 -> 010001)
-//        Chapter chapter = null
-//        String pictureIndex = ""
-
-        NewMediaDialog newMediaDialog = new NewMediaDialog(story, null)
-        newMediaDialog.setLocation(getLocationOnScreen())
-        newMediaDialog.visible = true
-
-//        Main.addMedia(story)
     }
 
     void enableAllButtons(){
@@ -85,7 +64,6 @@ class StoryButtonsPanel extends JPanel {
         mediaButton.enabled = story!=null
         backToStoryOverViewButton.enabled = true
         backToStoryDetailsButton.enabled = story!=null
-        addMediaButton.enabled = false
     }
 
     void disableAllButtons(){
@@ -94,7 +72,6 @@ class StoryButtonsPanel extends JPanel {
         mediaButton.enabled = false
         backToStoryOverViewButton.enabled = true
         backToStoryDetailsButton.enabled = story!=null
-        addMediaButton.enabled = false
     }
 
     void setStory(Story story) {

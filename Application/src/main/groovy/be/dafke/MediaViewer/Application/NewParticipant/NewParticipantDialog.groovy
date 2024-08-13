@@ -8,7 +8,7 @@ class NewParticipantDialog extends JDialog {
     AddParticipantPanel contentPanel
 
     NewParticipantDialog() {
-        setTitle(getBundle("MediaViewer").getString("ADD_PARTICIPANT_TITLE"))
+        setTitle(getBundle("MediaViewer").getString("ADD_PERSON_TITLE"))
         setModal(true)
         setDefaultCloseOperation(DISPOSE_ON_CLOSE)
         contentPanel = new AddParticipantPanel()

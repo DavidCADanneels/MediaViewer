@@ -46,7 +46,7 @@ class ImageTablePanel extends JScrollPane implements ListSelectionListener {
 //        this.story = story
         dataModel.setStory(story)
         JComboBox<Person> comboBox = new JComboBox<>()
-        story.getParticipants().each { comboBox.addItem(it) }
+        story.getPersons().each { comboBox.addItem(it) }
         TableColumn column = overviewTable.getColumnModel().getColumn(dataModel.OWNER_COL)
         column.setCellEditor(new DefaultCellEditor(comboBox))
     }

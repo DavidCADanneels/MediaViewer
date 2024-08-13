@@ -2,7 +2,6 @@ package be.dafke.MediaViewer.Application
 
 import be.dafke.MediaViewer.Application.Chapter.ChaptersOverviewPanel
 import be.dafke.MediaViewer.Application.Media.MediaOverviewPanel
-import be.dafke.MediaViewer.Application.Media.NewMediaDialog
 import be.dafke.MediaViewer.Application.Menu.MediaMenuBar
 import be.dafke.MediaViewer.Application.ParticipantsOverview.ParticipantsOverviewPanel
 import be.dafke.MediaViewer.Application.StoryDetails.StoryButtonsPanel
@@ -61,7 +60,7 @@ class Main {
     }
 
     static int selectParticipant(Story story, Component component){
-        Object [] participants = story.getParticipants().toArray()
+        Object [] participants = story.getPersons().toArray()
         return JOptionPane.showOptionDialog(component, "Select Owner", "Assign Owner",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                 participants, null)
@@ -149,7 +148,6 @@ class Main {
             storyButtonsPanel.chaptersButton.enabled = false
         } else if (view == VIEW_MEDIA_FOR_STORY) {
             storyButtonsPanel.mediaButton.enabled = false
-            storyButtonsPanel.addMediaButton.enabled = true
         } else if (view == VIEW_PARTICIPANTS_FOR_STORY){
             storyButtonsPanel.participantButton.enabled = false
         }

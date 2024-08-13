@@ -11,7 +11,7 @@ class NewMediaDialog extends JDialog {
     AddMediaPanel contentPanel
 
     NewMediaDialog(Story story, Chapter chapter) {
-        setTitle(getBundle("MediaViewer").getString("ADD_MEDIA_TITLE"))
+        setTitle(getBundle("MediaViewer").getString("ADD_PHOTO_TITLE"))
         setModal(true)
         setDefaultCloseOperation(DISPOSE_ON_CLOSE)
         contentPanel = new AddMediaPanel(story, chapter)

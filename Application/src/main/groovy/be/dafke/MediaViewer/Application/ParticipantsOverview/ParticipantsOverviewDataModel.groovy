@@ -28,7 +28,7 @@ class ParticipantsOverviewDataModel extends DefaultTableModel {
 
     void setStory(Story story) {
         this.story = story
-        participants = story.getParticipants()
+        participants = story.getPersons()
         fireTableDataChanged()
     }
 

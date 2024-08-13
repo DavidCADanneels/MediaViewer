@@ -9,7 +9,7 @@ class Story {
     String shortDescription
     String introText
     List<Chapter> chapters
-    List<Person> participants
+    List<Person> persons
     List<Picture> pictures
     List<MediaBox> mediaBoxes
     File projectFolder
@@ -17,7 +17,7 @@ class Story {
     Story() {
         chapters = []
         pictures = []
-        participants = []
+        persons = []
         mediaBoxes = []
     }
 
@@ -97,11 +97,11 @@ class Story {
         this.introText = introText
     }
 
-    List<Person> getParticipants() {
-        return participants
+    List<Person> getPersons() {
+        return persons
     }
 
-    void setParticipants(List<Person> participants) {
-        this.participants = participants
+    void setPersons(List<Person> participants) {
+        this.persons = participants
     }
 }

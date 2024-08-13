@@ -65,7 +65,7 @@ class AddMediaPanel extends JPanel {
 
     JPanel createOwnerPanel(){
         ownerComboBox = new JComboBox<>()
-        story.getParticipants().each { ownerComboBox.addItem(it) }
+        story.getPersons().each { ownerComboBox.addItem(it) }
         //
         setOwner = new JCheckBox("Set Owner")
         setOwner.setSelected true

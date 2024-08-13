@@ -25,7 +25,7 @@ class ParticipantsOverviewPanel extends JPanel {
         add new JScrollPane(overviewTable), BorderLayout.CENTER
 
 
-        addParticipantButton = new JButton(getBundle("MediaViewer").getString("ADD_PARTICIPANTS_BUTTON"))
+        addParticipantButton = new JButton(getBundle("MediaViewer").getString("ADD_PERSON_BUTTON"))
         addParticipantButton.addActionListener({ e ->
             NewParticipantDialog newParticipantDialog = new NewParticipantDialog()
             newParticipantDialog.setLocation(getLocationOnScreen())

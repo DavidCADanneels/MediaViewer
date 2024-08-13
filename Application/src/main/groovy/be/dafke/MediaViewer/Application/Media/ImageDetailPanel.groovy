@@ -12,6 +12,8 @@ import javax.swing.JOptionPane
 import javax.swing.JPanel
 import javax.swing.JTextField
 
+import static java.util.ResourceBundle.getBundle
+
 class ImageDetailPanel extends JPanel{
     JTextField sizeField
     JLabel sizeLabel
@@ -20,7 +22,7 @@ class ImageDetailPanel extends JPanel{
     Story story
     List<Picture> pictures
     boolean singleSelection
-    JButton assignOwnerButton, assignIndexButton, assignChapterButton
+    JButton assignOwnerButton, assignIndexButton, assignChapterButton, addMediaButton
     MediaOverviewPanel mediaOverviewPanel
     static String singleTextOwner = "Assign Owner to Picture"
     static String multiTextOwner = "Assign Owner to Pictures"
@@ -40,6 +42,9 @@ class ImageDetailPanel extends JPanel{
         line1.add sizeLabel
         line1.add sizeField
 
+        addMediaButton = new JButton(getBundle("MediaViewer").getString("ADD_PHOTO_BUTTON"))
+        addMediaButton.addActionListener { e -> loadData() }
+
         singleSelection = true
         assignOwnerButton = new JButton(singleTextOwner)
         assignOwnerButton.addActionListener {e ->
@@ -55,9 +60,27 @@ class ImageDetailPanel extends JPanel{
         }
 
         add line1
+        add addMediaButton
         add assignOwnerButton
         add assignChapterButton
         add assignIndexButton
+    }
+
+    void loadData(){
+        // FIXME:
+        // 1. Ask to Select Chapter as well, use same value for index (for now)
+        // 2. Create new Dialog with input fields for:
+        //      - Owner
+        //      - Chapter
+        //      - Index (auto-update proposal == Chapter-index) (editable: 0100 -> 010001)
+//        Chapter chapter = null
+//        String pictureIndex = ""
+
+        NewMediaDialog newMediaDialog = new NewMediaDialog(story, null)
+        newMediaDialog.setLocation(getLocationOnScreen())
+        newMediaDialog.visible = true
+
+//        Main.addMedia(story)
     }
 
     // FIXME:

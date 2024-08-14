@@ -18,10 +18,10 @@ class FileMenu extends JMenu  {
         super(getBundle("MediaViewer").getString("FILE_MENU"))
 
         loadStory = new JMenuItem(getBundle("MediaViewer").getString("LOAD_STORY_BUTTON"))
-        loadStory.registerKeyboardAction({ e ->
+        loadStory.addActionListener { e ->
             JFileChooser chooser = new JFileChooser()
             chooser.setMultiSelectionEnabled(false)
-            if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 File file = chooser.getSelectedFile()
                 Story story = IoTools.readStory(file)
 
@@ -31,21 +31,24 @@ class FileMenu extends JMenu  {
                     Main.switchView(Main.VIEW_STORY_DETAILS)
                 }
             }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_O,KeyEvent.CTRL_DOWN_MASK),JComponent.WHEN_IN_FOCUSED_WINDOW )
+        }
+        loadStory.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,KeyEvent.CTRL_DOWN_MASK))
 
         saveStory = new JMenuItem(getBundle("MediaViewer").getString("SAVE_STORY_BUTTON"))
-        saveStory.registerKeyboardAction( { e ->
+        saveStory.addActionListener { e ->
             Story story = Main.activeStory
             if(story!=null) {
                 // TODO: disable button if no activeStory
                 saveStory(story)
             }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_DOWN_MASK),JComponent.WHEN_IN_FOCUSED_WINDOW )
+        }
+        saveStory.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_DOWN_MASK))
 
         newStory = new JMenuItem(getBundle("MediaViewer").getString("NEW_STORY_BUTTON"))
-        newStory.registerKeyboardAction(  { e ->
+        newStory.addActionListener{ e ->
             showDialog()
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_N,KeyEvent.CTRL_DOWN_MASK),JComponent.WHEN_IN_FOCUSED_WINDOW )
+        }
+        newStory.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,KeyEvent.CTRL_DOWN_MASK))
 
         add newStory
         add loadStory

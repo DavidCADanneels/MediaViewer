@@ -7,6 +7,7 @@ import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.*
 import java.awt.Point
+import java.awt.event.KeyEvent
 
 import static java.util.ResourceBundle.getBundle
 
@@ -17,7 +18,7 @@ class FileMenu extends JMenu  {
         super(getBundle("MediaViewer").getString("FILE_MENU"))
 
         loadStory = new JMenuItem(getBundle("MediaViewer").getString("LOAD_STORY_BUTTON"))
-        loadStory.addActionListener { e ->
+        loadStory.registerKeyboardAction({ e ->
             JFileChooser chooser = new JFileChooser()
             chooser.setMultiSelectionEnabled(false)
             if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -30,21 +31,22 @@ class FileMenu extends JMenu  {
                     Main.switchView(Main.VIEW_STORY_DETAILS)
                 }
             }
-        }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_O,KeyEvent.CTRL_DOWN_MASK),JComponent.WHEN_IN_FOCUSED_WINDOW )
 
         saveStory = new JMenuItem(getBundle("MediaViewer").getString("SAVE_STORY_BUTTON"))
-        saveStory.addActionListener { e ->
+        saveStory.registerKeyboardAction( { e ->
             Story story = Main.activeStory
             if(story!=null) {
                 // TODO: disable button if no activeStory
                 saveStory(story)
             }
-        }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_DOWN_MASK),JComponent.WHEN_IN_FOCUSED_WINDOW )
 
         newStory = new JMenuItem(getBundle("MediaViewer").getString("NEW_STORY_BUTTON"))
-        newStory.addActionListener { e ->
+        newStory.registerKeyboardAction(  { e ->
             showDialog()
-        }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_N,KeyEvent.CTRL_DOWN_MASK),JComponent.WHEN_IN_FOCUSED_WINDOW )
+
         add newStory
         add loadStory
         add saveStory

@@ -8,6 +8,7 @@ import be.dafke.MediaViewer.Application.StoryDetails.StoryButtonsPanel
 import be.dafke.MediaViewer.Application.StoryDetails.StoryDetailsPanel
 import be.dafke.MediaViewer.Application.StoryOverview.StoryOverviewPanel
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
+import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.JFrame
@@ -44,6 +45,7 @@ class Main {
 
     static File storiesFile
     static Story activeStory
+    static HashMap<String, Chapter> chapterMap
 
 //    static Stories getAllStories() {
 //        return allStories
@@ -70,7 +72,31 @@ class Main {
         return activeStory
     }
 
+    static String getLongTitle(Chapter chapter){
+        String result = chapter.title
+        // TODO: if we use String parentChapterIndex,
+        // we store a HashMap<String, Chapters> for the activeStory
+
+        String index = chapter.parentChapter
+        Chapter parentChapter = chapterMap.get(index)
+        while(parentChapter != null){
+            result = "${parentChapter.title} | ${result}"
+            index = parentChapter.parentChapter
+            parentChapter = chapterMap.get(index)
+        }
+        return result
+    }
+
+    static HashMap<String, Chapter> getChapterMap() {
+        return chapterMap
+    }
+
     static void setActiveStory(Story story) {
+        chapterMap = [:]
+        story.chapters.each { Chapter chapter ->
+            chapterMap.put(chapter.prefix, chapter)
+        }
+        
         activeStory = story
         storyButtonsPanel.setStory(story)
         participantsOverviewPanel.setStory(story)

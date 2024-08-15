@@ -55,6 +55,12 @@ class AddMediaPanel extends JPanel {
         browseForFiles = new JButton("Browse ...")
         browseForFiles.addActionListener { e -> fileChoosenAction() }
         //
+        if(chapter != null){
+            String path = "... TODO: calculate 'C:\\Users\\david\\Pictures\\Laos 2024\\02\\01' if index is '0201'"
+            // TODO: browseForFiles setDefault/StartPath to the above ...
+            // filePathField.text = path
+        }
+        //
         JPanel filePanel = new JPanel()
         filePanel.add new JLabel("File/Folder:")
         filePanel.add filePathField

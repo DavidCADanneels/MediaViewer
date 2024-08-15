@@ -81,7 +81,7 @@ class ChaptersOverviewPanel extends JPanel {
         if(nr != -1) {
             Chapter chapter = (Chapter) chapters[nr]
             selectedChapter.getSubChapters().add(chapter.getPrefix())
-            chapter.setParentChapter(selectedChapter.getPrefix())
+            chapter.setParentChapter(selectedChapter.prefix)
         }
     }
 

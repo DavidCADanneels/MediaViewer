@@ -1,5 +1,6 @@
 package be.dafke.MediaViewer.Application.Chapter
 
+import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
@@ -69,7 +70,7 @@ class ChaptersOverviewDataModel extends DefaultTableModel {
             if (columnIndex == INDEX_COL) {
                 chapter.getPrefix()
             } else if (columnIndex == TITLE_COL) {
-                chapter.getTitle()
+                Main.getLongTitle(chapter)
             } else null
         } else null
     }

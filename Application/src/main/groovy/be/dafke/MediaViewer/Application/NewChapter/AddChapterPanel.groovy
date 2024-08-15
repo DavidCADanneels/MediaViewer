@@ -10,10 +10,12 @@ import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JTextField
 import java.awt.GridLayout
+import java.awt.event.FocusEvent
+import java.awt.event.FocusListener
 
 import static java.util.ResourceBundle.getBundle
 
-class AddChapterPanel extends JPanel {
+class AddChapterPanel extends JPanel implements FocusListener {
     JTextField indexField, titleField, parentChapterField
     //    TODO: use 'dropdownlist' with available chapters, iso (non-editable) JTextField parentChapterField
     JButton createButton
@@ -27,6 +29,7 @@ class AddChapterPanel extends JPanel {
         titleField = new JTextField(30)
         createButton = new JButton("Create")
         createButton.addActionListener({ e -> showDialog() })
+        indexField.addFocusListener(this)
         JPanel line1 = new JPanel()
         line1.add new JLabel("${getBundle("MediaViewer").getString("CHAPTER_INDEX")}:")
         line1.add indexField
@@ -61,11 +64,51 @@ class AddChapterPanel extends JPanel {
             if (story!=null && story.getChapters()!=null){
                 List<Chapter> chapters = story.getChapters()
                 chapters.add(chapter)
+//                HashMap<String, Chapter> mainChapters = story.getChapters()
+//                mainChapters.put(index, chapter)
 //                TODO: refresh Main.chaptersOverviewPanel.chapterTablePanel.dataModel
                 Main.chaptersOverviewPanel.chapterTablePanel.dataModel.fireTableDataChanged()
                 indexField.text = ''
                 titleField.text = ''
             }
+        }
+    }
+
+    @Override
+    void focusGained(FocusEvent e) {
+
+    }
+
+    @Override
+    void focusLost(FocusEvent e) {
+        // TODO: use DocumentListener iso FocusListener
+        // when content of field is changed, search for best matching parent chapter + link automatically
+
+        String index = indexField.text
+        System.out.println "index: ${index}"
+        if(Main.activeStory == null){
+            System.out.println "STORY NULL"
+        } else {
+            System.out.println "Story: ${Main.activeStory.title}"
+        }
+        List<Chapter> list = Main.activeStory.getChapters()
+        System.out.println "${list.size()} chapters"
+
+        Chapter parent = list.find { Chapter chapter -> chapter.prefix == index }
+        System.out.println "parentChapter:${parent}"
+
+        while(parent == null && index.length()>2){
+            index = index.substring(0,index.length()-2)
+            System.out.println "new index: ${index}"
+            parent = list.find { Chapter chapter -> chapter.prefix == index }
+        }
+        if(parent){
+            System.out.println("Found parent: ${parent.title} with index ${index}")
+            subChapterOf.selected = true
+            parentChapterField.text = Main.getLongTitle(parent)
+        } else {
+            subChapterOf.selected = false
+            parentChapterField.text = ""
         }
     }
 }

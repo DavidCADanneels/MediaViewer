@@ -2,6 +2,7 @@ package be.dafke.MediaViewer.Application
 
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
+import be.dafke.MediaViewer.ObjectModel.Stories.Stories
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator
 import com.sun.imageio.plugins.jpeg.JPEGImageReader
@@ -25,6 +26,17 @@ class IoTools {
             writer.flush()
             writer.close()
         } catch (IOException ex) {
+            System.err.println(ex)
+//                Logger.getLogger(Accounts.class.name).log(Level.SEVERE, null, ex)
+        }
+    }
+
+    static Stories readStories(File file){
+        XmlMapper xmlMapper = new XmlMapper()
+        try {
+            def xml
+            return xmlMapper.readValue(file, Stories.class)
+        } catch (Exception ex) {
             System.err.println(ex)
 //                Logger.getLogger(Accounts.class.name).log(Level.SEVERE, null, ex)
         }

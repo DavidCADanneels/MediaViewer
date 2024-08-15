@@ -5,6 +5,7 @@ import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.JButton
+import javax.swing.JCheckBox
 import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JTextField
@@ -13,8 +14,12 @@ import java.awt.GridLayout
 import static java.util.ResourceBundle.getBundle
 
 class AddChapterPanel extends JPanel {
-    JTextField indexField, titleField
+    JTextField indexField, titleField, parentChapterField
+    //    TODO: use 'dropdownlist' with available chapters, iso (non-editable) JTextField parentChapterField
     JButton createButton
+    JCheckBox subChapterOf
+
+    // TODO: select chapter with prefix, while editing prefix field
     Story story
 
     AddChapterPanel() {
@@ -25,6 +30,15 @@ class AddChapterPanel extends JPanel {
         JPanel line1 = new JPanel()
         line1.add new JLabel("${getBundle("MediaViewer").getString("CHAPTER_INDEX")}:")
         line1.add indexField
+
+        subChapterOf = new JCheckBox("Sub Chapter of:")
+        subChapterOf.selected = false
+        subChapterOf.enabled = false
+        line1.add subChapterOf
+
+        parentChapterField = new JTextField(20)
+        parentChapterField.enabled = false
+        line1.add parentChapterField
 
         JPanel line2 = new JPanel()
         line2.add new JLabel("${getBundle("MediaViewer").getString("CHAPTER_TITLE")}:")

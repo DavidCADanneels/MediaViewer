@@ -42,11 +42,7 @@ class ChaptersOverviewPanel extends JPanel {
     JPanel addChapterButtons(){
 
         addChapterButton = new JButton(getBundle("MediaViewer").getString("ADD_CHAPTER_BUTTON"))
-        addChapterButton.addActionListener { e ->
-            NewChapterDialog newChapterDialog = new NewChapterDialog()
-            newChapterDialog.setLocation(getLocationOnScreen())
-            newChapterDialog.visible = true
-        }
+        addChapterButton.addActionListener { e -> createNewChapter() }
 
         subChapterButton = new JButton(getBundle("MediaViewer").getString("ADD_SUBCHAPTER_BUTTON"))
         subChapterButton.addActionListener{e ->
@@ -72,6 +68,11 @@ class ChaptersOverviewPanel extends JPanel {
         newMediaDialog.visible = true
     }
 
+    void createNewChapter(){
+        NewChapterDialog newChapterDialog = new NewChapterDialog()
+        newChapterDialog.setLocation(getLocationOnScreen())
+        newChapterDialog.visible = true
+    }
     void assignSubChapter(){
         Object [] chapters = story.getChapters().toArray()
         int nr = JOptionPane.showOptionDialog(this, "Select Chapter", "Assign Chapter",

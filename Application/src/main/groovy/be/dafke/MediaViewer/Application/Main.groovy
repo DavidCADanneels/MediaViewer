@@ -39,7 +39,27 @@ class Main {
     static final String VIEW_PARTICIPANTS_FOR_STORY = 'PARTICIPANTS'
 
     static HashMap<Story, File> storyMap
+    // TODO: use allStories.allStories iso static Main.storyMap
+//    static Stories allStories
+
+    static File storiesFile
     static Story activeStory
+
+//    static Stories getAllStories() {
+//        return allStories
+//    }
+//
+//    static void setAllStories(Stories allStories) {
+//        Main.allStories = allStories
+//    }
+
+    static File getStoriesFile() {
+        return storiesFile
+    }
+
+    static void setStoriesFile(File storiesFile) {
+        Main.storiesFile = storiesFile
+    }
 
     static void addStory(Story story, File dataFile){
         storyMap.put(story,dataFile)
@@ -78,6 +98,8 @@ class Main {
         File storyFile = Main.storyMap.get(story)
         storyFile?.getParentFile()?.getParentFile()
     }
+
+
 
     static void main(String[] args) {
         storyMap = [:]

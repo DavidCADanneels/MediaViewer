@@ -7,7 +7,6 @@ import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.BoxLayout
 import javax.swing.JButton
-import javax.swing.JOptionPane
 import javax.swing.JPanel
 import javax.swing.JSplitPane
 import java.awt.BorderLayout
@@ -15,7 +14,7 @@ import java.awt.BorderLayout
 import static java.util.ResourceBundle.getBundle
 
 class ChaptersOverviewPanel extends JPanel {
-    JButton addChapterButton, subChapterButton, addMediaToChapterButton
+    JButton addChapterButton, addMediaToChapterButton
     ChapterTablePanel chapterTablePanel
     ChapterPanel chapterPanel
     Story story
@@ -44,11 +43,6 @@ class ChaptersOverviewPanel extends JPanel {
         addChapterButton = new JButton(getBundle("MediaViewer").getString("ADD_CHAPTER_BUTTON"))
         addChapterButton.addActionListener { e -> createNewChapter() }
 
-        subChapterButton = new JButton(getBundle("MediaViewer").getString("ADD_SUBCHAPTER_BUTTON"))
-        subChapterButton.addActionListener{e ->
-            assignSubChapter()
-        }
-
         addMediaToChapterButton = new JButton(getBundle("MediaViewer").getString("ADD_MEDIA_TO_CHAPTER_BUTTON"))
         addMediaToChapterButton.addActionListener{e ->
             addMediaToChapter()
@@ -57,7 +51,6 @@ class ChaptersOverviewPanel extends JPanel {
         JPanel panel = new JPanel()
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS))
         panel.add addChapterButton
-        panel.add subChapterButton
         panel.add addMediaToChapterButton
         return panel
     }
@@ -72,17 +65,6 @@ class ChaptersOverviewPanel extends JPanel {
         NewChapterDialog newChapterDialog = new NewChapterDialog()
         newChapterDialog.setLocation(getLocationOnScreen())
         newChapterDialog.visible = true
-    }
-    void assignSubChapter(){
-        Object [] chapters = story.getChapters().toArray()
-        int nr = JOptionPane.showOptionDialog(this, "Select Chapter", "Assign Chapter",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                chapters, null)
-        if(nr != -1) {
-            Chapter chapter = (Chapter) chapters[nr]
-            selectedChapter.getSubChapters().add(chapter.getPrefix())
-            chapter.setParentChapter(selectedChapter.prefix)
-        }
     }
 
     void setChapter(Chapter chapter){

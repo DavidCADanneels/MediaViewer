@@ -20,6 +20,7 @@ class AddChapterPanel extends JPanel implements FocusListener {
     //    TODO: use 'dropdownlist' with available chapters, iso (non-editable) JTextField parentChapterField
     JButton createButton
     JCheckBox subChapterOf
+    Chapter parentChapter
 
     // TODO: select chapter with prefix, while editing prefix field
     Story story
@@ -60,6 +61,10 @@ class AddChapterPanel extends JPanel implements FocusListener {
             Chapter chapter = new Chapter()
             chapter.setPrefix(index)
             chapter.setTitle(title)
+            if(parentChapter!=null) {
+                chapter.setParentChapter(parentChapter.prefix)
+                parentChapter.getSubChapters().add(chapter.prefix)
+            }
             Story story = Main.activeStory
             if (story!=null && story.getChapters()!=null){
                 List<Chapter> chapters = story.getChapters()
@@ -94,18 +99,18 @@ class AddChapterPanel extends JPanel implements FocusListener {
         List<Chapter> list = Main.activeStory.getChapters()
         System.out.println "${list.size()} chapters"
 
-        Chapter parent = list.find { Chapter chapter -> chapter.prefix == index }
-        System.out.println "parentChapter:${parent}"
+        parentChapter = list.find { Chapter chapter -> chapter.prefix == index }
+        System.out.println "parentChapter:${parentChapter}"
 
-        while(parent == null && index.length()>2){
+        while(parentChapter == null && index.length()>2){
             index = index.substring(0,index.length()-2)
             System.out.println "new index: ${index}"
-            parent = list.find { Chapter chapter -> chapter.prefix == index }
+            parentChapter = list.find { Chapter chapter -> chapter.prefix == index }
         }
-        if(parent){
-            System.out.println("Found parent: ${parent.title} with index ${index}")
+        if(parentChapter){
+            System.out.println("Found parentChapter: ${parentChapter.title} with index ${index}")
             subChapterOf.selected = true
-            parentChapterField.text = Main.getLongTitle(parent)
+            parentChapterField.text = Main.getLongTitle(parentChapter)
         } else {
             subChapterOf.selected = false
             parentChapterField.text = ""

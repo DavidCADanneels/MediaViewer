@@ -9,13 +9,18 @@ import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.BoxLayout
+import javax.swing.ButtonGroup
 import javax.swing.JButton
 import javax.swing.JCheckBox
 import javax.swing.JComboBox
 import javax.swing.JFileChooser
 import javax.swing.JPanel
 import javax.swing.JLabel
+import javax.swing.JRadioButton
+import javax.swing.JTextArea
 import javax.swing.JTextField
+import java.awt.BorderLayout
+import java.awt.CardLayout
 
 class AddMediaPanel extends JPanel {
     Story story
@@ -28,6 +33,14 @@ class AddMediaPanel extends JPanel {
     MediaBrowsePanel mediaBrowsePanel
     OwnerPanel ownerPanel
 
+//    CardLayout cardLayoutCenter
+//    JPanel center
+
+    JRadioButton files, text
+
+    final String VIEW_TEXT = 'TEXT'
+    final String VIEW_FILES = 'FILES'
+
     AddMediaPanel(Story story, Chapter chapter) {
         this.story = story
         this.chapter = chapter
@@ -38,14 +51,55 @@ class AddMediaPanel extends JPanel {
         saveAction = new JButton("Add to Story")
         saveAction.addActionListener { e -> saveAction() }
         //
-        ownerPanel = new OwnerPanel()
+        files = new JRadioButton("Select file(s)")
+        text = new JRadioButton("Enter text and save to file")
+        files.addActionListener { e-> showFilesInput() }
+        text.addActionListener { e-> showTextInput() }
+        files.selected = true
+        ButtonGroup group = new ButtonGroup()
+        group.add(files)
+        group.add(text)
+        //
+        ownerPanel = new OwnerPanel(story)
+        ownerPanel.add files
+        ownerPanel.add text
         ownerPanel.add saveAction
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS))
+        JPanel north = new JPanel()
+        north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS))
+        north.add indexPanel
+        north.add ownerPanel
 
-        add indexPanel
-        add ownerPanel
-        add mediaBrowsePanel
+
+//        cardLayoutCenter = new CardLayout()
+//        center = new JPanel(cardLayoutCenter)
+//        center = new JPanel()
+//        center.setLayout
+//        center.add mediaBrowsePanel//, VIEW_FILES
+//        center.add createTextAreaInputPanel(), VIEW_TEXT
+        //
+
+        setLayout(new BorderLayout())
+        add north, BorderLayout.NORTH
+        add mediaBrowsePanel, BorderLayout.CENTER
+//        add center, BorderLayout.CENTER
+    }
+
+    JPanel createTextAreaInputPanel() {
+        JPanel panel = new JPanel()
+        panel.setLayout new BorderLayout()
+
+        JTextField titleField = new JTextField(20)
+        JPanel north = new JPanel()
+        north.add new JLabel('Title:')
+        north.add titleField
+        add north, BorderLayout.NORTH
+
+        add new JTextArea(10,40), BorderLayout.CENTER
+        // TODO: add JTextArea in Center
+        // TODO: add saveToFile Button in South
+
+        return panel
     }
 
     void saveAction() {
@@ -102,5 +156,13 @@ class AddMediaPanel extends JPanel {
 //            NewMediaDialog newMediaDialog = new NewMediaDialog()
 //            newMediaDialog.setLocation(locationOnScreen)
 //            newMediaDialog.visible = true
+    }
+
+    void showFilesInput() {
+//        cardLayoutCenter.show(center, VIEW_FILES)
+    }
+
+    void showTextInput() {
+//        cardLayoutCenter.show(center, VIEW_TEXT)
     }
 }

@@ -9,9 +9,18 @@ import javax.swing.JPanel
 class OwnerPanel extends JPanel {
     JComboBox ownerComboBox
     JCheckBox setOwner
-    Story story
+//    Story story
+//
+//    Story getStory() {
+//        return story
+//    }
+//
+//    void setStory(Story story) {
+//        this.story = story
+//    }
 
-    OwnerPanel() {
+    OwnerPanel(Story story) {
+//        this.story = story
         ownerComboBox = new JComboBox<>()
         story.getPersons().each { ownerComboBox.addItem(it) }
         //

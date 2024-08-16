@@ -100,7 +100,7 @@ class AddMediaPanel extends JPanel {
             JTextField chapterField = new JTextField(chapter.toString())
             chapterField.editable = false
             panel.add chapterField
-            indexField.text = chapter.toString()
+            indexField.text = chapter.prefix
         } else {
             setChapter = new JCheckBox("Set Chapter and Index")
             setChapter.setSelected true

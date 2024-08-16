@@ -1,6 +1,7 @@
 package be.dafke.MediaViewer.Application.Chapter
 
 import be.dafke.MediaViewer.Application.Media.NewMediaDialog
+import be.dafke.MediaViewer.Application.Media.NewTextDialog
 import be.dafke.MediaViewer.Application.NewChapter.NewChapterDialog
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
@@ -14,7 +15,7 @@ import java.awt.BorderLayout
 import static java.util.ResourceBundle.getBundle
 
 class ChaptersOverviewPanel extends JPanel {
-    JButton addChapterButton, addMediaToChapterButton
+    JButton addChapterButton, addMediaToChapterButton, addTextToChapterButton
     ChapterTablePanel chapterTablePanel
     ChapterPanel chapterPanel
     Story story
@@ -48,10 +49,16 @@ class ChaptersOverviewPanel extends JPanel {
             addMediaToChapter()
         }
 
+        addTextToChapterButton = new JButton(getBundle("MediaViewer").getString("ADD_TEXT_TO_CHAPTER_BUTTON"))
+        addTextToChapterButton.addActionListener{e ->
+            addTextToChapter()
+        }
+
         JPanel panel = new JPanel()
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS))
         panel.add addChapterButton
         panel.add addMediaToChapterButton
+        panel.add addTextToChapterButton
         return panel
     }
 
@@ -59,6 +66,12 @@ class ChaptersOverviewPanel extends JPanel {
         NewMediaDialog newMediaDialog = new NewMediaDialog(story, selectedChapter)
         newMediaDialog.setLocation(getLocationOnScreen())
         newMediaDialog.visible = true
+    }
+
+    void addTextToChapter(){
+        NewTextDialog newTextDialog = new NewTextDialog(story, selectedChapter)
+        newTextDialog.setLocation(getLocationOnScreen())
+        newTextDialog.visible = true
     }
 
     void createNewChapter(){

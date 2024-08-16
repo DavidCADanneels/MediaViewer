@@ -2,7 +2,9 @@ package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.Application.IoTools
 import be.dafke.MediaViewer.Application.Main
+import be.dafke.MediaViewer.ObjectModel.Media.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
+import be.dafke.MediaViewer.ObjectModel.Media.Text
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
@@ -18,157 +20,80 @@ import javax.swing.JTextField
 class AddMediaPanel extends JPanel {
     Story story
     Chapter chapter = null
-    File[] files
 
-    JButton browseForFiles//, browseForFolders
-    JTextField filePathField
-    JCheckBox setOwner
-
-    JComboBox ownerComboBox
-
-    JCheckBox setChapter
-    JComboBox chapterComboBox
     JTextField indexField
-
     JButton saveAction
+
+    ChapterIndexConverterPanel indexPanel
+    MediaBrowsePanel mediaBrowsePanel
+    OwnerPanel ownerPanel
 
     AddMediaPanel(Story story, Chapter chapter) {
         this.story = story
         this.chapter = chapter
 
-        JPanel filePanel = createFilePanel(chapter)
-        JPanel ownerPanel = createOwnerPanel()
-        JPanel chapterAndIndexPanel = createChapterAndIndexPanel(chapter)
+        indexPanel = new ChapterIndexConverterPanel(story, chapter)
+        mediaBrowsePanel = new MediaBrowsePanel()
 
         saveAction = new JButton("Add to Story")
         saveAction.addActionListener { e -> saveAction() }
+        //
+        ownerPanel = new OwnerPanel()
+        ownerPanel.add saveAction
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS))
-        add filePanel
+
+        add indexPanel
         add ownerPanel
-        add chapterAndIndexPanel
-        add saveAction
-    }
-
-    JPanel createFilePanel(Chapter chapter){
-        filePathField = new JTextField(50)
-        browseForFiles = new JButton("Browse ...")
-        browseForFiles.addActionListener { e -> fileChoosenAction() }
-        //
-        if(chapter != null){
-            String path = "... TODO: calculate 'C:\\Users\\david\\Pictures\\Laos 2024\\02\\01' if index is '0201'"
-            // TODO: browseForFiles setDefault/StartPath to the above ...
-            // filePathField.text = path
-        }
-        //
-        JPanel filePanel = new JPanel()
-        filePanel.add new JLabel("File/Folder:")
-        filePanel.add filePathField
-        filePanel.add browseForFiles
-
-        return filePanel
-    }
-
-    JPanel createOwnerPanel(){
-        ownerComboBox = new JComboBox<>()
-        story.getPersons().each { ownerComboBox.addItem(it) }
-        //
-        setOwner = new JCheckBox("Set Owner")
-        setOwner.setSelected true
-        setOwner.addActionListener { e ->
-            if(setOwner.selected){
-//                ownerComboBox.enabled = true
-            } else {
-                ownerComboBox.setSelectedIndex(-1)
-//                ownerComboBox.enabled = false
-            }
-            ownerComboBox.enabled = setOwner.selected
-        }
-        //
-        JPanel ownerPanel = new JPanel()
-        ownerPanel.add setOwner
-        ownerPanel.add ownerComboBox
-        return ownerPanel
-    }
-
-    JPanel createChapterAndIndexPanel(Chapter chapter){
-        JPanel panel = new JPanel()
-        panel.add new JLabel("Chapter:")
-        indexField = new JTextField(30)
-
-        if(chapter != null) {
-            JTextField chapterField = new JTextField(chapter.toString())
-            chapterField.editable = false
-            panel.add chapterField
-            indexField.text = chapter.prefix
-        } else {
-            setChapter = new JCheckBox("Set Chapter and Index")
-            setChapter.setSelected true
-            setChapter.addActionListener { e ->
-                if (setChapter.selected) {
-//                chapterComboBox.enabled = true
-//                indexField.enabled = true
-                } else {
-                    chapterComboBox.setSelectedIndex(-1)
-//                chapterComboBox.enabled = false
-//                indexField.enabled = true
-                }
-                chapterComboBox.enabled = setChapter.selected
-                indexField.enabled = setChapter.selected
-            }
-            panel.add setChapter
-            //
-            chapterComboBox = new JComboBox<>()
-            story.getChapters().each { chapterComboBox.addItem(it) }
-            panel.add chapterComboBox
-        }
-
-        panel.add new JLabel("Index:")
-        panel.add indexField
-        return panel
-    }
-
-    void fileChoosenAction() {
-        File startFolder = Main.getSubFolder(story)
-        JFileChooser chooser = new JFileChooser(startFolder)
-        chooser.setMultiSelectionEnabled(true)
-        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            files = chooser.getSelectedFiles()
-            if (files.size() == 1) {
-                filePathField.text = files[0].path
-            } else if (files.size() > 1) {
-                filePathField.text = files[0].parentFile.path
-            } else {
-                filePathField.text = ''
-            }
-        }
+        add mediaBrowsePanel
     }
 
     void saveAction() {
-        files.each { File file ->
+        // TODO: use other switch, e.g. radioButton Files/Text
+        if(mediaBrowsePanel.files){
+            saveFiles()
+        } else {
+            // TODO save Text from JTextArea
+        }
+    }
+
+    void saveFiles() {
+        mediaBrowsePanel.files.each { File file ->
             int index = file.name.lastIndexOf('.')
             String extension = file.name.substring(index + 1)
             System.out.println("extension: $extension")
-            if (['jpg', 'jpeg', 'heic'].contains(extension.toLowerCase())) {
-                Picture picture = new Picture()
-                String fileName = file.name - ".${extension}"
-                System.out.println("fileName: $fileName")
-                picture.setFileName(fileName)
-                picture.setExtension(extension)
-                IoTools.readAndDisplayMetadata(file, picture)
+            String fileName = file.name - ".${extension}"
+            System.out.println("fileName: $fileName")
 
+            Media media
+            if (['jpg', 'jpeg', 'heic'].contains(extension.toLowerCase())) {
+                media = new Picture()
+                IoTools.readAndDisplayMetadata(file, media)
+//            } else if (['txt', 'adoc', 'md'].contains(extension.toLowerCase())) {
+//                media = new Text()
+                // ... get Prefix, Title and TextContent
+            }
+            if(media != null) {
+                media.setFileName(fileName)
+                media.setExtension(extension)
                 if (chapter == null) {
-                    int chapterIndex = chapterComboBox.getSelectedIndex()
+                    String chapterIndex = indexPanel.prefixField
                     if (chapterIndex == -1) {
                         chapter = null
                     } else {
                         chapter = story.getChapters().get(chapterIndex)
                     }
                 }
-                picture.setOwner(ownerComboBox.getSelectedIndex())
-                picture.setChapter(chapter.getPrefix())
-                picture.setIndexNumber(indexField.getText().trim())
-                story.getPictures().add(picture)
+                if (ownerPanel.setOwnerChecked) {
+                    media.setOwner(ownerPanel.getSelectedIndex())
+                }
+                if (chapter != null) {
+                    media.setChapter(chapter.getPrefix())
+                } else {
+
+                }
+                media.setIndexNumber(indexPanel.prefixField.trim())
+                story.getPictures().add(media)
             }
         }
 

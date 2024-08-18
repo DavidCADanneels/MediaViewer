@@ -1,6 +1,6 @@
 package be.dafke.MediaViewer.Application.Chapter
 
-import be.dafke.MediaViewer.ObjectModel.Media.Picture
+
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
@@ -13,12 +13,12 @@ import javax.swing.event.ListSelectionListener
 import javax.swing.table.TableModel
 import java.awt.Dimension
 
-class ChapterTablePanel extends JScrollPane implements ListSelectionListener {
+class ChapterTextTablePanel extends JScrollPane implements ListSelectionListener {
     ChaptersOverviewDataModel dataModel
     JTable overviewTable
-    ChaptersOverviewPanel chaptersOverviewPanel
+    ChaptersTextOverviewPanel chaptersOverviewPanel
 
-    ChapterTablePanel(ChaptersOverviewPanel chaptersOverviewPanel) {
+    ChapterTextTablePanel(ChaptersTextOverviewPanel chaptersOverviewPanel) {
         this.chaptersOverviewPanel = chaptersOverviewPanel
         dataModel = new ChaptersOverviewDataModel()
         overviewTable = new JTable(dataModel)

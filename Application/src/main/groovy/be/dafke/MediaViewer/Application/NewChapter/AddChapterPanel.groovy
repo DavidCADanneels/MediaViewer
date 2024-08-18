@@ -56,7 +56,7 @@ class AddChapterPanel extends JPanel {
 //                HashMap<String, Chapter> mainChapters = story.getChapters()
 //                mainChapters.put(index, chapter)
 //                TODO: refresh Main.chaptersOverviewPanel.chapterTablePanel.dataModel
-                Main.chaptersOverviewPanel.chapterTablePanel.dataModel.fireTableDataChanged()
+                Main.chaptersPicturesOverviewPanel.chapterTablePanel.dataModel.fireTableDataChanged()
                 indexPanel.index = ''
                 titleField.text = ''
             }

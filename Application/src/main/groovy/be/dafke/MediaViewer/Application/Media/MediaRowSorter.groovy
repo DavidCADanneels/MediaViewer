@@ -15,10 +15,10 @@ class MediaRowSorter extends TableRowSorter {
 //    }
 
     boolean isSortable(int column){
-        return column == MediaOverviewDataModel.ID_COL ||
-                column == MediaOverviewDataModel.CREATION_DATE_COL ||
-                column == MediaOverviewDataModel.OWNER_COL ||
-                column == MediaOverviewDataModel.CHAPTER_COL ||
-                column == MediaOverviewDataModel.INDEX_COL
+        return column == PictureOverviewDataModel.ID_COL ||
+                column == PictureOverviewDataModel.CREATION_DATE_COL ||
+                column == PictureOverviewDataModel.OWNER_COL ||
+                column == PictureOverviewDataModel.CHAPTER_COL ||
+                column == PictureOverviewDataModel.INDEX_COL
     }
 }

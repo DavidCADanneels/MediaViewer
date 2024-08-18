@@ -18,7 +18,7 @@ import javax.swing.table.TableModel
 import java.awt.Dimension
 
 class ImageTablePanel extends JScrollPane implements ListSelectionListener {
-    MediaOverviewDataModel dataModel
+    PictureOverviewDataModel dataModel
     JTable overviewTable
     boolean singleSelection
     boolean showSelection
@@ -27,7 +27,7 @@ class ImageTablePanel extends JScrollPane implements ListSelectionListener {
 
     ImageTablePanel(MediaOverviewPanel mediaOverviewPanel) {
         this.mediaOverviewPanel = mediaOverviewPanel
-        dataModel = new MediaOverviewDataModel()
+        dataModel = new PictureOverviewDataModel()
         overviewTable = new JTable(dataModel)
         overviewTable.setPreferredScrollableViewportSize(new Dimension(500, 200))
 

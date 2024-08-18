@@ -1,6 +1,7 @@
 package be.dafke.MediaViewer.Application
 
-import be.dafke.MediaViewer.Application.Chapter.ChaptersOverviewPanel
+import be.dafke.MediaViewer.Application.Chapter.ChaptersPicturesOverviewPanel
+import be.dafke.MediaViewer.Application.Chapter.ChaptersTextOverviewPanel
 import be.dafke.MediaViewer.Application.Media.MediaOverviewPanel
 import be.dafke.MediaViewer.Application.Menu.MediaMenuBar
 import be.dafke.MediaViewer.Application.ParticipantsOverview.ParticipantsOverviewPanel
@@ -29,14 +30,16 @@ class Main {
     static StoryDetailsPanel storyDetailsPanel
     static MediaOverviewPanel mediaOverviewPanel
     static ParticipantsOverviewPanel participantsOverviewPanel
-    static ChaptersOverviewPanel chaptersOverviewPanel
+    static ChaptersPicturesOverviewPanel chaptersPicturesOverviewPanel
+    static ChaptersTextOverviewPanel chaptersTextOverviewPanel
     static CardLayout cardLayoutCenter
     static JFrame frame
 
     static final String VIEW_STORY_OVERVIEW = 'STORY_OVERVIEW_TITLE'
     static final String VIEW_STORY_DETAILS = 'STORY_DETAILS_TITLE'
-    static final String VIEW_CHAPTERS_FOR_STORY = 'CHAPTERS'
-    static final String VIEW_MEDIA_FOR_STORY = 'MEDIA'
+    static final String VIEW_MEDIA_PER_CHAPTER = 'MEDIA_CHAPTERS'
+    static final String VIEW_TEXT_PER_CHAPTER = 'TEXT_CHAPTERS'
+    static final String VIEW_ALL_PICTURES_FOR_STORY = 'ALL_MEDIA'
     static final String VIEW_PARTICIPANTS_FOR_STORY = 'PARTICIPANTS'
 
     static HashMap<Story, File> storyMap
@@ -100,7 +103,8 @@ class Main {
         activeStory = story
         storyButtonsPanel.setStory(story)
         participantsOverviewPanel.setStory(story)
-        chaptersOverviewPanel.setStory(story)
+        chaptersPicturesOverviewPanel.setStory(story)
+        chaptersTextOverviewPanel.setStory(story)
         mediaOverviewPanel.setStory(story)
         storyDetailsPanel.setStory(story)
     }
@@ -167,11 +171,14 @@ class Main {
         storyDetailsPanel = new StoryDetailsPanel()
         center.add storyDetailsPanel, VIEW_STORY_DETAILS
 
-        chaptersOverviewPanel = new ChaptersOverviewPanel()
-        center.add chaptersOverviewPanel, VIEW_CHAPTERS_FOR_STORY
+        chaptersPicturesOverviewPanel = new ChaptersPicturesOverviewPanel()
+        center.add chaptersPicturesOverviewPanel, VIEW_MEDIA_PER_CHAPTER
+
+        chaptersTextOverviewPanel = new ChaptersTextOverviewPanel()
+        center.add chaptersTextOverviewPanel, VIEW_TEXT_PER_CHAPTER
 
         mediaOverviewPanel = new MediaOverviewPanel()
-        center.add mediaOverviewPanel, VIEW_MEDIA_FOR_STORY
+        center.add mediaOverviewPanel, VIEW_ALL_PICTURES_FOR_STORY
 
         participantsOverviewPanel = new ParticipantsOverviewPanel()
         center.add participantsOverviewPanel, VIEW_PARTICIPANTS_FOR_STORY
@@ -240,9 +247,9 @@ class Main {
             storyButtonsPanel.disableAllButtons()
         } else if(view == VIEW_STORY_DETAILS){
             storyButtonsPanel.backToStoryDetailsButton.enabled = false
-        } else if(view == VIEW_CHAPTERS_FOR_STORY){
-            storyButtonsPanel.chaptersButton.enabled = false
-        } else if (view == VIEW_MEDIA_FOR_STORY) {
+        } else if(view == VIEW_MEDIA_PER_CHAPTER){ // TODO: add 'else if view == VIEW_TEXT_PER_CHAPTER ???
+            storyButtonsPanel.picturesPerChapterButton.enabled = false
+        } else if (view == VIEW_ALL_PICTURES_FOR_STORY) {
             storyButtonsPanel.mediaButton.enabled = false
         } else if (view == VIEW_PARTICIPANTS_FOR_STORY){
             storyButtonsPanel.participantButton.enabled = false

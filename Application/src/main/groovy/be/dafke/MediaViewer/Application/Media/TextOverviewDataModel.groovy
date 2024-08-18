@@ -1,6 +1,7 @@
 package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
+import be.dafke.MediaViewer.ObjectModel.Media.Text
 import be.dafke.MediaViewer.ObjectModel.People.Person
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
@@ -9,7 +10,7 @@ import javax.swing.table.AbstractTableModel
 
 import static java.util.ResourceBundle.getBundle
 
-class MediaOverviewDataModel extends AbstractTableModel {
+class TextOverviewDataModel extends AbstractTableModel {
     static int ID_COL = 0
     static int CREATION_DATE_COL = 1
     static int CREATION_TIME_COL = 2
@@ -25,10 +26,10 @@ class MediaOverviewDataModel extends AbstractTableModel {
     HashMap<Integer,String> columnNames = [:]
     HashMap<Integer,Class> columnClasses = [:]
 
-    List<Picture> pictures = []
+    List<Text> textFragments = []
     Story story
 
-    MediaOverviewDataModel() {
+    TextOverviewDataModel() {
         columnClasses.put(ID_COL, String.class)
 //        columnClasses.put(FOLDER_NAME_COL, String.class)
         columnClasses.put(EXTENSION_COL, String.class)
@@ -46,7 +47,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
         columnNames.put(EXTENSION_COL, getBundle("MediaViewer").getString("EXTENSION"))
         columnNames.put(FILE_NAME_COL, getBundle("MediaViewer").getString("FILE_NAME"))
         columnNames.put(INDEX_COL, getBundle("MediaViewer").getString("MEDIA_INDEX"))
-        columnNames.put(SIZE_COL, getBundle("MediaViewer").getString("IMAGE_SIZE"))
+        columnNames.put(SIZE_COL, getBundle("MediaViewer").getString("TEXT_SIZE"))
         columnNames.put(CHAPTER_COL, getBundle("MediaViewer").getString("CHAPTER"))
         columnNames.put(CREATION_DATE_COL, getBundle("MediaViewer").getString("CREATION_DATE"))
         columnNames.put(CREATION_TIME_COL, getBundle("MediaViewer").getString("CREATION_TIME"))
@@ -57,13 +58,13 @@ class MediaOverviewDataModel extends AbstractTableModel {
     void setChapter(Chapter chapter) {
         if(chapter != null) {
             String prefix = chapter.getPrefix()
-            pictures = []
+            textFragments = []
             if (prefix) {
-                List<Picture> allPictures = story.getPictures()
-                allPictures.each { Picture picture ->
-                    String myChapter = picture.getChapter()
+                List<Text> allFragments = story.getTextFragments()
+                allFragments.each { Text text ->
+                    String myChapter = text.getChapter()
                     if (myChapter != null && myChapter == prefix) {
-                        pictures.add picture
+                        textFragments.add text
                     }
                 }
             }
@@ -73,7 +74,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
 
     void setStory(Story story) {
         this.story = story
-        pictures = story.getPictures()
+        textFragments = story.getTextFragments()
         fireTableDataChanged()
     }
 
@@ -81,13 +82,13 @@ class MediaOverviewDataModel extends AbstractTableModel {
 //        this.pictures = pictures
 //    }
 
-    Picture getObject(int row) {
-        return pictures.get(row)
+    Text getObject(int row) {
+        return textFragments.get(row)
     }
 
     @Override
     int getRowCount() {
-        pictures.size()
+        textFragments.size()
     }
 
     @Override
@@ -114,27 +115,27 @@ class MediaOverviewDataModel extends AbstractTableModel {
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-        Picture picture = getObject(rowIndex)
-        if (picture) {
+        Text text = getObject(rowIndex)
+        if (text) {
             if (columnIndex == ID_COL) {
-                return picture.getFileName()
+                return text.getFileName()
 //            } else if (columnIndex == FOLDER_NAME_COL) {
-//                return picture.getSubFolderName()
+//                return text.getSubFolderName()
             } else if (columnIndex == EXTENSION_COL) {
-                return picture.getExtension()
+                return text.getExtension()
             } else if (columnIndex == INDEX_COL) {
-                return picture.getIndexNumber()
+                return text.getIndexNumber()
             } else if (columnIndex == CHAPTER_COL) {
-                return picture.getChapter()
+                return text.getChapter()
             } else if (columnIndex == OWNER_COL) {
-                Integer id = picture.getOwner()
+                Integer id = text.getOwner()
                 if(id != null && id != -1) {
                     return story.getPersons().get(id)
                 } else return null
             } else if (columnIndex == CREATION_DATE_COL) {
-                return picture.getCreationDate()
+                return text.getCreationDate()
             } else if (columnIndex == CREATION_TIME_COL) {
-                Date date = picture.getCreationDate()
+                Date date = text.getCreationDate()
                 if(date == null) return null
                 Calendar calendar = Calendar.getInstance()
                 calendar.setTime(date)
@@ -144,9 +145,9 @@ class MediaOverviewDataModel extends AbstractTableModel {
                 return "${hours}:${minutes<10?'0':''}${minutes}:${seconds<10?'0':''}${seconds}"
 //                return "${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}"
             } else if (columnIndex == FILE_NAME_COL) {
-                return "${picture.getFileName()}.${picture.getExtension()}"
+                return "${text.getFileName()}.${text.getExtension()}"
             } else if (columnIndex == SIZE_COL) {
-                return "${picture.getWidth()} x ${picture.getHeight()}"
+                return ""
             } else {
                 null
             }
@@ -157,10 +158,10 @@ class MediaOverviewDataModel extends AbstractTableModel {
 
     @Override
     void setValueAt(Object value, int rowIndex, int columnIndex) {
-        Picture picture = getObject(rowIndex)
+        Text text = getObject(rowIndex)
         if (columnIndex == INDEX_COL) {
             String indexNumber = (String) value
-            picture.setIndexNumber(indexNumber)
+            text.setIndexNumber(indexNumber)
 //        } else if (columnIndex == CHAPTER_COL) {
         } else if (columnIndex == OWNER_COL) {
             List<Person> list = story.getPersons()
@@ -168,7 +169,7 @@ class MediaOverviewDataModel extends AbstractTableModel {
             Integer id = list.indexOf(participant)
             if (id != -1) {
                 System.out.println("Participant: ${participant} has ID: ${id}")
-                picture.setOwner(id)
+                text.setOwner(id)
             }
         }
     }

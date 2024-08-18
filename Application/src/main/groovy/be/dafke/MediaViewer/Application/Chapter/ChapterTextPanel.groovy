@@ -1,23 +1,23 @@
 package be.dafke.MediaViewer.Application.Chapter
 
-import be.dafke.MediaViewer.Application.Media.ImageTablePanel
-import be.dafke.MediaViewer.Application.Media.MediaOverviewDataModel
+
+import be.dafke.MediaViewer.Application.Media.PictureOverviewDataModel
 import be.dafke.MediaViewer.Application.Media.MediaRowSorter
+import be.dafke.MediaViewer.Application.Media.TextOverviewDataModel
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
-import javax.swing.DefaultListSelectionModel
 import javax.swing.JScrollPane
 import javax.swing.JTable
 import java.awt.Dimension
 
-class ChapterPanel extends JScrollPane {
-    MediaOverviewDataModel dataModel
+class ChapterTextPanel extends JScrollPane {
+    TextOverviewDataModel dataModel
     JTable overviewTable
     boolean singleSelection
 
-    ChapterPanel() {
-        dataModel = new MediaOverviewDataModel()
+    ChapterTextPanel() {
+        dataModel = new TextOverviewDataModel()
         overviewTable = new JTable(dataModel)
         overviewTable.setPreferredScrollableViewportSize(new Dimension(500, 200))
 

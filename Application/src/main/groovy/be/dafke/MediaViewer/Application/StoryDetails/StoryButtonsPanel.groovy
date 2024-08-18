@@ -1,7 +1,6 @@
 package be.dafke.MediaViewer.Application.StoryDetails
 
 import be.dafke.MediaViewer.Application.Main
-import be.dafke.MediaViewer.Application.Media.NewMediaDialog
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.JButton
@@ -10,17 +9,28 @@ import javax.swing.JPanel
 import static java.util.ResourceBundle.getBundle
 
 class StoryButtonsPanel extends JPanel {
-    JButton chaptersButton, participantButton, mediaButton, backToStoryOverViewButton, backToStoryDetailsButton
+    JButton picturesPerChapterButton, textPerChapterButton, participantButton, mediaButton, backToStoryOverViewButton, backToStoryDetailsButton
 
     Story story
 
     StoryButtonsPanel() {
-        chaptersButton = new JButton(getBundle("MediaViewer").getString("SHOW_CHAPTERS_FOR_STORY"))
-        chaptersButton.addActionListener { e ->
+        picturesPerChapterButton = new JButton(getBundle("MediaViewer").getString("SHOW_PICTURES_PER_CHAPTER"))
+        picturesPerChapterButton.addActionListener { e ->
             Story story = Main.activeStory
             if(story) {
 //                Main.chaptersOverviewPanel.setStory()}
-                Main.switchView(Main.VIEW_CHAPTERS_FOR_STORY)
+                Main.switchView(Main.VIEW_MEDIA_PER_CHAPTER)
+            } else {
+                System.err.println("Story is 'null'")
+            }
+        }
+
+        textPerChapterButton = new JButton(getBundle("MediaViewer").getString("SHOW_TEXT_PER_CHAPTER"))
+        textPerChapterButton.addActionListener { e ->
+            Story story = Main.activeStory
+            if(story) {
+//                Main.chaptersOverviewPanel.setStory()}
+                Main.switchView(Main.VIEW_TEXT_PER_CHAPTER)
             } else {
                 System.err.println("Story is 'null'")
             }
@@ -38,7 +48,7 @@ class StoryButtonsPanel extends JPanel {
 
         mediaButton = new JButton(getBundle("MediaViewer").getString("SHOW_MEDIA_FOR_STORY"))
         mediaButton.addActionListener { e ->
-            Main.switchView(Main.VIEW_MEDIA_FOR_STORY)
+            Main.switchView(Main.VIEW_ALL_PICTURES_FOR_STORY)
         }
 
         backToStoryOverViewButton = new JButton("${getBundle("MediaViewer").getString("BACK_TO_MAIN")}")
@@ -53,13 +63,15 @@ class StoryButtonsPanel extends JPanel {
 
         add backToStoryOverViewButton
         add backToStoryDetailsButton
-        add chaptersButton
+        add picturesPerChapterButton
+        add textPerChapterButton
         add participantButton
         add mediaButton
     }
 
     void enableAllButtons(){
-        chaptersButton.enabled = story!=null
+        picturesPerChapterButton.enabled = story!=null
+        textPerChapterButton.enabled = story!=null
         participantButton.enabled = story!=null
         mediaButton.enabled = story!=null
         backToStoryOverViewButton.enabled = true
@@ -67,7 +79,8 @@ class StoryButtonsPanel extends JPanel {
     }
 
     void disableAllButtons(){
-        chaptersButton.enabled = false
+        picturesPerChapterButton.enabled = false
+        textPerChapterButton.enabled = false
         participantButton.enabled = false
         mediaButton.enabled = false
         backToStoryOverViewButton.enabled = true

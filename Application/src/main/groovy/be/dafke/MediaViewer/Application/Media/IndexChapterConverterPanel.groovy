@@ -2,6 +2,7 @@ package be.dafke.MediaViewer.Application.Media
 
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
+import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.JCheckBox
 import javax.swing.JLabel
@@ -56,19 +57,10 @@ class IndexChapterConverterPanel extends JPanel implements FocusListener {
         } else {
             System.out.println "Story: ${Main.activeStory.title}"
         }
-        List<Chapter> list = Main.activeStory.getChapters()
-        System.out.println "${list.size()} chapters"
+        Story story = Main.activeStory
 
-        parentChapter = list.find { Chapter chapter -> chapter.prefix == index }
-        System.out.println "parentChapter:${parentChapter}"
-
-        while(parentChapter == null && index.length()>2){
-            index = index.substring(0,index.length()-2)
-            System.out.println "new index: ${index}"
-            parentChapter = list.find { Chapter chapter -> chapter.prefix == index }
-        }
+        parentChapter = Main.getLowestParentChapter(story, index)
         if(parentChapter){
-            System.out.println("Found parentChapter: ${parentChapter.title} with index ${index}")
             subChapterOf.selected = true
             parentChapterField.text = Main.getLongTitle(parentChapter)
         } else {

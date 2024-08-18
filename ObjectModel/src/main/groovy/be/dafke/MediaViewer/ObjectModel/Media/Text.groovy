@@ -1,16 +1,16 @@
 package be.dafke.MediaViewer.ObjectModel.Media
 
 class Text extends Media {
-    int length
+    String title
 
     Text() {
     }
 
-    int getLength() {
-        return length
+    String getTitle() {
+        return title
     }
 
-    void setLength(int length) {
-        this.length = length
+    void setTitle(String title) {
+        this.title = title
     }
 }

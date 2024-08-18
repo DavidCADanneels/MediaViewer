@@ -2,6 +2,7 @@ package be.dafke.MediaViewer.ObjectModel.Stories
 
 import be.dafke.MediaViewer.ObjectModel.Media.MediaBox
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
+import be.dafke.MediaViewer.ObjectModel.Media.Text
 import be.dafke.MediaViewer.ObjectModel.People.Person
 
 class Story {
@@ -11,6 +12,7 @@ class Story {
     List<Chapter> chapters
     List<Person> persons
     List<Picture> pictures
+    List<Text> textFragments
     List<MediaBox> mediaBoxes
     File projectFolder
 
@@ -18,7 +20,16 @@ class Story {
         chapters = []
         pictures = []
         persons = []
+        textFragments = []
         mediaBoxes = []
+    }
+
+    List<Text> getTextFragments() {
+        return textFragments
+    }
+
+    void setTextFragments(List<Text> textFragments) {
+        this.textFragments = textFragments
     }
 
     List<MediaBox> getMediaBoxes() {

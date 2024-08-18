@@ -182,9 +182,57 @@ class Main {
         bar
     }
 
-//    static addMedia(Story story){
-//
-//    }
+    static String getNettoPrefix(Chapter chapter) {
+        if(chapter.parentChapter == null) {
+            return chapter.prefix
+        } else {
+            return chapter.prefix - chapter.parentChapter
+        }
+    }
+
+    static File getChapterFolder(Story story, String index){
+        File projectFile = storyMap.get(story)
+        File metadataFolder = projectFile.parentFile
+        File projectFolder = metadataFolder.parentFile
+
+        System.out.println "chapter.prefix=${index}"
+
+        Chapter lowestParent = getLowestParentChapter(story, index)
+        System.out.println "lowestParent.prefix=${lowestParent.prefix}"
+
+        Stack<String> indexStack = new Stack<>()
+
+        Chapter pivot = lowestParent
+        while(pivot != null){
+            indexStack.push(getNettoPrefix(pivot))
+            pivot = getLowestParentChapter(story, pivot.parentChapter)
+        }
+        File resultFolder = projectFolder
+
+        String pit
+        while(!indexStack.empty()){
+            pit = indexStack.pop()
+            resultFolder = new File(resultFolder, pit)
+        }
+        return resultFolder
+    }
+
+    static Chapter getLowestParentChapter(Story story, String index){
+        List<Chapter> chapters = story.getChapters()
+        System.out.println "${chapters.size()} chapters"
+        Chapter parentChapter = chapters.find { Chapter chapter -> chapter.prefix == index }
+        System.out.println "parentChapter:${parentChapter}"
+
+        while(parentChapter == null && index.length()>2){
+            index = index.substring(0,index.length()-2)
+            System.out.println "new index: ${index}"
+            parentChapter = chapters.find { Chapter chapter -> chapter.prefix == index }
+        }
+        if(parentChapter) {
+            System.out.println("Found parentChapter: ${parentChapter.title} with index ${index}")
+        }
+        return parentChapter
+    }
 
     static switchView(String view){
         storyButtonsPanel.enableAllButtons()

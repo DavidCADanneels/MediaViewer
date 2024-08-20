@@ -25,7 +25,6 @@ class AddTextPanel extends JPanel {
     JTextArea textArea
 
     ChapterIndexConverterPanel indexPanel
-    MediaBrowsePanel mediaBrowsePanel
     OwnerPanel ownerPanel
 
     AddTextPanel(Story story, Chapter chapter) {
@@ -33,7 +32,6 @@ class AddTextPanel extends JPanel {
         this.chapter = chapter
 
         indexPanel = new ChapterIndexConverterPanel(story, chapter)
-        mediaBrowsePanel = new MediaBrowsePanel()
 
         saveAction = new JButton("Add to Story")
         saveAction.addActionListener { e -> saveAction() }
@@ -85,17 +83,26 @@ class AddTextPanel extends JPanel {
         // TODO save Text from JTextArea
         String index = indexPanel.fullIndex
         String title = titleField.text.trim()
-//        if(index == null || title == '')
-        String extension = 'txt'
-        String fileName = "${index}-${title}.${extension}"
-        System.out.println("fileName=${fileName}")
+        String fileName = "${index}-${title}"
 
-        chapter = Main.getLowestParentChapter(story, index)
+        Text newText = new Text()
+        newText.title = title
+        newText.fileName = fileName
+        newText.extension = 'txt'
+
+        newText.chapter = indexPanel.selectedChapter
+        if (ownerPanel.setOwnerChecked) {
+            newText.setOwner(ownerPanel.getSelectedIndex())
+        }
+        if (chapter != null) {
+            newText.setChapter(chapter.getPrefix())
+        } else {
+
+        }
+        newText.setIndexNumber(index)
+
         File chapterFolder = Main.getChapterFolder(story, index)
-        System.out.println("chapterFolder=${chapterFolder}")
-
-        File textFile = new File(chapterFolder, fileName)
-
+        File textFile = new File(chapterFolder, "${fileName}.txt")
         System.out.println("textFile=${textFile.path}")
 
         String text = textArea.text.trim()
@@ -103,15 +110,7 @@ class AddTextPanel extends JPanel {
             textFile.write text
         }
 
-        Text newText = new Text()
-        newText.content = text
-        newText.title = title
-
         story.textFragments.add(newText)
-
-        // TODO: save content of textArea to file
-//        textArea.text
-
     }
 
     JScrollPane createTextAreaPanel() {

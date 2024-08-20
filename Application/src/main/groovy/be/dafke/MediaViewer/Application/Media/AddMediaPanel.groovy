@@ -26,7 +26,7 @@ class AddMediaPanel extends JPanel {
         this.chapter = chapter
 
         indexPanel = new ChapterIndexConverterPanel(story, chapter)
-        mediaBrowsePanel = new MediaBrowsePanel()
+        mediaBrowsePanel = new MediaBrowsePanel(story)
 
         saveAction = new JButton("Add to Story")
         saveAction.addActionListener { e -> saveAction() }
@@ -68,14 +68,7 @@ class AddMediaPanel extends JPanel {
             if(media != null) {
                 media.setFileName(fileName)
                 media.setExtension(extension)
-                if (chapter == null) {
-                    String chapterIndex = indexPanel.prefixField
-                    if (chapterIndex == -1) {
-                        chapter = null
-                    } else {
-                        chapter = story.getChapters().get(chapterIndex)
-                    }
-                }
+                media.chapter = indexPanel.selectedChapter
                 if (ownerPanel.setOwnerChecked) {
                     media.setOwner(ownerPanel.getSelectedIndex())
                 }

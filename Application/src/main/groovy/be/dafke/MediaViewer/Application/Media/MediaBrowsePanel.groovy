@@ -18,7 +18,8 @@ class MediaBrowsePanel extends JPanel {
     JButton browseForFiles
     JTextField filePathField
 
-    MediaBrowsePanel() {
+    MediaBrowsePanel(Story story) {
+        this.story = story
         filePathField = new JTextField(50)
         browseForFiles = new JButton("Browse ...")
         browseForFiles.addActionListener { e -> fileChoosenAction() }

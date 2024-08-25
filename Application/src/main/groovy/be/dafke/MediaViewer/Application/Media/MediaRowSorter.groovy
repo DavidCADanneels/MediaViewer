@@ -19,6 +19,7 @@ class MediaRowSorter extends TableRowSorter {
                 column == PictureOverviewDataModel.CREATION_DATE_COL ||
                 column == PictureOverviewDataModel.OWNER_COL ||
                 column == PictureOverviewDataModel.CHAPTER_COL ||
+                column == PictureOverviewDataModel.STARS_COL ||
                 column == PictureOverviewDataModel.INDEX_COL
     }
 }

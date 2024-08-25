@@ -126,6 +126,7 @@ class TextOverviewDataModel extends AbstractTableModel {
             } else if (columnIndex == INDEX_COL) {
                 return text.getIndexNumber()
             } else if (columnIndex == CHAPTER_COL) {
+                // TODO text.getChapter -> int -> Chapter.toString()
                 return text.getChapter()
             } else if (columnIndex == OWNER_COL) {
                 Integer id = text.getOwner()

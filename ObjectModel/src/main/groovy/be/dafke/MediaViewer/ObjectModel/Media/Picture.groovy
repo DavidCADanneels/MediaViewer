@@ -3,7 +3,7 @@ package be.dafke.MediaViewer.ObjectModel.Media
 import java.util.function.Predicate
 
 class Picture extends Media {
-    int width, height
+    int width, height, stars
     /**
      * index of Participant in Story.participants List
      */
@@ -18,6 +18,7 @@ class Picture extends Media {
 //    Boolean panorama = false
 
     Picture() {
+        stars = 0
 //        participantsInForeGround = []
 //        participantsInMiddleGround = []
 //        participantsBackGround = []

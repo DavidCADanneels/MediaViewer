@@ -7,10 +7,15 @@ import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.BoxLayout
 import javax.swing.JButton
+import javax.swing.JDesktopPane
+import javax.swing.JDialog
+import javax.swing.JFrame
 import javax.swing.JLabel
 import javax.swing.JOptionPane
 import javax.swing.JPanel
 import javax.swing.JTextField
+import java.awt.BorderLayout
+import java.awt.Dialog
 
 import static java.util.ResourceBundle.getBundle
 
@@ -22,7 +27,7 @@ class ImageDetailPanel extends JPanel{
     Story story
     List<Picture> pictures
     boolean singleSelection
-    JButton assignOwnerButton, assignIndexButton, assignChapterButton, addMediaButton
+    JButton assignOwnerButton, assignIndexButton, assignChapterButton, addMediaButton, voteButton
     MediaOverviewPanel mediaOverviewPanel
     static String singleTextOwner = "Assign Owner to Picture"
     static String multiTextOwner = "Assign Owner to Pictures"
@@ -47,23 +52,45 @@ class ImageDetailPanel extends JPanel{
 
         singleSelection = true
         assignOwnerButton = new JButton(singleTextOwner)
-        assignOwnerButton.addActionListener {e ->
-            assignOwner()
-        }
+        assignOwnerButton.addActionListener {e -> assignOwner() }
         assignIndexButton = new JButton(singleTextIndex)
-        assignIndexButton.addActionListener {e ->
-            assignIndex()
-        }
+        assignIndexButton.addActionListener {e -> assignIndex() }
         assignChapterButton = new JButton(singleTextChapter)
-        assignChapterButton.addActionListener {e ->
-            assignChapter()
-        }
+        assignChapterButton.addActionListener {e -> assignChapter() }
+
+        voteButton = new JButton("Vote !")
+        voteButton.addActionListener { e -> vote() }
 
         add line1
         add addMediaButton
         add assignOwnerButton
         add assignChapterButton
         add assignIndexButton
+        add voteButton
+    }
+
+    void vote(){
+        JDialog voteDialog = new JDialog()
+        voteDialog.modal = true
+        voteDialog.defaultCloseOperation = JDialog.DISPOSE_ON_CLOSE
+
+        ImagePanel imagePanel = new ImagePanel()
+        imagePanel.setStory(story)
+        VotePanel votePanel = new VotePanel(imagePanel, pictures)
+
+        // use: this
+        imagePanel.add votePanel, BorderLayout.NORTH
+        voteDialog.setContentPane imagePanel
+        // or: this
+//        JPanel contentPanel = new JPanel(new BorderLayout())
+//        contentPanel.add votePanel, BorderLayout.NORTH
+//        contentPanel.add imagePanel, BorderLayout.CENTER
+//        voteDialog.contentPane = contentPanel
+//        voteDialog.setContentPane(contentPanel)
+
+        voteDialog.pack()
+        voteDialog.setLocation(getLocationOnScreen())
+        voteDialog.visible = true
     }
 
     void loadData(){

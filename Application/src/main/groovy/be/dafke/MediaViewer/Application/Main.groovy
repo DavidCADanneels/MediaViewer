@@ -50,6 +50,13 @@ class Main {
     static Story activeStory
     static HashMap<String, Chapter> chapterMap
 
+//    static HashMap<Story, File> getStoryMap() {
+//        return storyMap
+//    }
+//
+//    static void setStoryMap(HashMap<Story, File> storyMap) {
+//        Main.storyMap = storyMap
+//    }
 //    static Stories getAllStories() {
 //        return allStories
 //    }
@@ -76,6 +83,9 @@ class Main {
     }
 
     static String getLongTitle(Chapter chapter){
+        if(chapter == null){
+            return null
+        }
         String result = chapter.title
         // TODO: if we use String parentChapterIndex,
         // we store a HashMap<String, Chapters> for the activeStory

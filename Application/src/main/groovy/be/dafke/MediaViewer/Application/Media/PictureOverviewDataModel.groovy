@@ -1,5 +1,6 @@
 package be.dafke.MediaViewer.Application.Media
 
+import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.People.Person
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
@@ -17,10 +18,11 @@ class PictureOverviewDataModel extends AbstractTableModel {
     static int OWNER_COL = 4
     static int INDEX_COL = 5
     static int CHAPTER_COL = 6
-    static int NR_OF_COL = 7
-    static int FILE_NAME_COL = 7
-    static int EXTENSION_COL = 8
-//    static int FULL_PATH_COL = 9
+    static int STARS_COL = 7
+    static int NR_OF_COL = 8
+    static int FILE_NAME_COL = 8
+    static int EXTENSION_COL = 9
+//    static int FULL_PATH_COL = 10
 
     HashMap<Integer,String> columnNames = [:]
     HashMap<Integer,Class> columnClasses = [:]
@@ -35,6 +37,7 @@ class PictureOverviewDataModel extends AbstractTableModel {
         columnClasses.put(FILE_NAME_COL, String.class)
         columnClasses.put(INDEX_COL, String.class)
         columnClasses.put(CHAPTER_COL, String.class)
+        columnClasses.put(STARS_COL, Integer.class)
         columnClasses.put(SIZE_COL, String.class)
         columnClasses.put(CREATION_DATE_COL, Date.class)
         columnClasses.put(CREATION_TIME_COL, String.class)
@@ -48,6 +51,7 @@ class PictureOverviewDataModel extends AbstractTableModel {
         columnNames.put(INDEX_COL, getBundle("MediaViewer").getString("MEDIA_INDEX"))
         columnNames.put(SIZE_COL, getBundle("MediaViewer").getString("IMAGE_SIZE"))
         columnNames.put(CHAPTER_COL, getBundle("MediaViewer").getString("CHAPTER"))
+        columnNames.put(STARS_COL, getBundle("MediaViewer").getString("STARS"))
         columnNames.put(CREATION_DATE_COL, getBundle("MediaViewer").getString("CREATION_DATE"))
         columnNames.put(CREATION_TIME_COL, getBundle("MediaViewer").getString("CREATION_TIME"))
         columnNames.put(OWNER_COL, getBundle("MediaViewer").getString("OWNER"))
@@ -121,11 +125,18 @@ class PictureOverviewDataModel extends AbstractTableModel {
 //            } else if (columnIndex == FOLDER_NAME_COL) {
 //                return picture.getSubFolderName()
             } else if (columnIndex == EXTENSION_COL) {
-                return picture.getExtension()
+                return picture.extension
             } else if (columnIndex == INDEX_COL) {
-                return picture.getIndexNumber()
+                return picture.indexNumber
+            } else if (columnIndex == STARS_COL) {
+                return picture.stars
             } else if (columnIndex == CHAPTER_COL) {
-                return picture.getChapter()
+                // TODO: String picture.chapter -> Chapter:
+                Chapter result = story.getChapters().find { chapter ->
+                    chapter.prefix == picture.chapter
+                }
+                return Main.getLongTitle(result)
+//                return picture.getChapter()
             } else if (columnIndex == OWNER_COL) {
                 Integer id = picture.getOwner()
                 if(id != null && id != -1) {

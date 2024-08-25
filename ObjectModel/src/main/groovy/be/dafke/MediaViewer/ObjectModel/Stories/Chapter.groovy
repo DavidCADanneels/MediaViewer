@@ -78,7 +78,8 @@ public void paintComponent(Graphics g) {
 //    }
 
     String toString(){
-        return "${prefix}-${title}"
+        return prefix
+//        return "${prefix}-${title}"
     }
 
 //    Story getStory() {

@@ -7,15 +7,13 @@ import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.BoxLayout
 import javax.swing.JButton
-import javax.swing.JDesktopPane
 import javax.swing.JDialog
-import javax.swing.JFrame
 import javax.swing.JLabel
 import javax.swing.JOptionPane
 import javax.swing.JPanel
 import javax.swing.JTextField
 import java.awt.BorderLayout
-import java.awt.Dialog
+import java.awt.Point
 
 import static java.util.ResourceBundle.getBundle
 
@@ -89,7 +87,7 @@ class ImageDetailPanel extends JPanel{
 //        voteDialog.setContentPane(contentPanel)
 
         voteDialog.pack()
-        voteDialog.setLocation(getLocationOnScreen())
+        voteDialog.setLocation(new Point(0,0))
         voteDialog.visible = true
     }
 

@@ -3,13 +3,14 @@ package be.dafke.MediaViewer.Application.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 
 import javax.swing.JButton
+import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JTextField
 import java.awt.Dimension
 import java.awt.event.KeyEvent
 
 class VotePanel extends JPanel {
-    JButton delete, zeroStar, oneStar, twoStar, threeStar
+    JButton delete, zeroStar, oneStar, twoStar, threeStar, nextButton, previousButton
 
     Picture currentPicture
     int currentIndex
@@ -27,6 +28,8 @@ class VotePanel extends JPanel {
         oneStar = new JButton("1")
         twoStar = new JButton("2")
         threeStar = new JButton("3")
+        nextButton = new JButton("Next")
+        previousButton = new JButton("Previous")
 
         currentStars = new JTextField(2)
         currentStars.enabled = false
@@ -39,23 +42,31 @@ class VotePanel extends JPanel {
         // Cttl+3 : set stars = 3
 
         delete.addActionListener { e -> deletePicture() }
-        zeroStar.addActionListener { e -> showNext() }
+        zeroStar.addActionListener { e -> setVote(0) }
         oneStar.addActionListener { e -> setVote(1) }
         twoStar.addActionListener { e -> setVote(2) }
         threeStar.addActionListener { e -> setVote(3) }
+        nextButton.addActionListener { e -> showNext() }
+        previousButton.addActionListener { e -> showPrevious() }
 
         delete.setMnemonic(KeyEvent.VK_DELETE)
         zeroStar.setMnemonic(KeyEvent.VK_0)
         oneStar.setMnemonic(KeyEvent.VK_1)
         twoStar.setMnemonic(KeyEvent.VK_2)
         threeStar.setMnemonic(KeyEvent.VK_3)
+        nextButton.setMnemonic(KeyEvent.VK_RIGHT)
+        previousButton.setMnemonic(KeyEvent.VK_LEFT)
 
+        add new JLabel("Stars: ")
         add currentStars
+        add new JLabel("Set Stars: ")
         add threeStar
         add twoStar
         add oneStar
         add zeroStar
         add delete
+        add previousButton
+        add nextButton
 
         setCurrentPicture(pictures.get(0))
     }
@@ -89,7 +100,14 @@ class VotePanel extends JPanel {
         }
         currentPicture = pictures.get(currentIndex)
         setCurrentPicture(currentPicture)
-//            view.setPicture(currentPicture)
-//            currentStars.text = currentPicture.stars
+    }
+
+    void showPrevious(){
+        currentIndex--
+        if(currentIndex<0){
+            currentIndex = pictures.size() - 1
+        }
+        currentPicture = pictures.get(currentIndex)
+        setCurrentPicture(currentPicture)
     }
 }

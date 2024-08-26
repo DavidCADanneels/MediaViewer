@@ -12,40 +12,63 @@ import java.awt.event.KeyEvent
 class VotePanel extends JPanel {
     JButton delete, zeroStar, oneStar, twoStar, threeStar, nextButton, previousButton
 
+    boolean addVotes
     Picture currentPicture
     int currentIndex
     ImagePanel view
     List<Picture> pictures
+    int minimumLevel
 
-    JTextField currentStars
+    JTextField currentStars, initialStars
+    JLabel initialLabel, currentLabel, starsLabel
 
-    VotePanel(ImagePanel imagePanel, List<Picture> pictures) {
+    VotePanel(ImagePanel imagePanel, List<Picture> pictures, boolean addVotes, int minimumLevel) {
         view = imagePanel
-        this.pictures = pictures
+        this.addVotes = addVotes
+        this.minimumLevel = minimumLevel
+        this.pictures = pictures.findAll { Picture picture ->
+            picture.stars >= minimumLevel
+        }
 
+        currentStars = new JTextField(2)
+        currentStars.enabled = false
+
+        initialStars = new JTextField(2)
+        initialStars.enabled = false
+
+        initialLabel = new JLabel("Initial Stars: ")
+        currentLabel = new JLabel("Current Stars: ")
+
+        nextButton = new JButton("Next")
+        previousButton = new JButton("Previous")
         delete = new JButton("-1")
         zeroStar = new JButton("0")
         oneStar = new JButton("1")
         twoStar = new JButton("2")
         threeStar = new JButton("3")
-        nextButton = new JButton("Next")
-        previousButton = new JButton("Previous")
-
-        currentStars = new JTextField(2)
-        currentStars.enabled = false
-
-//        delete.getInputMap().put KeyStroke.getKeyStroke(KeyEvent.VK_0,KeyEvent.CTRL_DOWN_MASK), "delete"
-//        delete.getActionMap().put "delete", deletePicture()
-        // Ctrl+0 : set stars = -1 (do not include in any series)
-        // Cttl+1 : set stars = 1 (set or add? later)
-        // Cttl+2 : set stars = 2
-        // Cttl+3 : set stars = 3
-
-        delete.addActionListener { e -> deletePicture() }
-        zeroStar.addActionListener { e -> setVote(0) }
-        oneStar.addActionListener { e -> setVote(1) }
-        twoStar.addActionListener { e -> setVote(2) }
-        threeStar.addActionListener { e -> setVote(3) }
+        if(addVotes) {
+            starsLabel = new JLabel("Add Stars: ")
+            zeroStar = new JButton("0")
+            oneStar = new JButton("+1")
+            twoStar = new JButton("+2")
+            threeStar = new JButton("+3")
+            delete.addActionListener { e -> addVote(-1) }
+            zeroStar.addActionListener { e -> addVote(0) }
+            oneStar.addActionListener { e -> addVote(1) }
+            twoStar.addActionListener { e -> addVote(2) }
+            threeStar.addActionListener { e -> addVote(3) }
+        } else {
+            starsLabel = new JLabel("Set Stars: ")
+            zeroStar = new JButton("0")
+            oneStar = new JButton("1")
+            twoStar = new JButton("2")
+            threeStar = new JButton("3")
+            delete.addActionListener { e -> setVote(-1) }
+            zeroStar.addActionListener { e -> setVote(0) }
+            oneStar.addActionListener { e -> setVote(1) }
+            twoStar.addActionListener { e -> setVote(2) }
+            threeStar.addActionListener { e -> setVote(3) }
+        }
         nextButton.addActionListener { e -> showNext() }
         previousButton.addActionListener { e -> showPrevious() }
 
@@ -57,9 +80,14 @@ class VotePanel extends JPanel {
         nextButton.setMnemonic(KeyEvent.VK_RIGHT)
         previousButton.setMnemonic(KeyEvent.VK_LEFT)
 
-        add new JLabel("Stars: ")
-        add currentStars
-        add new JLabel("Set Stars: ")
+        if(addVotes) {
+            add initialLabel
+            add initialStars
+        } else {
+            add currentLabel
+            add currentStars
+        }
+        add starsLabel
         add threeStar
         add twoStar
         add oneStar
@@ -67,15 +95,23 @@ class VotePanel extends JPanel {
         add delete
         add previousButton
         add nextButton
-
-        setCurrentPicture(pictures.get(0))
+        if(addVotes) {
+            add currentLabel
+            add currentStars
+        }
+        setCurrentPicture(this.pictures.get(0))
     }
 
     void setCurrentPicture(Picture currentPicture) {
         this.currentPicture = currentPicture
         view.scrollPane.size = new Dimension(1200,800)
         view.setPicture(currentPicture)
-        currentStars.text = currentPicture.stars
+        if(addVotes){
+            initialStars.text = currentPicture.stars
+            currentStars.text = currentPicture.stars
+        } else {
+            currentStars.text = currentPicture.stars
+        }
     }
 
     void setVote(Integer nr){
@@ -85,11 +121,6 @@ class VotePanel extends JPanel {
 
     void addVote(Integer nr){
         currentPicture.stars += nr
-        showNext()
-    }
-
-    void deletePicture(){
-        currentPicture.stars = -1
         showNext()
     }
 

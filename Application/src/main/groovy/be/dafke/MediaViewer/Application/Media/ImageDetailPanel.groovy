@@ -25,7 +25,7 @@ class ImageDetailPanel extends JPanel{
     Story story
     List<Picture> pictures
     boolean singleSelection
-    JButton assignOwnerButton, assignIndexButton, assignChapterButton, addMediaButton, voteButton
+    JButton assignOwnerButton, assignIndexButton, assignChapterButton, addMediaButton, setVoteButton, addVoteButton
     MediaOverviewPanel mediaOverviewPanel
     static String singleTextOwner = "Assign Owner to Picture"
     static String multiTextOwner = "Assign Owner to Pictures"
@@ -56,25 +56,28 @@ class ImageDetailPanel extends JPanel{
         assignChapterButton = new JButton(singleTextChapter)
         assignChapterButton.addActionListener {e -> assignChapter() }
 
-        voteButton = new JButton("Vote !")
-        voteButton.addActionListener { e -> vote() }
+        setVoteButton = new JButton("Set (Initial) Star !")
+        setVoteButton.addActionListener { e -> vote(false) }
+        addVoteButton = new JButton("Add Stars !")
+        addVoteButton.addActionListener { e -> vote(true) }
 
         add line1
         add addMediaButton
         add assignOwnerButton
         add assignChapterButton
         add assignIndexButton
-        add voteButton
+        add setVoteButton
+        add addVoteButton
     }
 
-    void vote(){
+    void vote(boolean add){
         JDialog voteDialog = new JDialog()
         voteDialog.modal = true
         voteDialog.defaultCloseOperation = JDialog.DISPOSE_ON_CLOSE
 
         ImagePanel imagePanel = new ImagePanel()
         imagePanel.setStory(story)
-        VotePanel votePanel = new VotePanel(imagePanel, pictures)
+        VotePanel votePanel = new VotePanel(imagePanel, pictures, add, 0)
 
         // use: this
         imagePanel.add votePanel, BorderLayout.NORTH

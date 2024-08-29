@@ -97,9 +97,51 @@ class DateConverterPanel extends JPanel {
     }
 
     // use 'index' to calculate the rest
-    void calculate2(){
+    void calculate2() {
         // either chop of yyyy/MM/dd/hh/mm/ss
         // or use a 'template'
+        String text = index.text.trim()
+        calculateFromIndex(text)
+    }
+
+    static Calendar calculateFromIndex(String text){
+        Calendar now = Calendar.getInstance()
+        now.set(Calendar.MILLISECOND, 0)
+        if(text.size()>=8) {
+            String year = text.substring(0, 4)
+            String month = text.substring(4, 6)
+            String day = text.substring(6, 8)
+
+            try {
+                Integer yyyy = Integer.parseInt(year)
+                Integer MM = Integer.parseInt(month) - 1
+                Integer dd = Integer.parseInt(day)
+                now.set(Calendar.YEAR, yyyy)
+                now.set(Calendar.MONTH, MM)
+                now.set(Calendar.DAY_OF_MONTH, dd)
+            } catch (NumberFormatException nfe){
+                // do nothing
+                return null
+            }
+            if(text.size()>=15){
+                String hourOfDay = text.substring(9,11)
+                String minute = text.substring(11,13)
+                String second = text.substring(13,15)
+                try {
+                    Integer hh = Integer.parseInt(hourOfDay) - 1
+                    Integer mm = Integer.parseInt(minute)
+                    Integer ss = Integer.parseInt(second)
+                    now.set(Calendar.HOUR_OF_DAY, hh)
+                    now.set(Calendar.MINUTE, mm)
+                    now.set(Calendar.SECOND, ss)
+                    return now
+                } catch (NumberFormatException nfe){
+                    // do nothing
+                    return null
+                }
+            }
+        }
+        return null
     }
 
     // use 'ms since 1970' to calculate the rest

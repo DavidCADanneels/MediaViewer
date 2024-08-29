@@ -1,5 +1,6 @@
 package be.dafke.MediaViewer.Application.Media
 
+import be.dafke.MediaViewer.Application.DateUtils.DateConverterPanel
 import be.dafke.MediaViewer.Application.Main
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 import be.dafke.MediaViewer.ObjectModel.Stories.Chapter
@@ -25,7 +26,7 @@ class ImageDetailPanel extends JPanel{
     Story story
     List<Picture> pictures
     boolean singleSelection
-    JButton assignOwnerButton, assignIndexButton, assignChapterButton, addMediaButton, setVoteButton, addVoteButton
+    JButton assignOwnerButton, assignIndexButton, assignChapterButton, addMediaButton, setVoteButton, addVoteButton, setDateButton
     MediaOverviewPanel mediaOverviewPanel
     static String singleTextOwner = "Assign Owner to Picture"
     static String multiTextOwner = "Assign Owner to Pictures"
@@ -61,6 +62,17 @@ class ImageDetailPanel extends JPanel{
         addVoteButton = new JButton("Add Stars !")
         addVoteButton.addActionListener { e -> vote(true) }
 
+        setDateButton = new JButton("Correct Date")
+        setDateButton.addActionListener { e ->
+            pictures.each { Picture p ->
+                String trimmed = p.fileName - 'IMG_'
+                Calendar cal = DateConverterPanel.calculateFromIndex(trimmed)
+                if(cal) {
+                    p.creationDate = cal.time
+                }
+            }
+        }
+
         add line1
         add addMediaButton
         add assignOwnerButton
@@ -68,6 +80,7 @@ class ImageDetailPanel extends JPanel{
         add assignIndexButton
         add setVoteButton
         add addVoteButton
+        add setDateButton
     }
 
     void vote(boolean add){

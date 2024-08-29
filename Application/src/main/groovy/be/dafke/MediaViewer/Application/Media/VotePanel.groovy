@@ -3,6 +3,7 @@ package be.dafke.MediaViewer.Application.Media
 import be.dafke.MediaViewer.ObjectModel.Media.Picture
 
 import javax.swing.JButton
+import javax.swing.JCheckBox
 import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JTextField
@@ -12,23 +13,27 @@ import java.awt.event.KeyEvent
 class VotePanel extends JPanel {
     JButton delete, zeroStar, oneStar, twoStar, threeStar, nextButton, previousButton
 
-    boolean addVotes
+    boolean addVotes, nextOnVote
     Picture currentPicture
     int currentIndex
     ImagePanel view
     List<Picture> pictures
-    int minimumLevel
+    Integer minimumLevel, totalNr, selectedNr
+    JCheckBox nextOnVoteCheckBox
 
-    JTextField currentStars, initialStars
-    JLabel initialLabel, currentLabel, starsLabel
+    JTextField currentStars, initialStars, minimumStars
+    JLabel initialLabel, currentLabel, starsLabel, selectionLabel, pictureLabel
 
-    VotePanel(ImagePanel imagePanel, List<Picture> pictures, boolean addVotes, int minimumLevel) {
+    VotePanel(ImagePanel imagePanel, List<Picture> pictures, boolean addVotes, Integer minimumLevel) {
         view = imagePanel
+        nextOnVote = true
         this.addVotes = addVotes
         this.minimumLevel = minimumLevel
+        totalNr = pictures.size()
         this.pictures = pictures.findAll { Picture picture ->
             picture.stars >= minimumLevel
         }
+        selectedNr = this.pictures.size()
 
         currentStars = new JTextField(2)
         currentStars.enabled = false
@@ -80,6 +85,32 @@ class VotePanel extends JPanel {
         nextButton.setMnemonic(KeyEvent.VK_RIGHT)
         previousButton.setMnemonic(KeyEvent.VK_LEFT)
 
+        nextOnVoteCheckBox = new JCheckBox()
+        nextOnVoteCheckBox.setSelected(true)
+        nextOnVoteCheckBox.addActionListener { e -> nextOnVote = nextOnVoteCheckBox.selected }
+
+        minimumStars = new JTextField(2)
+        minimumStars.text = minimumLevel.toString()
+        minimumStars.enabled = addVotes
+        minimumStars.addActionListener { e ->
+            try {
+                this.minimumLevel = Integer.parseInt(minimumStars.text.trim())
+                this.pictures = pictures.findAll { Picture picture ->
+                    picture.stars >= this.minimumLevel
+                }
+                selectedNr = this.pictures.size()
+                selectionLabel.text = "(${selectedNr}/${totalNr})"
+                setCurrentPicture(this.pictures[0])
+                pictureLabel.text = "(0/${selectedNr})"
+            } catch (NumberFormatException nfe) {
+            }
+        }
+        selectionLabel = new JLabel("(${selectedNr}/${totalNr})")
+        pictureLabel = new JLabel("(0/${selectedNr})")
+
+        add new JLabel("Minimum stars")
+        add minimumStars
+        add selectionLabel
         if(addVotes) {
             add initialLabel
             add initialStars
@@ -87,12 +118,14 @@ class VotePanel extends JPanel {
             add currentLabel
             add currentStars
         }
+        add pictureLabel
         add starsLabel
         add threeStar
         add twoStar
         add oneStar
         add zeroStar
         add delete
+        add nextOnVoteCheckBox
         add previousButton
         add nextButton
         if(addVotes) {
@@ -116,12 +149,16 @@ class VotePanel extends JPanel {
 
     void setVote(Integer nr){
         currentPicture.stars = nr
-        showNext()
+        if(nextOnVote) {
+            showNext()
+        }
     }
 
     void addVote(Integer nr){
         currentPicture.stars += nr
-        showNext()
+        if(nextOnVote) {
+            showNext()
+        }
     }
 
     void showNext(){
@@ -131,6 +168,7 @@ class VotePanel extends JPanel {
         }
         currentPicture = pictures.get(currentIndex)
         setCurrentPicture(currentPicture)
+        pictureLabel.text = "(${currentIndex}/${selectedNr})"
     }
 
     void showPrevious(){
@@ -140,5 +178,6 @@ class VotePanel extends JPanel {
         }
         currentPicture = pictures.get(currentIndex)
         setCurrentPicture(currentPicture)
+        pictureLabel.text = "(${currentIndex}/${selectedNr})"
     }
 }

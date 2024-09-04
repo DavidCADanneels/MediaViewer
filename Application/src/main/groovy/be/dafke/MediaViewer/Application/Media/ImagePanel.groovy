@@ -170,16 +170,20 @@ class ImagePanel extends JPanel{
             ImageIcon imageIcon
             if (fullSize) {
                 imageIcon = new ImageIcon(bufferedImage)
+                label.setIcon(imageIcon)
             } else {
                 Dimension available = scrollPane.getSize()
                 Dimension oldDimension = new Dimension(picture.getWidth(), picture.getHeight())
                 Dimension newDimension = rescale(oldDimension, available)
-                if (bufferedImage) {
-                    Image image = bufferedImage.getScaledInstance(newDimension.getWidth().intValue(), newDimension.getHeight().intValue(), Image.SCALE_SMOOTH)
+                int width = newDimension.getWidth().intValue()
+                int height = newDimension.getHeight().intValue()
+                if (bufferedImage && width != 0 && height != 0) {
+                    Image image = bufferedImage.getScaledInstance(width, height, Image.SCALE_SMOOTH)
                     imageIcon = new ImageIcon(image)
+                    label.setIcon(imageIcon)
                 }
             }
-            label.setIcon(imageIcon)
+//            label.setIcon(imageIcon)
             repaint()
         }
     }

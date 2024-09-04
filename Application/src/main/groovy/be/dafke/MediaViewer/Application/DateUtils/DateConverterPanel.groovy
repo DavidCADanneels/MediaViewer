@@ -128,7 +128,7 @@ class DateConverterPanel extends JPanel {
                 String minute = text.substring(11,13)
                 String second = text.substring(13,15)
                 try {
-                    Integer hh = Integer.parseInt(hourOfDay) - 1
+                    Integer hh = Integer.parseInt(hourOfDay)
                     Integer mm = Integer.parseInt(minute)
                     Integer ss = Integer.parseInt(second)
                     now.set(Calendar.HOUR_OF_DAY, hh)

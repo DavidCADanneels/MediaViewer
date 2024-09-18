@@ -19,9 +19,6 @@ import java.awt.Point
 import static java.util.ResourceBundle.getBundle
 
 class ImageDetailPanel extends JPanel{
-    JTextField sizeField, labelsField
-    JLabel sizeLabel
-    JPanel line1
     Picture picture
     Story story
     List<Picture> pictures
@@ -41,13 +38,6 @@ class ImageDetailPanel extends JPanel{
         this.imageTablePanel = imageTablePanel
 //        this.mediaOverviewPanel = mediaOverviewPanel
         setLayout new BoxLayout(this, BoxLayout.Y_AXIS)
-
-        sizeField = new JTextField(20)
-        sizeField.setEnabled false
-        line1 = new JPanel()
-        sizeLabel = new JLabel("Size:")
-        line1.add sizeLabel
-        line1.add sizeField
 
         addMediaButton = new JButton(getBundle("MediaViewer").getString("ADD_PHOTO_BUTTON"))
         addMediaButton.addActionListener { e -> loadData() }
@@ -76,9 +66,6 @@ class ImageDetailPanel extends JPanel{
             }
         }
 
-        labelsField = new JTextField(20)
-        labelsField.enabled = false
-
         addLabelButton = new JButton('Add label')
         addLabelButton.addActionListener { e ->
             pictures.each { Picture p ->
@@ -101,16 +88,10 @@ class ImageDetailPanel extends JPanel{
             }
         }
 
-        JPanel line2 = new JPanel()
-        line2.add new JLabel('Labels:')
-        line2.add labelsField
-
         JPanel line3 = new JPanel()
         line3.add addLabelButton
         line3.add createLabelButton
 
-        add line1
-        add line2
         add line3
         add addMediaButton
         add assignOwnerButton
@@ -234,18 +215,10 @@ class ImageDetailPanel extends JPanel{
 
     void setPicture(Picture picture){
         this.picture = picture
-        if(picture) {
-            sizeField.text = "${picture.getWidth()} x ${picture.getHeight()}"
-            labelsField.text = "${picture.labels.toString()}"
-        } else {
-            sizeField.text = ''
-            labelsField.text = ''
-        }
     }
 
     void setSingleSelection(boolean singleSelection) {
         this.singleSelection = singleSelection
-        line1.setVisible(singleSelection)
         if(singleSelection){
             assignOwnerButton.setText(singleTextOwner)
             assignIndexButton.setText(singleTextIndex)

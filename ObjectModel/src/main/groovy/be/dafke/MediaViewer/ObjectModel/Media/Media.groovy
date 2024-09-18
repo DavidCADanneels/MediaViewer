@@ -8,9 +8,18 @@ abstract class Media {
     Date creationDate
     Integer owner
     String indexNumber
+    List<String> labels = []
     // FIXME: Use Chapter iso String
 //    Chapter chapter
     String chapter
+
+    List<String> getLabels() {
+        return labels
+    }
+
+    void setLabels(List<String> labels) {
+        this.labels = labels
+    }
 
     String getChapter() {
         return chapter

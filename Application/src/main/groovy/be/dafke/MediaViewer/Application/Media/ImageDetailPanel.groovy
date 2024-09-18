@@ -19,15 +19,17 @@ import java.awt.Point
 import static java.util.ResourceBundle.getBundle
 
 class ImageDetailPanel extends JPanel{
-    JTextField sizeField
+    JTextField sizeField, labelsField
     JLabel sizeLabel
     JPanel line1
     Picture picture
     Story story
     List<Picture> pictures
     boolean singleSelection
-    JButton assignOwnerButton, assignIndexButton, assignChapterButton, addMediaButton, setVoteButton, addVoteButton, setDateButton
-    MediaOverviewPanel mediaOverviewPanel
+    JButton assignOwnerButton, assignIndexButton, assignChapterButton
+    JButton addMediaButton, setVoteButton, addVoteButton, setDateButton
+    JButton addLabelButton, createLabelButton
+    ImageTablePanel imageTablePanel
     static String singleTextOwner = "Assign Owner to Picture"
     static String multiTextOwner = "Assign Owner to Pictures"
     static String singleTextIndex = "Assign Index to Picture"
@@ -35,8 +37,9 @@ class ImageDetailPanel extends JPanel{
     static String singleTextChapter = "Assign Chapter to Picture"
     static String multiTextChapter = "Assign Chapter to Pictures"
 
-    ImageDetailPanel(MediaOverviewPanel mediaOverviewPanel) {
-        this.mediaOverviewPanel = mediaOverviewPanel
+    ImageDetailPanel(ImageTablePanel imageTablePanel) {
+        this.imageTablePanel = imageTablePanel
+//        this.mediaOverviewPanel = mediaOverviewPanel
         setLayout new BoxLayout(this, BoxLayout.Y_AXIS)
 
         sizeField = new JTextField(20)
@@ -73,7 +76,42 @@ class ImageDetailPanel extends JPanel{
             }
         }
 
+        labelsField = new JTextField(20)
+        labelsField.enabled = false
+
+        addLabelButton = new JButton('Add label')
+        addLabelButton.addActionListener { e ->
+            pictures.each { Picture p ->
+                Object [] labels = story.labels.toArray()
+                int nr = JOptionPane.showOptionDialog(this, "Select Label", "Assign Label",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                        labels, null)
+                if(nr != -1){
+                    String label = labels[nr]
+                    p.labels.add(label)
+                }
+            }
+        }
+
+        createLabelButton = new JButton('Create new label')
+        createLabelButton.addActionListener { e ->
+            String response = JOptionPane.showInputDialog('New label')
+            if(response && response.trim() != '') {
+                story.labels.add response.trim()
+            }
+        }
+
+        JPanel line2 = new JPanel()
+        line2.add new JLabel('Labels:')
+        line2.add labelsField
+
+        JPanel line3 = new JPanel()
+        line3.add addLabelButton
+        line3.add createLabelButton
+
         add line1
+        add line2
+        add line3
         add addMediaButton
         add assignOwnerButton
         add assignChapterButton
@@ -168,7 +206,7 @@ class ImageDetailPanel extends JPanel{
                 // pictures.each { it.setOwner(nr) }
                 Main.setOwners(pictures,nr)
             }
-            mediaOverviewPanel.imageTablePanel.dataModel.fireTableDataChanged()
+            imageTablePanel.dataModel.fireTableDataChanged()
         }
     }
 
@@ -182,7 +220,7 @@ class ImageDetailPanel extends JPanel{
                     picture.setIndexNumber(reply)
                 }
             }
-            mediaOverviewPanel.imageTablePanel.dataModel.fireTableDataChanged()
+            imageTablePanel.dataModel.fireTableDataChanged()
         }
     }
 
@@ -197,9 +235,11 @@ class ImageDetailPanel extends JPanel{
     void setPicture(Picture picture){
         this.picture = picture
         if(picture) {
-            sizeField.setText "${picture.getWidth()} x ${picture.getHeight()}"
+            sizeField.text = "${picture.getWidth()} x ${picture.getHeight()}"
+            labelsField.text = "${picture.labels.toString()}"
         } else {
-            sizeField.setText ''
+            sizeField.text = ''
+            labelsField.text = ''
         }
     }
 

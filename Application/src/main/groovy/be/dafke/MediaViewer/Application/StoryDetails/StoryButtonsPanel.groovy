@@ -9,7 +9,8 @@ import javax.swing.JPanel
 import static java.util.ResourceBundle.getBundle
 
 class StoryButtonsPanel extends JPanel {
-    JButton picturesPerChapterButton, textPerChapterButton, participantButton, mediaButton, backToStoryOverViewButton, backToStoryDetailsButton
+    JButton picturesPerChapterButton, textPerChapterButton, participantButton, mediaButton
+    JButton backToStoryOverViewButton, backToStoryDetailsButton
 
     Story story
 

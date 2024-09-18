@@ -20,10 +20,10 @@ class MediaOverviewPanel extends JPanel {
     MediaOverviewPanel() {
         setLayout(new BorderLayout())
 
-        imageDetailPanel = new ImageDetailPanel(this)
+        imageTablePanel = new ImageTablePanel(this)
+        imageDetailPanel = new ImageDetailPanel(imageTablePanel)
         imageShowOptionsPanel = new ImageShowOptionsPanel(this)
         imagePanel = new ImagePanel() // dependency only needed to include in Layout
-        imageTablePanel = new ImageTablePanel(this)
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT)
         splitPane.add imageTablePanel, JSplitPane.TOP

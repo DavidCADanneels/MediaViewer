@@ -14,6 +14,7 @@ class Story {
     List<Picture> pictures
     List<Text> textFragments
     List<MediaBox> mediaBoxes
+    List<String> labels
     File projectFolder
 
     Story() {
@@ -22,6 +23,15 @@ class Story {
         persons = []
         textFragments = []
         mediaBoxes = []
+        labels = []
+    }
+
+    List<String> getLabels() {
+        return labels
+    }
+
+    void setLabels(List<String> labels) {
+        this.labels = labels
     }
 
     List<Text> getTextFragments() {

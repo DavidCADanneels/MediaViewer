@@ -20,6 +20,7 @@ class MediaRowSorter extends TableRowSorter {
                 column == PictureOverviewDataModel.OWNER_COL ||
                 column == PictureOverviewDataModel.CHAPTER_COL ||
                 column == PictureOverviewDataModel.STARS_COL ||
+                column == PictureOverviewDataModel.LABELS_COL ||
                 column == PictureOverviewDataModel.INDEX_COL
     }
 }

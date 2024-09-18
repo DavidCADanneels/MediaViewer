@@ -19,10 +19,11 @@ class PictureOverviewDataModel extends AbstractTableModel {
     static int INDEX_COL = 5
     static int CHAPTER_COL = 6
     static int STARS_COL = 7
-    static int NR_OF_COL = 8
-    static int FILE_NAME_COL = 8
-    static int EXTENSION_COL = 9
-//    static int FULL_PATH_COL = 10
+    static int LABELS_COL = 8
+    static int NR_OF_COL = 9
+    static int FILE_NAME_COL = 10
+    static int EXTENSION_COL = 11
+//    static int FULL_PATH_COL = 12
 
     HashMap<Integer,String> columnNames = [:]
     HashMap<Integer,Class> columnClasses = [:]
@@ -38,6 +39,7 @@ class PictureOverviewDataModel extends AbstractTableModel {
         columnClasses.put(INDEX_COL, String.class)
         columnClasses.put(CHAPTER_COL, String.class)
         columnClasses.put(STARS_COL, Integer.class)
+        columnClasses.put(LABELS_COL, String.class)
         columnClasses.put(SIZE_COL, String.class)
         columnClasses.put(CREATION_DATE_COL, Date.class)
         columnClasses.put(CREATION_TIME_COL, String.class)
@@ -52,6 +54,7 @@ class PictureOverviewDataModel extends AbstractTableModel {
         columnNames.put(SIZE_COL, getBundle("MediaViewer").getString("IMAGE_SIZE"))
         columnNames.put(CHAPTER_COL, getBundle("MediaViewer").getString("CHAPTER"))
         columnNames.put(STARS_COL, getBundle("MediaViewer").getString("STARS"))
+        columnNames.put(LABELS_COL, getBundle("MediaViewer").getString("LABELS"))
         columnNames.put(CREATION_DATE_COL, getBundle("MediaViewer").getString("CREATION_DATE"))
         columnNames.put(CREATION_TIME_COL, getBundle("MediaViewer").getString("CREATION_TIME"))
         columnNames.put(OWNER_COL, getBundle("MediaViewer").getString("OWNER"))
@@ -128,6 +131,8 @@ class PictureOverviewDataModel extends AbstractTableModel {
                 return picture.extension
             } else if (columnIndex == INDEX_COL) {
                 return picture.indexNumber
+            } else if (columnIndex == LABELS_COL) {
+                return picture.labels.toString()
             } else if (columnIndex == STARS_COL) {
                 return picture.stars
             } else if (columnIndex == CHAPTER_COL) {

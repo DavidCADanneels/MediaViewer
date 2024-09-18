@@ -4,7 +4,7 @@ class MediaBox {
     int nr
     String name
     List<Media> content
-    Media typeOfContent
+//    Media typeOfContent
 
     MediaBox(int nr) {
         this.nr = nr
@@ -30,11 +30,19 @@ class MediaBox {
         this.content = content
     }
 
-    Media getTypeOfContent() {
-        return typeOfContent
+//    Media getTypeOfContent() {
+//        return typeOfContent
+//    }
+//
+//    void setTypeOfContent(Media typeOfContent) {
+//        this.typeOfContent = typeOfContent
+//    }
+
+    String getName() {
+        return name
     }
 
-    void setTypeOfContent(Media typeOfContent) {
-        this.typeOfContent = typeOfContent
+    void setName(String name) {
+        this.name = name
     }
 }

@@ -1,5 +1,6 @@
 package be.dafke.MediaViewer.Application
 
+import be.dafke.MediaViewer.Application.Boxes.BoxesOverviewPanel
 import be.dafke.MediaViewer.Application.Chapter.ChaptersPicturesOverviewPanel
 import be.dafke.MediaViewer.Application.Chapter.ChaptersTextOverviewPanel
 import be.dafke.MediaViewer.Application.Media.MediaOverviewPanel
@@ -32,6 +33,7 @@ class Main {
     static ParticipantsOverviewPanel participantsOverviewPanel
     static ChaptersPicturesOverviewPanel chaptersPicturesOverviewPanel
     static ChaptersTextOverviewPanel chaptersTextOverviewPanel
+    static BoxesOverviewPanel boxesOverviewPanel
     static CardLayout cardLayoutCenter
     static JFrame frame
 
@@ -194,8 +196,8 @@ class Main {
         participantsOverviewPanel = new ParticipantsOverviewPanel()
         center.add participantsOverviewPanel, VIEW_PARTICIPANTS_FOR_STORY
 
-        JPanel panel = new JPanel()
-        center.add panel, VIEW_MEDIABOXES_FOR_STORY
+        boxesOverviewPanel = new BoxesOverviewPanel()
+        center.add boxesOverviewPanel, VIEW_MEDIABOXES_FOR_STORY
     }
 
     static JMenuBar createMenuBar(){

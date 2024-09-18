@@ -118,6 +118,7 @@ class Main {
         participantsOverviewPanel.setStory(story)
         chaptersPicturesOverviewPanel.setStory(story)
         chaptersTextOverviewPanel.setStory(story)
+        boxesOverviewPanel.setStory(story)
         mediaOverviewPanel.setStory(story)
         storyDetailsPanel.setStory(story)
     }

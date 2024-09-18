@@ -1,6 +1,7 @@
 package be.dafke.MediaViewer.Application.Boxes
 
 import be.dafke.MediaViewer.ObjectModel.Media.MediaBox
+import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.table.DefaultTableModel
 
@@ -22,6 +23,15 @@ class BoxesOverviewDataModel extends DefaultTableModel {
         columnClasses.put(NAME_COL, String.class)
         columnNames.put(NR_COL, getBundle("MediaViewer").getString("BOX_NUMBER"))
         columnNames.put(NAME_COL, getBundle("MediaViewer").getString("BOX_NAME"))
+    }
+
+    void setMediaBoxes(List<MediaBox> mediaBoxes) {
+        this.mediaBoxes = mediaBoxes
+        fireTableDataChanged()
+    }
+
+    MediaBox getObject(int row){
+        return mediaBoxes.get(row)
     }
 
     @Override

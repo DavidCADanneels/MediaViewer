@@ -1,11 +1,11 @@
 package be.dafke.MediaViewer.Application.Boxes
 
+import be.dafke.MediaViewer.ObjectModel.Media.Book
 import be.dafke.MediaViewer.ObjectModel.Media.Media
 import be.dafke.MediaViewer.ObjectModel.Media.MediaBox
 
 import javax.swing.table.DefaultTableModel
 
-import static java.util.ResourceBundle.getBundle
 import static java.util.ResourceBundle.getBundle
 
 class BoxContentDataModel extends DefaultTableModel {
@@ -24,6 +24,15 @@ class BoxContentDataModel extends DefaultTableModel {
         columnClasses.put(AUTHOR_COL, String.class)
         columnNames.put(TITLE_COL, getBundle("MediaViewer").getString("MEDIA_TITLE"))
         columnNames.put(AUTHOR_COL, getBundle("MediaViewer").getString("MEDIA_AUTHOR"))
+    }
+
+    void setMediaBox(MediaBox mediaBox){
+        content = mediaBox.content
+        fireTableDataChanged()
+    }
+
+    Media getObject(int row){
+        return content.get(row)
     }
 
     @Override
@@ -48,16 +57,33 @@ class BoxContentDataModel extends DefaultTableModel {
 
     @Override
     boolean isCellEditable(int rowIndex, int columnIndex) {
-        return true
+        return true //columnIndex == TITLE_COL
     }
 
     @Override
     Object getValueAt(int rowIndex, int columnIndex) {
-
+        Media media = content.get(rowIndex)
+        if(media instanceof Book){
+            Book book = (Book)media
+            if(columnIndex == TITLE_COL){
+                return book.title
+            } else if(columnIndex == AUTHOR_COL){
+                return book.author
+            }
+        }
+        return null
     }
 
     @Override
     void setValueAt(Object value, int rowIndex, int columnIndex) {
-
+        Media media = content.get(rowIndex)
+        if(media instanceof Book){
+            Book book = (Book)media
+            if(columnIndex == TITLE_COL){
+                book.title = value
+            } else if(columnIndex == AUTHOR_COL){
+                book.author = value
+            }
+        }
     }
 }

@@ -3,16 +3,16 @@ package be.dafke.MediaViewer.ObjectModel.Media
 class MediaBox {
     int nr
     String name
-    List<Media> content
+    List<Book> content
 //    Media typeOfContent
 
-    MediaBox(int nr) {
-        this.nr = nr
+    MediaBox() {
+        content = []
     }
 
-    void addMedia(Media media){
-        content.add media
-    }
+//    void addMedia(Book book){
+//        content.add book
+//    }
 
     int getNr() {
         return nr
@@ -22,11 +22,11 @@ class MediaBox {
         this.nr = nr
     }
 
-    List<Media> getContent() {
+    List<Book> getContent() {
         return content
     }
 
-    void setContent(List<Media> content) {
+    void setContent(List<Book> content) {
         this.content = content
     }
 

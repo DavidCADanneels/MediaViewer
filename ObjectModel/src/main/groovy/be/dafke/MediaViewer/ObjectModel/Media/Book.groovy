@@ -4,12 +4,11 @@ import be.dafke.MediaViewer.ObjectModel.People.Author
 
 class Book extends Media {
     String title
-    List<Author> authors
+    String author
     int nrOfPages
     int boxNr
 
-    Book(String title) {
-        this.title = title
+    Book() {
     }
 
     String getTitle() {
@@ -20,16 +19,12 @@ class Book extends Media {
         this.title = title
     }
 
-    List<Author> getAuthors() {
-        return authors
+    String getAuthor() {
+        return author
     }
 
-    void addAuthor(Author author){
-        authors.add author
-    }
-
-    void setAuthors(List<Author> authors) {
-        this.authors = authors
+    void setAuthor(String author) {
+        this.author = author
     }
 
     int getNrOfPages() {

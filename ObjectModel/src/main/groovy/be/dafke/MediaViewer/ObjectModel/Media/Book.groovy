@@ -6,6 +6,7 @@ class Book extends Media {
     String title
     List<Author> authors
     int nrOfPages
+    int boxNr
 
     Book(String title) {
         this.title = title
@@ -37,5 +38,13 @@ class Book extends Media {
 
     void setNrOfPages(int nrOfPages) {
         this.nrOfPages = nrOfPages
+    }
+
+    int getBoxNr() {
+        return boxNr
+    }
+
+    void setBoxNr(int boxNr) {
+        this.boxNr = boxNr
     }
 }

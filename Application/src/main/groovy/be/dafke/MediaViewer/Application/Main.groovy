@@ -41,6 +41,7 @@ class Main {
     static final String VIEW_TEXT_PER_CHAPTER = 'TEXT_CHAPTERS'
     static final String VIEW_ALL_PICTURES_FOR_STORY = 'ALL_MEDIA'
     static final String VIEW_PARTICIPANTS_FOR_STORY = 'PARTICIPANTS'
+    static final String VIEW_MEDIABOXES_FOR_STORY = 'MEDIABOXES'
 
     static HashMap<Story, File> storyMap
     // TODO: use allStories.allStories iso static Main.storyMap
@@ -192,6 +193,9 @@ class Main {
 
         participantsOverviewPanel = new ParticipantsOverviewPanel()
         center.add participantsOverviewPanel, VIEW_PARTICIPANTS_FOR_STORY
+
+        JPanel panel = new JPanel()
+        center.add panel, VIEW_MEDIABOXES_FOR_STORY
     }
 
     static JMenuBar createMenuBar(){
@@ -263,6 +267,8 @@ class Main {
             storyButtonsPanel.mediaButton.enabled = false
         } else if (view == VIEW_PARTICIPANTS_FOR_STORY){
             storyButtonsPanel.participantButton.enabled = false
+        } else if (view == VIEW_MEDIABOXES_FOR_STORY){
+            storyButtonsPanel.mediaPerBoxButton.enabled = false
         }
         cardLayoutCenter.show(center, view)
         String title = getBundle("MediaViewer").getString(view)

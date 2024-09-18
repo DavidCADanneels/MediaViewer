@@ -9,7 +9,7 @@ import javax.swing.JPanel
 import static java.util.ResourceBundle.getBundle
 
 class StoryButtonsPanel extends JPanel {
-    JButton picturesPerChapterButton, textPerChapterButton, participantButton, mediaButton
+    JButton picturesPerChapterButton, textPerChapterButton, participantButton, mediaButton, mediaPerBoxButton
     JButton backToStoryOverViewButton, backToStoryDetailsButton
 
     Story story
@@ -47,6 +47,11 @@ class StoryButtonsPanel extends JPanel {
             }
         }
 
+        mediaPerBoxButton = new JButton(getBundle("MediaViewer").getString("SHOW_MEDIA_PER_BOX"))
+        mediaPerBoxButton.addActionListener { e ->
+            Main.switchView(Main.VIEW_MEDIABOXES_FOR_STORY)
+        }
+
         mediaButton = new JButton(getBundle("MediaViewer").getString("SHOW_MEDIA_FOR_STORY"))
         mediaButton.addActionListener { e ->
             Main.switchView(Main.VIEW_ALL_PICTURES_FOR_STORY)
@@ -66,6 +71,7 @@ class StoryButtonsPanel extends JPanel {
         add backToStoryDetailsButton
         add picturesPerChapterButton
         add textPerChapterButton
+        add mediaPerBoxButton
         add participantButton
         add mediaButton
     }
@@ -75,6 +81,7 @@ class StoryButtonsPanel extends JPanel {
         textPerChapterButton.enabled = story!=null
         participantButton.enabled = story!=null
         mediaButton.enabled = story!=null
+        mediaPerBoxButton.enabled = story!=null
         backToStoryOverViewButton.enabled = true
         backToStoryDetailsButton.enabled = story!=null
     }
@@ -84,6 +91,7 @@ class StoryButtonsPanel extends JPanel {
         textPerChapterButton.enabled = false
         participantButton.enabled = false
         mediaButton.enabled = false
+        mediaPerBoxButton.enabled = false
         backToStoryOverViewButton.enabled = true
         backToStoryDetailsButton.enabled = story!=null
     }

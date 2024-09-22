@@ -1,8 +1,10 @@
 package be.dafke.MediaViewer.Application.Boxes
 
 import be.dafke.MediaViewer.ObjectModel.Media.Book
-import be.dafke.MediaViewer.ObjectModel.Media.Media
+import be.dafke.MediaViewer.ObjectModel.Media.CD
+import be.dafke.MediaViewer.ObjectModel.Media.DVD
 import be.dafke.MediaViewer.ObjectModel.Media.MediaBox
+import be.dafke.MediaViewer.ObjectModel.Media.VHS
 import be.dafke.MediaViewer.ObjectModel.Stories.Story
 
 import javax.swing.BoxLayout
@@ -32,14 +34,27 @@ class BoxesOverviewPanel extends JPanel {
 
         JPanel east = new JPanel()
         east.setLayout(new BoxLayout(east, BoxLayout.Y_AXIS))
+
         JButton addBoxButton = new JButton('Add box')
         addBoxButton.addActionListener { e -> addBox() }
+
         JButton addBookButton = new JButton('Add book to box')
         addBookButton.addActionListener { e -> addBook() }
-//        JButton addAuthorButton = new JButton('Add author')
-//        addAuthorButton.addActionListener { e -> addAuthor() }
+
+        JButton addCdButton = new JButton('Add CD to box')
+        addCdButton.addActionListener { e -> addCd() }
+
+        JButton addDvdButton = new JButton('Add DVD to box')
+        addDvdButton.addActionListener { e -> addDvd() }
+
+        JButton addVhsButton = new JButton('Add VHS to box')
+        addVhsButton.addActionListener { e -> addVhs() }
+
         east.add addBoxButton
         east.add addBookButton
+        east.add addCdButton
+        east.add addDvdButton
+        east.add addVhsButton
 
         add east, BorderLayout.EAST
     }
@@ -68,19 +83,57 @@ class BoxesOverviewPanel extends JPanel {
         String title = JOptionPane.showInputDialog("Give Title")
         Book book = new Book()
         book.title = title
+        String author = JOptionPane.showInputDialog("Give Author")
+        book.author = author
         MediaBox mediaBox = boxesOverviewTablePanel.getSingleSelectedMediaBox()
         if(mediaBox) {
-            mediaBox.content.add book
+            mediaBox.books.add book
             book.boxNr = mediaBox.nr
+            boxContentTablePanel.boxContentDataModel.fireTableDataChanged()
         }
     }
 
-//    void addAuthor(){
-//        Media media = boxContentTablePanel.getSelectedMedia()
-//        if(media instanceof Book){
-//            Book book = (Book)media
-//            book.author = JOptionPane.showInputDialog("Give Author")
-////            book.addAuthor(author)
-//        }
-//    }
+
+    void addCd(){
+        String title = JOptionPane.showInputDialog("Give Album Title")
+        CD cd = new CD()
+        cd.albumTitle = title
+        String author = JOptionPane.showInputDialog("Give Artist")
+        cd.artist = author
+        MediaBox mediaBox = boxesOverviewTablePanel.getSingleSelectedMediaBox()
+        if(mediaBox) {
+            mediaBox.cds.add cd
+            cd.boxNr = mediaBox.nr
+//            boxesOverviewTablePanel.dataModel.fireTableDataChanged()
+            boxContentTablePanel.boxContentDataModel.fireTableDataChanged()
+        }
+    }
+
+    void addDvd(){
+        String title = JOptionPane.showInputDialog("Give Title")
+        DVD dvd = new DVD()
+        dvd.title = title
+        String author = JOptionPane.showInputDialog("Give Author")
+        dvd.author = author
+        MediaBox mediaBox = boxesOverviewTablePanel.getSingleSelectedMediaBox()
+        if(mediaBox) {
+            mediaBox.dvds.add dvd
+            dvd.boxNr = mediaBox.nr
+            boxContentTablePanel.boxContentDataModel.fireTableDataChanged()
+        }
+    }
+
+    void addVhs(){
+        String title = JOptionPane.showInputDialog("Give Title")
+        VHS vhs = new VHS()
+        vhs.title = title
+        String author = JOptionPane.showInputDialog("Give Author")
+        vhs.author = author
+        MediaBox mediaBox = boxesOverviewTablePanel.getSingleSelectedMediaBox()
+        if(mediaBox) {
+            mediaBox.vhss.add vhs
+            vhs.boxNr = mediaBox.nr
+            boxContentTablePanel.boxContentDataModel.fireTableDataChanged()
+        }
+    }
 }

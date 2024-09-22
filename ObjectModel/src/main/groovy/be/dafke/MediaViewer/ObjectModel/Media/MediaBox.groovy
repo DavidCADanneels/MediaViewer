@@ -3,16 +3,17 @@ package be.dafke.MediaViewer.ObjectModel.Media
 class MediaBox {
     int nr
     String name
-    List<Book> content
-//    Media typeOfContent
+    List<Book> books
+    List<CD> cds
+    List<DVD> dvds
+    List<VHS> vhss
 
     MediaBox() {
-        content = []
+        books = []
+        cds = []
+        dvds = []
+        vhss = []
     }
-
-//    void addMedia(Book book){
-//        content.add book
-//    }
 
     int getNr() {
         return nr
@@ -22,21 +23,37 @@ class MediaBox {
         this.nr = nr
     }
 
-    List<Book> getContent() {
-        return content
+    List<Book> getBooks() {
+        return books
     }
 
-    void setContent(List<Book> content) {
-        this.content = content
+    void setBooks(List<Book> content) {
+        this.books = content
     }
 
-//    Media getTypeOfContent() {
-//        return typeOfContent
-//    }
-//
-//    void setTypeOfContent(Media typeOfContent) {
-//        this.typeOfContent = typeOfContent
-//    }
+    List<CD> getCds() {
+        return cds
+    }
+
+    void setCds(List<CD> cds) {
+        this.cds = cds
+    }
+
+    List<DVD> getDvds() {
+        return dvds
+    }
+
+    void setDvds(List<DVD> dvds) {
+        this.dvds = dvds
+    }
+
+    List<VHS> getVhss() {
+        return vhss
+    }
+
+    void setVhss(List<VHS> vhss) {
+        this.vhss = vhss
+    }
 
     String getName() {
         return name
